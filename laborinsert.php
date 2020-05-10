@@ -81,6 +81,15 @@ $('#state').on('change',function(){
     {
       $con=mysqli_connect('localhost','root','','labor');
 
+
+      $qry="SELECT `AUTO_INCREMENT` as id FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'labor' AND TABLE_NAME ='labor'";
+       $res=mysqli_query($con,$qry);
+
+      while($row=mysqli_fetch_array($res))  
+      {
+        $folder=$row['id'];
+      }
+
       $firstname=$_POST['firstname'];
       $lastname=$_POST['lastname'];
       $gender=$_POST['gender'];
@@ -97,54 +106,54 @@ $('#state').on('change',function(){
       $password=$_POST['password'];
       $about=$_POST['about'];
       
-          $path="./labor_img/";
-         // $foldertitle=$firstname."_".rand(1000,1000000);
 
+      if(isset($_FILES["fimage"]))
+      {
+          $path="./labor_img/";
+          $foldername=$folder;
           $target_file = $path.basename($_FILES["fimage"]["name"]);
           // Select file type
+         
           $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
           // Valid file extensions
           $extensions_arr = array("jpg","jpeg","png","gif");
           // Check extension
           $imgSize = $_FILES['fimage']['size'];
 
-          if(in_array($imageFileType,$extensions_arr) )
-          {
-          
-          if($imgSize < 5000000)   
-          {
-           $myimg=$firstname.time().$_FILES['fimage']['name'];
-           //echo $myimg;
-
-            if(move_uploaded_file($_FILES['fimage']['tmp_name'],$path.$myimg))
+            if(in_array($imageFileType,$extensions_arr) )
             {
-              echo "insert image";
+            
+              if($imgSize < 5000000)   
+              {
+                if(!is_dir($path.$foldername))
+                {
+                  mkdir($path.$foldername);     
+                  $myimg=time().$_FILES['fimage']['name'];
+                  echo $myimg;
+
+                  $targetpath=$path.$foldername."/".$myimg;
+                  if(move_uploaded_file($_FILES['fimage']['tmp_name'],$targetpath))
+                  {
+                    echo "insert image";
+                  }
+                }
+
+              }
+              else{
+               echo "Sorry, your file is too large.";
+              }
+                    
             }
-
-          // if(!is_dir($path.$foldertitle))
-          // {
-          // mkdir($path.$foldertitle);      
-          // $myimg=$firstname.time().$_FILES['fimage']['name'];
-          // echo $myimg;
-
-          // $targetpath=$path.$foldertitle."/".$myimg;
-          //   if(move_uploaded_file($_FILES['fimage']['tmp_name'],$targetpath))
-          //   {
-          //     echo "insert image";
-          //   }
-          // }
-           
-          }
-          else
-          {
-           echo "Sorry, your file is too large.";
-          }
-                
-          }
-          else
-          {
-            echo "please Select front image file";
-          }
+            else
+            {
+              echo "please Select valid extention front image file";
+            }
+      }
+      else
+      {
+          echo "please Select image file";
+      }
+ 
 
 
       $status=$_POST['status'];
@@ -153,6 +162,7 @@ $('#state').on('change',function(){
       $leaderid=$_POST['leaderid'];
 
       $qry="insert into labor values(0,'$firstname','$lastname','$gender','$age','$email','$phone','$aadharno','$address','$location','$country','$state','$city','$pincode','$password','$about','$myimg','$status','$charge',NOW(),'$category','$leaderid')";
+
       $res=mysqli_query($con,$qry);
         if($res>0)
         {

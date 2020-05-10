@@ -158,10 +158,19 @@ $('#state').on('change',function(){
         }
         else
         { 
-            $myimg=$fimage;
+            $flag=1;
         }
 
+    if($flag==1)
+    {
+      $qry="update customer set c_firstname='$firstname',c_lastname='$lastname',c_email='$email',c_phone='$phone',c_address='$address',c_location='$location',c_country='$country',c_state='$state',c_city='$city',c_pincode='$pincode',c_password='$password',c_about='$about' where c_id=".$_REQUEST['cid'];
+      $flag=0;
+    }
+    else
+    {
+
       $qry="update customer set c_firstname='$firstname',c_lastname='$lastname',c_email='$email',c_phone='$phone',c_address='$address',c_location='$location',c_country='$country',c_state='$state',c_city='$city',c_pincode='$pincode',c_password='$password',c_about='$about',c_image='$myimg' where c_id=".$_REQUEST['cid'];
+    }
       $res=mysqli_query($con,$qry);
         if($res>0)
         {
@@ -173,6 +182,7 @@ $('#state').on('change',function(){
           echo "erro not update customer";
         }
     }
+    
   }
   ?>
 
@@ -202,10 +212,16 @@ Country Name:
   if($rowCount > 0){
 
     while($row = $query->fetch_assoc()){
-
-    echo '<option value="'.$row['id'].'">'.$row['name'].'</option>';
+      if($country==$row['id']){
+         ?>
+         <option value="<?php echo $row['id']; ?>" selected><?php echo $row['name']; ?></option>     
+        <?php
+      }else{
+           echo '<option value="'.$row['id'].'">'.$row['name'].'</option>';
+     }
     }
   }
+
   else
   {
     echo '<option value="">Country not available</option>';
@@ -216,12 +232,33 @@ Country Name:
 <br>
 State Name:
 <select name="state" id="state">
-<option value="">Select state first</option>
+<!-- <option value="">Select state first</option> -->
+<?php
+      $qry="select * from state where s_id='$state'"; 
+      $res=mysqli_query($con,$qry);
+      while($row=mysqli_fetch_row($res))
+      {
+        ?>
+        <option value="<?php echo $row[0]; ?>" selected><?php echo $row[1]; ?></option>         
+      <?php
+      }   
+    ?>
 </select>
 <br>
 City Name:
 <select name="city" id="city">
-<option value="">Select state first</option>
+<!-- <option value="">Select state first</option> -->
+<?php
+      $qry="select * from city where ci_id='$city'"; 
+      $res=mysqli_query($con,$qry);
+      while($row=mysqli_fetch_row($res))
+      {
+        ?>
+        <option value="<?php echo $row[0]; ?>" selected><?php echo $row[1]; ?></option>     
+      <?php
+        }
+        ?>
+
 </select>
 </div>
 

@@ -13,8 +13,12 @@
 			$res=mysqli_query($con,$qry);
 			while($row=mysqli_fetch_row($res))
 			{
-				$oldimage=$path.$row[15];
+				$dirpath=$path.$row[0];
+				$oldimage=$path.$row[0].'/'.$row[16];
+				//echo $oldimage;
 				unlink($oldimage);
+				//echo $dirpath;
+				rmdir($dirpath);
 			}
 
 			//$con=mysqli_connect("localhost","root","","labor");
@@ -60,7 +64,7 @@
 		<td><?php echo $row[12];?></td>
 		<td><?php echo $row[14];?></td>
 		<td><?php echo $row[15];?></td>
-		<td><img src="labor_img/<?php echo $row[16]; ?>" width="100px" height=100></td>
+		<td><img src="labor_img/<?php echo $row[0];?>/<?php echo $row[16]; ?>" width="100px" height=100></td>
 		<td><?php echo $row[17];?></td>
 		<td><?php echo $row[18];?></td>
 		<td><?php echo $row[19];?></td>
@@ -75,6 +79,8 @@
 ?>
 </table>
 <a href="laborinsert.php" style="font-size:40px">insert New</a>&emsp;
+
+<a href="multiimageadmin.php" style="font-size:40px">insert workimage</a>&emsp;
 <!-- <button name="logout">logout</button> -->
 </form>
 </body>

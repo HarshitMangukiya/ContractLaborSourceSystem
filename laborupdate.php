@@ -86,6 +86,7 @@ $('#state').on('change',function(){
         $res=mysqli_query($con,$qry);
         while($row=mysqli_fetch_row($res))
           {
+            $foldername=$row[0];
             $firstname=$row[1];
             $lastname=$row[2];
             $gender=$row[3];
@@ -131,9 +132,9 @@ $('#state').on('change',function(){
       
       $path="./labor_img/";
       
-      if($_FILES["fimage"]["name"]!=null)
+   if($_FILES["fimage"]["name"]!=null)
       {
-      $oldimage=$path.$fimage;
+      $oldimage=$path.$foldername.'/'.$fimage;
       unlink($oldimage);
 
       $target_file = $path.basename($_FILES["fimage"]["name"]);
@@ -143,42 +144,51 @@ $('#state').on('change',function(){
       $extensions_arr = array("jpg","jpeg","png","gif");
       // Check extension  
       $imgSize = $_FILES['fimage']['size'];
-      if(in_array($imageFileType,$extensions_arr) )
-      {
+          if(in_array($imageFileType,$extensions_arr) )
+          {
 
-        if($imgSize < 5000000)   
-        {
-        $myimg=$firstname.time().$_FILES['fimage']['name'];
+              if($imgSize < 5000000)   
+              {
 
-        if(move_uploaded_file($_FILES['fimage']['tmp_name'],$path.$myimg))
-        {
-          echo "insert image";
-        }
-        
-        }
-        else{
-          echo "Sorry, your file is too large.";
-        }
-          
+                $myimg=time().$_FILES['fimage']['name'];
+                echo $myimg;
+
+                $targetpath=$path.$foldername."/".$myimg;
+                if(move_uploaded_file($_FILES['fimage']['tmp_name'],$targetpath))
+                {
+                  echo "insert image";
+                }
+           
+              }
+              else{
+                echo "Sorry, your file is too large.";
+              }
+                
+          }
+          else
+          {
+            echo "please Select valid extention front image file";
+          }
         }
         else
-        {
-          echo "please Select front image file";
+        { 
+          $flag=1;
         }
-        }
-        else
-        {
-            $myimg=$fimage;
-        }
-
 
       $status=$_POST['status'];
       $charge=$_POST['charge'];
       $categoryid=$_POST['category'];
       $leaderid=$_POST['leaderid'];
 
+    if($flag==1)
+    {  
+      $qry="update labor set l_firstname='$firstname',l_lastname='$lastname',l_gender='$gender',l_age='$age',l_email='$email',l_phone='$phone',l_aadharno='$aadharno',l_address='$address',l_location='$location',l_country='$country',l_state='$state',l_city='$city',l_pincode='$pincode',l_password='$password',l_about='$about',l_status='$status',l_charge='$charge',l_categoryid='$categoryid',l_leaderid='$leaderid' where l_id=".$_REQUEST['lid'];
+      $flag=0;
+    }
+    else
+    {
       $qry="update labor set l_firstname='$firstname',l_lastname='$lastname',l_gender='$gender',l_age='$age',l_email='$email',l_phone='$phone',l_aadharno='$aadharno',l_address='$address',l_location='$location',l_country='$country',l_state='$state',l_city='$city',l_pincode='$pincode',l_password='$password',l_about='$about',l_image='$myimg',l_status='$status',l_charge='$charge',l_categoryid='$categoryid',l_leaderid='$leaderid' where l_id=".$_REQUEST['lid'];
-      echo $qry;
+    }
       $res=mysqli_query($con,$qry);
         if($res>0)
         {
@@ -227,9 +237,14 @@ Country Name:
   if($rowCount > 0){
 
     while($row = $query->fetch_assoc()){
-
+      if($country==$row['id']){
+         ?>
+         <option value="<?php echo $row['id']; ?>" selected><?php echo $row['name']; ?></option>     
+        <?php
+      }else{
     echo '<option value="'.$row['id'].'">'.$row['name'].'</option>';
     }
+  }
   }
   else
   {
@@ -241,12 +256,34 @@ Country Name:
 <br>
 State Name:
 <select name="state" id="state">
-<option value="">Select state first</option>
+<!-- <option value="">Select state first</option> -->
+<?php
+      $qry="select * from state where s_id='$state'"; 
+      $res=mysqli_query($con,$qry);
+      while($row=mysqli_fetch_row($res))
+      {
+        ?>
+        <option value="<?php echo $row[0]; ?>" selected><?php echo $row[1]; ?></option>         
+      <?php
+      }   
+    ?>
 </select>
 <br>
 City Name:
 <select name="city" id="city">
-<option value="">Select state first</option>
+<!-- <option value="">Select city first</option> -->
+<?php
+      $qry="select * from city where ci_id='$city'"; 
+      $res=mysqli_query($con,$qry);
+      while($row=mysqli_fetch_row($res))
+      {
+        ?>
+        <option value="<?php echo $row[0]; ?>" selected><?php echo $row[1]; ?></option>     
+      <?php
+      }
+?>
+
+
 </select>
 </div>
 

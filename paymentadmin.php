@@ -41,12 +41,6 @@ while($row=mysqli_fetch_row($res))
 <td><?php echo $row[3];?></td>
 <td><?php echo $row[4];?></td>
 <td><?php echo $row[5];?></td>
-<td><?php echo $row[6];?></td>
-<td><?php echo $row[7];?></td>
-<td><?php echo $row[8];?></td>
-<td><?php echo $row[9];?></td>
-<td><?php echo $row[10];?></td>
-
 
 <td><a href="paymentadmin.php?pid=<?php echo $row[0]; ?>">delete</a></td>		
 <td><a href="paymentupdate.php?pid=<?php echo $row[0]; ?>">edit</a></td>		

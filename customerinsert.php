@@ -94,6 +94,8 @@ $('#state').on('change',function(){
       $password=$_POST['password'];
       $about=$_POST['about'];
       
+      if(isset($_FILES["fimage"]))
+      {
           $path="./customer_img/";
           $target_file = $path.basename($_FILES["fimage"]["name"]);
           // Select file type
@@ -124,8 +126,13 @@ $('#state').on('change',function(){
           }
           else
           {
-            echo "please Select front image file";
+            echo "please Select valid extension front image file";
           }
+        }
+        else
+        {
+          echo "select image";
+        }
 
 
       $qry="insert into customer values(0,'$firstname','$lastname','$email','$phone','$address','$location','$country','$state','$city','$pincode','$password','$about','$myimg',NOW())";
