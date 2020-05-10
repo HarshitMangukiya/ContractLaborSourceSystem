@@ -41,8 +41,6 @@ while($row=mysqli_fetch_row($res))
 <td><?php echo $row[3];?></td>
 <td><?php echo $row[4];?></td>
 <td><?php echo $row[5];?></td>
-<td><?php echo $row[6];?></td>
-<td><?php echo $row[7];?></td>
 
 <td><a href="hiredlaboradmin.php?hid=<?php echo $row[0]; ?>">delete</a></td>		
 <td><a href="hiredlaborupdate.php?hid=<?php echo $row[0]; ?>">edit</a></td>		
