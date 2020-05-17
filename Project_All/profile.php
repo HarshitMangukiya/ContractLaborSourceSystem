@@ -7,13 +7,13 @@
 }
 else
 {
-	//header("location:login.php");	
+	//header("location:index.php");	
 }
 if(isset($_POST['logout']))
 {
 	 //session_destroy();
 		unset($_SESSION['emailname']);
-        header("Location:login.php");
+        header("Location:index.php");
 }
 ?>
 	<head>
@@ -45,6 +45,7 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/animate.min.css">
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
+		
 		</head>
 		<body>
             <form method="post" enctype="multipart/form-data">
@@ -59,14 +60,15 @@ if(isset($_POST['logout']))
 				          <li class="menu-active"><a href="index.php">Home</a></li>
 				          <li><a href="about-us.php">About Us</a></li>
 				          <li><a href="category.php">Category</a></li>
-				          <li><a href="price.html">Price</a></li>
+				          <li><a href="price.php">Price</a></li>
 				          <li><a href="blog-home.html">Blog</a></li>
 				          <li><a href="contact.php">Contact</a></li>
-				          <li class="menu-has-children"><a href="">Pages</a>
+				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
-								<li><a href="elements.html">elements</a></li>
+								<!-- <li><a href="elements.html">elements</a></li> -->
 								<li><a href="search.php">search</a></li>
 								<li><a href="single.php">single</a></li>
+
 				            </ul>
 				          </li>
                         <?php
@@ -98,7 +100,7 @@ if(isset($_POST['logout']))
 				          else
 				          {?>
 				          <li><a class="ticker-btn" href="register.php">Signup</a></li>
-				          <li><a class="ticker-btn" href="login.php">Login</a></li>
+				          <li><a class="ticker-btn" href="index.php">Login</a></li>
 				          <?php	
 				          }
 				          ?>
@@ -159,11 +161,11 @@ if(isset($_POST['logout']))
 										 -->
 									</ul>
 								</div>
-								&nbsp &nbsp &nbsp
-								<div class="details">
+
+								<div class="details" style="margin-left:15px;">
 									<div class="title d-flex flex-row justify-content-between">
 										<div class="titles">
-											<a href="#"><h3>
+											<a href="#"><h3 class="text-uppercase">
 											<?php echo $row[1].' '.$row[2];?>
 											</h3></a>
 										</div>
@@ -435,7 +437,8 @@ if(isset($_POST['logout']))
 									    <p><h6><?php echo $row5[15];?></h6></p>
 										<h5>Job Nature: Full Day</h5>
 										<p class="address"><span class="lnr lnr-map"></span> <?php echo $row5[8];?> </p>
-										<p class="address"><span class="lnr lnr-database"></span>&#x20a8; <?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row5[17];?></p>
+										<p class="address"><span class="lnr lnr-database"></span> &#x20a8; 
+											<?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row5[17];?></p>
 										<a href="#" class="btns text-uppercase">Hire Me</a>
 									</div>
 									 <?php
@@ -583,7 +586,7 @@ if(isset($_POST['logout']))
 								<h1 class="mb-10 text-white">Join us today without any hesitation</h1>
 								<p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
 								<a class="primary-btn" href="register.php">I am a Customer</a>
-								<a class="primary-btn" href="#">We are a labor</a>
+								<a class="primary-btn" href="#">i am a labor</a>
 							</div>
 						</div>
 					</div>	

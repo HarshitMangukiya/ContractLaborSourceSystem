@@ -13,7 +13,7 @@ if(isset($_POST['logout']))
 {
 	 //session_destroy();
 		unset($_SESSION['emailname']);
-        header("location:login.php");
+        header("location:index.php");
 }
 ?>
 	<head>
@@ -45,7 +45,7 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/animate.min.css">
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
-			<script src="jquery.js"></script>
+			<script src="Labor/jquery.js"></script>
   <script type="text/javascript">
 
 $(document).ready(function(){
@@ -60,7 +60,7 @@ var countryID = $(this).val();
 
       type:'POST',
 
-      url:'ajaxdata.php',
+      url:'Labor/ajaxdata.php',
 
       data:'country_id='+countryID,
 
@@ -95,7 +95,7 @@ $('#state').on('change',function(){
 
         type:'POST',
 
-        url:'ajaxdata.php',
+        url:'Labor/ajaxdata.php',
 
         data:'state_id='+stateID,
 
@@ -118,6 +118,15 @@ $('#state').on('change',function(){
 });
 
 </script>
+<script type="text/javascript">
+
+function myFunction() {
+	alert("hello"); 
+  // location.replace("profile.php");
+  window.location.href ="profile.php";
+}
+
+</script>
 		</head>
 		<body>
             <form method="post" enctype="multipart/form-data">
@@ -132,12 +141,12 @@ $('#state').on('change',function(){
 				          <li class="menu-active"><a href="index.php">Home</a></li>
 				          <li><a href="about-us.php">About Us</a></li>
 				          <li><a href="category.php">Category</a></li>
-				          <li><a href="price.html">Price</a></li>
+				          <li><a href="price.php">Price</a></li>
 				          <li><a href="blog-home.html">Blog</a></li>
 				          <li><a href="contact.php">Contact</a></li>
-				          <li class="menu-has-children"><a href="">Pages</a>
+				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
-								<li><a href="elements.html">elements</a></li>
+								<!-- <li><a href="elements.html">elements</a></li> -->
 								<li><a href="search.php">search</a></li>
 								<li><a href="single.php">single</a></li>
 				            </ul>
@@ -170,7 +179,7 @@ $('#state').on('change',function(){
 				          else
 				          {?>
 				          <li><a class="ticker-btn" href="register.php">Signup</a></li>
-				          <li><a class="ticker-btn" href="login.php">Login</a></li>
+				          <li><a class="ticker-btn" href="index.php">Login</a></li>
 				          <?php	
 				          }
 				          ?>
@@ -397,7 +406,8 @@ $('#state').on('change',function(){
         if($res>0)
         {
           echo "update record into customer table";
-          header("location:index.php");
+
+         // header("location:index.php");
         }   
         else
         {
@@ -460,7 +470,7 @@ $('#state').on('change',function(){
 										$query = $con->query("SELECT * FROM country");
 										$rowCount = $query->num_rows;
 										?>
-										<select name="country" id="country">
+										<select name="country" id="country" style="border-radius:5px;">
 										<option value="">Select Country</option>
 										<?php
 
@@ -492,7 +502,7 @@ $('#state').on('change',function(){
 										<img src="img/pages/list.jpg" alt="">
 										<span>State Name: 
 											</span>
-									    <select name="state" id="state">
+									    <select name="state" id="state" style="border-radius:5px;">
 										<!-- <option value="">Select state first</option> -->
 										<?php
 										      $qry="select * from state where s_id='$state'"; 
@@ -511,7 +521,7 @@ $('#state').on('change',function(){
 									<li>
 										<img src="img/pages/list.jpg" alt="">
 										<span>City Name:</span>
-										<select name="city" id="city">
+										<select name="city" id="city" style="border-radius:5px;">
 										<!-- <option value="">Select state first</option> -->
 										<?php
 										      $qry="select * from city where ci_id='$city'"; 
@@ -547,8 +557,9 @@ $('#state').on('change',function(){
 									    </span>
 
 									</li>
+
 									<li>
-										<input type="submit" class="ticker-btn" name="submit" value="Update profile">
+										<input type="submit" class="ticker-btn" name="submit" value="Update profile" onclick="myFunction()">
 									</li>
 
 <!-- 
@@ -683,7 +694,8 @@ $('#state').on('change',function(){
 									    <p><h6><?php echo $row5[15];?></h6></p>
 										<h5>Job Nature: Full Day</h5>
 										<p class="address"><span class="lnr lnr-map"></span> <?php echo $row5[8];?> </p>
-										<p class="address"><span class="lnr lnr-database"></span>&#x20a8; <?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row5[17];?></p>
+										<p class="address"><span class="lnr lnr-database"></span> &#x20a8;
+										  <?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row5[17];?></p>
 										<a href="#" class="btns text-uppercase">Hire Me</a>
 									</div>
 									 <?php
@@ -831,7 +843,7 @@ $('#state').on('change',function(){
 								<h1 class="mb-10 text-white">Join us today without any hesitation</h1>
 								<p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
 								<a class="primary-btn" href="register.php">I am a Customer</a>
-								<a class="primary-btn" href="#">We are a labor</a>
+								<a class="primary-btn" href="#">i am a labor</a>
 							</div>
 						</div>
 					</div>	

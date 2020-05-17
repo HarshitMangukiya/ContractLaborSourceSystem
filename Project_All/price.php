@@ -7,17 +7,16 @@
 }
 else
 {
-	//header("location:index.php");	
+	//header("location:login.php");	
 }
 if(isset($_POST['logout']))
 {
-	 //session_destroy();
+	 //session_destroy
 		unset($_SESSION['emailname']);
         header("Location:index.php");
 }
-?>
+	 ?>
 	<head>
-		
 		<!-- Mobile Specific Meta -->
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<!-- Favicon-->
@@ -47,7 +46,7 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/main.css">
 		</head>
 		<body>
-              <form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data">
 			  <header id="header" id="home">
 			    <div class="container">
 			    	<div class="row align-items-center justify-content-between d-flex">
@@ -59,9 +58,9 @@ if(isset($_POST['logout']))
 				          <li class="menu-active"><a href="index.php">Home</a></li>
 				          <li><a href="about-us.php">About Us</a></li>
 				          <li><a href="category.php">Category</a></li>
-				          <li><a href="price.php">Price</a></li>
+				          <li><a href="#">Price</a></li>
 				          <li><a href="blog-home.html">Blog</a></li>
-				          <li><a href="#">Contact</a></li>
+				          <li><a href="contact.php">Contact</a></li>
 				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
 								<!-- <li><a href="elements.html">elements</a></li> -->
@@ -69,7 +68,7 @@ if(isset($_POST['logout']))
 								<li><a href="single.php">single</a></li>
 				            </ul>
 				          </li>
-				          
+
 				          &nbsp &nbsp	
 				          <?php
 				          if(isset($_SESSION['emailname']))
@@ -99,17 +98,16 @@ if(isset($_POST['logout']))
 				          }
 				          else
 				          {?>
-				          <li><a class="ticker-btn" href="register.php">Signup</a></li>
+				          <li><a class="ticker-btn" href="register">Signup</a></li>
 				          <li><button type="button" class="ticker-btn" data-toggle="modal" data-target="#myModal" style="border-width:0px;">Login</button></li>				        <?php	
 				          }
 				          ?>
-				          				          
+
 				        </ul>
 				      </nav><!-- #nav-menu-container -->		    		
 			    	</div>
 			    </div>
 			  </header><!-- #header -->
-
 
 
 <!-- login page -->
@@ -212,6 +210,8 @@ if(isset($_POST['logout']))
   </div>  
 </div>
 
+
+
 			<!-- start banner Area -->
 			<section class="banner-area relative" id="home">	
 				<div class="overlay overlay-bg"></div>
@@ -219,47 +219,188 @@ if(isset($_POST['logout']))
 					<div class="row d-flex align-items-center justify-content-center">
 						<div class="about-content col-lg-12">
 							<h1 class="text-white">
-								Contact Us				
+								Pricing Plan				
 							</h1>	
-							<p class="text-white"><a href="index.php">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="contact.php"> Contact Us</a></p>
+							<p class="text-white link-nav"><a href="index.php">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="#"> Pricing Plan</a></p>
 						</div>											
 					</div>
 				</div>
 			</section>
 			<!-- End banner Area -->	
-
-			<!-- Start contact-page Area -->
-			<section class="contact-page-area section-gap">
+				
+			<!-- Start price Area -->
+			<section class="price-area section-gap" id="price">
 				<div class="container">
+					<div class="row d-flex justify-content-center">
+						<div class="menu-content pb-60 col-lg-8">
+							<div class="title text-center">
+								<h1 class="mb-10">Choose the best pricing for you</h1>
+								<p>Who are in extremely love with eco friendly system.</p>
+							</div>
+						</div>
+					</div>						
 					<div class="row">
-						<div class="map-wrap" style="width:100%; height: 445px;" id="map"></div>
-						<div class="col-lg-4 d-flex flex-column">
-							<a class="contact-btns" href="#">Submit Your CV</a>
-							<a class="contact-btns" href="#">Post New Job</a>
-							<a class="contact-btns" href="#">Create New Account</a>
-						</div>
-						<div class="col-lg-8">
-							<form class="form-area " id="myForm" action="mail.php" method="post" class="contact-form text-right">
-								<div class="row">	
-									<div class="col-lg-12 form-group">
-										<input name="name" placeholder="Enter your name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" class="common-input mb-20 form-control" required="" type="text">
-									
-										<input name="email" placeholder="Enter email address" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" class="common-input mb-20 form-control" required="" type="email">
+						<?php
+						if(isset($_POST['submit']))
+						{
+					  	    $customerid=$_POST['customerid'];
+						    $method=$_POST['method']; 
+							$totalpayment=$_POST['totalpayment'];	      
 
-										<input name="subject" placeholder="Enter your subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your subject'" class="common-input mb-20 form-control" required="" type="text">
-										<textarea class="common-textarea mt-10 form-control" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
-										<button class="primary-btn mt-20 text-white" style="float: right;">Send Message</button>
-										<div class="mt-20 alert-msg" style="text-align: left;"></div>
-									</div>
+	                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
+	                        echo $qry;
+							$res=mysqli_query($con,$qry);
+							if($res>0)
+							{
+								echo "insert record into payment table";
+							    //header("location:index.php");
+							}		
+							else
+							{
+								echo "erro not insert payment";
+							}
+						}
+						?>
+						<div class="col-lg-4">
+							<div class="single-price no-padding">
+								<div class="price-top">
+									<h4>Real basic</h4>
 								</div>
-							</form>	
+								<ul class="lists">
+									<li>2.5 GB Space</li>
+									<li>Secure Online Transfer</li>
+									<li>Unlimited Styles</li>
+									<li>Customer Service</li>
+								</ul>
+								<div class="price-bottom">
+									<div class="price-wrap d-flex flex-row justify-content-center">
+										<span class="price">$</span><h1> 39 </h1><span class="time">Per <br> Month</span>
+									</div>
+									<!-- <a href="#" class="primary-btn header-btn">Get Started</a> -->
+									<input type="submit" name="submit" value="Get started" class="primary-btn header-btn">
+								</div>
+								
+							</div>
 						</div>
+						<div class="col-lg-4">
+							<div class="single-price no-padding">
+								<div class="price-top">
+									<h4>Real Standred</h4>
+								</div>
+								<ul class="lists">
+									<li>10 GB Space</li>
+									<li>Secure Online Transfer</li>
+									<li>Unlimited Styles</li>
+									<li>Customer Service</li>
+								</ul>
+								<div class="price-bottom">
+									<div class="price-wrap d-flex flex-row justify-content-center">
+										<span class="price">$</span><h1> 69 </h1><span class="time">Per <br> Month</span>
+									</div>
+									<!-- <a href="#" class="primary-btn header-btn">Get Started</a> -->
+							        <input type="submit" name="submit" value="Get started" class="primary-btn header-btn">
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="single-price no-padding">
+								<div class="price-top">
+									<h4>Real Ultimate</h4>
+								</div>
+								<ul class="lists">
+									<li>Unlimited Space</li>
+									<li>Secure Online Transfer</li>
+									<li>Unlimited Styles</li>
+									<li>Customer Service</li>
+								</ul>
+								<div class="price-bottom">
+									<div class="price-wrap d-flex flex-row justify-content-center">
+										<span class="price">$</span><h1> 99 </h1><span class="time">Per <br> Month</span>
+									</div>
+									<!-- <a href="#" class="primary-btn header-btn">Get Started</a> -->
+								    <input type="submit" name="submit" value="Get started" class="primary-btn header-btn">
+								</div>
+							</div>				
+						</div>								
 					</div>
 				</div>	
 			</section>
-			<!-- End contact-page Area -->
+			<!-- End price Area -->		
+
+			<!-- Start feature Area -->
+		<!-- 	<section class="feature-area">
+				<div class="container-fluid">
+					<div class="row justify-content-center align-items-center">
+						<div class="col-lg-3 feat-img no-padding">
+							<img class="img-fluid" src="img/pages/f1.jpg" alt="">
+						</div>
+						<div class="col-lg-3 no-padding feat-txt">
+							<h6 class="text-uppercase text-white">Basic & Common Repairs</h6>
+							<h1>Who we are</h1>
+							<p>
+								Computer users and programmers have become so accustomed to using Windows, even for the changing capabilities and the appearances of the graphical.
+							</p>
+						</div>
+						<div class="col-lg-3 feat-img no-padding">
+							<img class="img-fluid" src="img/pages/f2.jpg" alt="">							
+						</div>
+						<div class="col-lg-3 no-padding feat-txt">
+							<h6 class="text-uppercase text-white">Basic & Common Repairs</h6>
+							<h1>What we do</h1>
+							<p>
+								Computer users and programmers have become so accustomed to using Windows, even for the changing capabilities and the appearances of the graphical.
+							</p>
+						</div>
+					</div>
+				</div>	
+			</section> -->
+			<!-- End feature Area -->
+
+			<!-- Start submit Area -->
+			<!-- <section class="submit-area section-gap">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="submit-left">
+								<h4>Submit Your Resume Today</h4>
+								<p>
+									Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.
+								</p>
+								<a href="#" class="primary-btn header-btn">Submit Your CV</a>	
+							</div>
+						</div>
+						<div class="col-lg-6 ">
+							<div class="submit-right">
+								<h4>Submit a New Job Now!</h4>
+								<p>
+									Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.
+								</p>
+								<a href="#" class="primary-btn header-btn">Post a Job</a>		
+							</div>			
+						</div>
+
+					</div>
+				</div>	
+			</section> -->
+			<!-- End submit Area -->
 			
-	
+			<!-- Start callto-action Area -->
+			<section class="callto-action-area section-gap">
+				<div class="container">
+					<div class="row d-flex justify-content-center">
+						<div class="menu-content col-lg-9">
+							<div class="title text-center">
+								<h1 class="mb-10 text-white">Join us today without any hesitation</h1>
+								<p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+								<a class="primary-btn" href="register.php">I am a Customer</a>
+								<a class="primary-btn" href="laborside/laborregister.php">I am a Labor</a>
+							</div>
+						</div>
+					</div>	
+				</div>	
+			</section>
+			<!-- End calto-action Area -->
+		
 			<!-- start footer Area -->		
 			<footer class="footer-area section-gap">
 				<div class="container">
@@ -275,7 +416,7 @@ if(isset($_POST['logout']))
 								</ul>
 							</div>
 						</div>
-						<div class="col-lg-6 col-md-12">
+						<div class="col-lg-6  col-md-12">
 							<div class="single-footer-widget newsletter">
 								<h6>Newsletter</h6>
 								<p>You can trust us. we only send promo offers, not a single spam.</p>
@@ -317,7 +458,7 @@ if(isset($_POST['logout']))
 					</div>
 
 					<div class="row footer-bottom d-flex justify-content-between">
-						<p class="col-lg-8 col-sm-12 footer-text m-0 text-white">
+						 <p class="col-lg-8 col-sm-12 footer-text m-0 text-white">
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --><!-- 
 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> -->
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -347,8 +488,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			<script src="js/jquery.nice-select.min.js"></script>			
 			<script src="js/parallax.min.js"></script>		
 			<script src="js/mail-script.js"></script>	
-			<script src="js/main.js"></script>
-			</form>	
+			<script src="js/main.js"></script>	
+		</form>
 		</body>
 	</html>
 

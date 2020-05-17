@@ -70,23 +70,24 @@ if(isset($_POST['login']))
   }
 }
     ?>
-<body>
+<body style="overflow-x:hidden;">
   <!-- Material form login -->
-<div class="card">
+<div class="row">
+    <div class="col-sm-4"></div>
+  <div class="col-sm-4" style="margin-top:10%;">
 
   <h4 class="card-header info-color white-text text-center py-4" style="background-color: #17a2b8;color:white;" >
 
-    <div id="logo">
+    <div id="logo"> 
                 <img src="img/logo.png" alt="" title="" align="left" />
                   <strong>Log In</strong>
     </div> 
   </h4>
 
   <!--Card content-->
-  <div class="card-body px-lg-5 pt-0">
 <br>
     <!-- Form -->
-    <form class="text-center" style="color:#757575;" action="#!" method="post" enctype="multipart/form-data">
+    <form class="text-center" style="color:#757575;" method="post" enctype="multipart/form-data">
 
       <!-- Email -->
     <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" name="email" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '" required="">
@@ -116,6 +117,11 @@ if(isset($_POST['login']))
       <p>Not a member?
         <a href="register.php">Register</a>
       </p>
+
+      <p>Are you labor?
+        <a href="laborside/index.php">Login</a>
+      </p>
+
 
       <!-- Social login -->
       <p>or sign in with:</p>
@@ -149,6 +155,7 @@ if(isset($_POST['login']))
       <script src="js/main.js"></script>
 
   </div>
+  <div class="col-sm-4"></div>
 
 </div>
 

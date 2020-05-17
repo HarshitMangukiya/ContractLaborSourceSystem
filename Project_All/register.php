@@ -52,7 +52,8 @@
         if($res>0)
         {
           echo "insert record into customer table";
-          header("location:login.php");
+
+          header("location:price.php");
         }   
         else
         {
@@ -61,10 +62,14 @@
 
 }
     ?>
-<body>
+<body style="overflow-x:hidden;">
   <!-- Material form login -->
-<div class="card">
+<div class="row">
+  <!-- <div class="col-md-6 col-sm-12 col-lg-6 col-md-offset-3"> -->
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4" style="margin:4%;">
 
+   <!-- <div class="form-group col-md-4 col-md-offset-5 align-center">  -->
   <h4 class="card-header info-color white-text text-center py-4" style="background-color: #17a2b8;color:white;" >
 
     <div id="logo">
@@ -74,7 +79,7 @@
   </h4>
 
   <!--Card content-->
-  <div class="card-body px-lg-5 pt-0">
+
 <br>
     <!-- Form -->
     <form class="text-center" style="color:#757575;" method="post" enctype="multipart/form-data">
@@ -99,19 +104,6 @@
       <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="register">Sign In</button>
 
 
-      <a type="button" class="btn-floating btn-fb btn-sm">
-        <i class="fa fa-facebook"></i>
-      </a>
-      <a type="button" class="btn-floating btn-tw btn-sm">
-        <i class="fa fa-twitter"></i>
-      </a>
-      <a type="button" class="btn-floating btn-li btn-sm">
-        <i class="fa fa-dribbble"></i>
-      </a>
-      <a type="button" class="btn-floating btn-git btn-sm">
-        <i class="fa fa-github"></i>
-      </a>
-
       <script src="js/vendor/jquery-2.2.4.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
       <script src="js/vendor/bootstrap.min.js"></script>      
@@ -127,8 +119,10 @@
       <script src="js/parallax.min.js"></script>    
       <script src="js/mail-script.js"></script> 
       <script src="js/main.js"></script>
-
+      
+      <!-- </div> -->
   </div>
+<div class="col-sm-4"></div>
 
 </div>
 

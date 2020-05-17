@@ -7,13 +7,13 @@
 }
 else
 {
-	//header("location:login.php");	
+	//header("location:index.php");	
 }
 if(isset($_POST['logout']))
 {
-	 //session_destroy();
+	 //session_destroy
 		unset($_SESSION['emailname']);
-        header("Location:login.php");
+        header("Location:index.php");
 }
 	 ?>
 	
@@ -45,6 +45,7 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/animate.min.css">
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
+			
 		</head>
 		<body>
 			<form method="post" enctype="multipart/form-data">
@@ -60,12 +61,12 @@ if(isset($_POST['logout']))
 				          <li class="menu-active"><a href="#">Home</a></li>
 				          <li><a href="about-us.php">About Us</a></li>
 				          <li><a href="category.php">Category</a></li>
-				          <li><a href="price.html">Price</a></li>
+				          <li><a href="price.php">Price</a></li>
 				          <li><a href="blog-home.html">Blog</a></li>
 				          <li><a href="contact.php">Contact</a></li>
-				          <li class="menu-has-children"><a href="">Pages</a>
+				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
-								<li><a href="elements.html">elements</a></li>
+								<!-- <li><a href="elements.html">elements</a></li> -->
 								<li><a href="search.php">search</a></li>
 								<li><a href="single.php">single</a></li>
 				            </ul>
@@ -99,21 +100,123 @@ if(isset($_POST['logout']))
 				          }
 				          else
 				          {?>
-				          <li><a class="ticker-btn" href="register">Signup</a></li>
-				          <li><a class="ticker-btn" href="login.php">Login</a></li>
+				          <li><a class="ticker-btn" href="register.php">Signup</a></li>
+				          <li><button type="button" class="ticker-btn" data-toggle="modal" data-target="#myModal" style="border-width:0px;">Login</button></li>
+
 				          <?php	
 				          }
 				          ?>
 				          
-
 				       </ul>
 				      </nav><!-- #nav-menu-container -->		    		
 			    	</div>
 			    </div>
 			  </header><!-- #header -->
 
+<!-- login page -->
+<div class="container">
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+
+      	<h4 class="card-header info-color white-text text-center py-4" style="background-color: #17a2b8;color:white;" >
+		    <div id="logo">
+		        <img src="img/logo.png" alt="" title="" align="left" />
+		    </div> 
+	        <!-- <div class="modal-header"> -->
+	          <button type="button" class="close" data-dismiss="modal" style="color:black;">&times;</button>
+	        <!-- </div> -->
+        </h4>
+        <hr>
+        <?php
+			if(isset($_POST['login']))
+			{
+			 if(!empty($_POST['email']) && !empty($_POST['password']))
+			  {
+			     
+			    $email=$_POST['email'];
+			    $password=$_POST['password'];
+
+			    $qry="select * from customer where c_email='$email' and c_password='$password'";    
+			   // echo $qry;
+			       if($res=mysqli_query($con,$qry))
+			      {
+			        if(mysqli_num_rows($res)==1)
+			        {
+			            while($row=mysqli_fetch_row($res))
+			          {
+			            $_SESSION['emailname']=$row[0];
+			            //echo $email;
+			           header("location:index.php"); 
+
+			          }
+			        }
+			        else
+			        {
+			          header("location:index.php"); 
+			          echo "Invalid Uasename or Password..."; 
+			        }
+			      }else
+			      {
+			        echo "Error while fetch database...";
+			      }
+			  }
+			}
+        ?>
+    
+    <div class="modal-body">
+
+    <p align="left">Email *
+    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" name="email" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '">
+
+    <!-- Password -->
+    <p align="left">Password *
+    <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
+
+
+      <div class="d-flex justify-content-around">
+        <!-- <div>
+           Remember me 
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="materialLoginFormRemember">
+            <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
+          </div>
+        </div> -->
+        <div>
+          <!-- Forgot password -->
+          <a href="#">Forgot password?</a>
+        </div>
+      </div>
+
+        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login">Log In</button>
+
+        <p align="center">Don't Have An Account ?
+	    <a href="register.php">Sign up!</a>
+	    </p>
+
+	    <p align="center">Are you labor ?
+        <a href="laborside/index.php">Login</a>
+        </p>
+
+        </div>
+       <!--  <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              Register
+        </div> -->
+      </div>
+      
+    </div>
+  </div>  
+</div>
+<!-- login page end -->
+
 
 			<!-- start banner Area -->
+			<form method="post" action="search.php" enctype="multipart/form-data">
 			<section class="banner-area relative" id="home">	
 				<div class="overlay overlay-bg"></div>
 				<div class="container">
@@ -166,8 +269,7 @@ if(isset($_POST['logout']))
 										</div>										
 									</div>
 									<?php 
-									if(isset($_POST['search']))
-									{
+									
 										if(!empty($_POST['city']))
 										{
 											if(!empty($_POST['category']))
@@ -175,18 +277,22 @@ if(isset($_POST['logout']))
 									
 										      $city=$_POST['city'];
 										      $category=$_POST['category'];
-											  // $searchQuery ="./search.php" ;
+										      $_SESSION['city']=$city;
+										      $_SESSION['category']=$category;	
+										      
 											}
-										}
-									}
+										}	
 									?>
 									<div class="col-lg-2 form-cols">
-											
-									    <!-- <button type="submit" class="btn btn-info" name="search" value="search">									    	 -->
-									      <a href="search.php?ciid=<?php echo $city; ?>&caid=<?php echo $category; ?>" class="ticker-btn">
+
+<!-- 
+									    <button type="submit" class="btn btn-info" name="search">									    --> 	
+									      <!-- <a href="search.php?ciid=<?php echo $city; ?>&caid=<?php echo $category; ?>" class="ticker-btn"> -->
+									      <a href="search.php" class="ticker-btn">
 									      <span class="lnr lnr-magnifier"></span> &nbsp Search
 									      </a>
 									    <!-- </button> -->
+									</a>
 										
 									</div>								
 								</div>
@@ -196,7 +302,10 @@ if(isset($_POST['logout']))
 					</div>
 				</div>
 			</section>
+			</form>
 			<!-- End banner Area -->	
+
+
 
 			<!-- Start features Area -->
 			<section class="features-area">
@@ -398,12 +507,12 @@ if(isset($_POST['logout']))
 				<div class="container">
 					<div class="row justify-content-center d-flex">
 						<div class="col-lg-8 post-list">
-							<ul class="cat-list">
+							<!-- <ul class="cat-list">
 								<li><a href="#">Recent</a></li>
 								<li><a href="#">Full Time</a></li>
 								<li><a href="#">Intern</a></li>
 								<li><a href="#">part Time</a></li>
-							</ul>
+							</ul> -->
 
 						<?php
 							$qry="select * from labor";					    
@@ -442,8 +551,8 @@ if(isset($_POST['logout']))
 										</li> -->
 									</ul>
 								</div>
-								&nbsp &nbsp &nbsp
-								<div class="details">
+								
+								<div class="details" style="margin-left:15px;">
 									<div class="title d-flex flex-row justify-content-between">
 										<div class="titles">
 											<a href="single.php?lid=<?php echo $row[0]; ?>" class="text-uppercase"><h3>
@@ -463,9 +572,9 @@ if(isset($_POST['logout']))
 								</div>
 							</div>
 
-					<?php
-					}
-					?>
+						<?php
+						}
+						?>
 
 							<!-- <div class="single-post d-flex flex-row">
 								<div class="thumb">
@@ -735,8 +844,9 @@ if(isset($_POST['logout']))
 									    <p><h6><?php echo $row[15];?></h6></p>
 										<h5>Job Nature: Full Day</h5>
 										<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[8];?> </p>
-										<p class="address"><span class="lnr lnr-database"></span>&#x20a8; <?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row[17];?></p>
-										<a href="#" class="btns text-uppercase">Hire Me</a>
+										<p class="address"><span class="lnr lnr-database"></span>
+										&#x20a8; <?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row[17];?></p>
+										<a href="#" class="btns text-uppercase" >Hire Me</a>
 									</div>
 									 <?php
 										}
@@ -869,7 +979,7 @@ if(isset($_POST['logout']))
 								<h1 class="mb-10 text-white">Join us today without any hesitation</h1>
 								<p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
 								<a class="primary-btn" href="register.php">I am a Customer</a>
-								<a class="primary-btn" href="#">We are a Labor</a>
+								<a class="primary-btn" href="laborside/laborregister.php">I am a Labor</a>
 							</div>
 						</div>
 					</div>	
@@ -878,7 +988,7 @@ if(isset($_POST['logout']))
 			<!-- End calto-action Area -->
 
 			<!-- Start download Area -->
-			<section class="download-area section-gap" id="app">
+			<!-- <section class="download-area section-gap" id="app">
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-6 download-left">
@@ -917,7 +1027,7 @@ if(isset($_POST['logout']))
 						</div>
 					</div>
 				</div>	
-			</section>
+			</section> -->
 			<!-- End download Area -->
 		
 			<!-- start footer Area -->		
