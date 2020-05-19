@@ -63,7 +63,7 @@ if(isset($_POST['logout']))
 				          <!-- <li><a href="price.html">Price</a></li> -->
 				          <!-- <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="contact.php">Contact</a></li>
-				          <li class="menu-has-children"><a href="">Pages</a>
+				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
 								<!-- <li><a href="elements.html">elements</a></li> -->
 								<li><a href="search.php">search</a></li>
@@ -82,16 +82,23 @@ if(isset($_POST['logout']))
 							{
 								$folder=$row[0];
 								$name=$row[1]." ".$row[2];
-								$imagename=$row[16];
+								if(empty($row[16]))
+								{
+									$imagename="../img/avatar-13.jpg";
+								}
+								else
+								{
+									$imagename="../Labor/labor_img/".$row[0].'/'.$row[16];
+								}
 		
 							}
 				          	?>
-				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="../Labor/labor_img/<?php echo $folder.'/'.$imagename; ?>" width="40" height="40" alt="" ></a>
+				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
 				            <ul>
 								<li>Signed in as</li>
 								<li><a href="single.php"><?php echo $name;?></a></li>
 								<div class="dropdown-divider"></div>
-								<li><a href="single.php">Your Profile</a></li>
+								<li><a href="profile.php">Your Profile</a></li>
 								<li><a href="#">Your Order</a></li>
 								<div class="dropdown-divider"></div>
 								<li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li>
@@ -236,11 +243,20 @@ if(isset($_POST['logout']))
 	$res=mysqli_query($con,$qry);
 	while($row=mysqli_fetch_row($res))
 		{
+
+	    	if(empty($row[13]))
+			{
+				$imagename1="../img/avatar-13.jpg";
+			}
+			else
+			{	
+				$imagename1="../Labor/customer_img/".$row[13];
+			}
 			?>
 						<div class="col-lg-8 post-list">
 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
-									<img src="../Labor/customer_img/<?php echo $row[13]; ?>" width="100px" height=100 alt="">
+									<img src="<?php echo $row[13]; ?>" width="100px" height=100 alt="">
 
 <!--  									<ul class="tags">
 										<li>
@@ -523,10 +539,20 @@ if(isset($_POST['logout']))
 							    $res5=mysqli_query($con,$qry5);
 								while($row5=mysqli_fetch_row($res5))
 							        {
+
+	      								if(empty($row5[16]))
+										{
+											$imagename2="../img/avatar-13.jpg";
+										}
+										else
+										{
+											$imagename2="../Labor/labor_img/".$row5[0].'/'.$row5[16];
+										}
+
 									?>
 									<div class="single-rated">
 										<!-- <a href="single.php?lid=<?php echo $row5[0]; ?>"> -->
-										<img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " class="img-fluid" src="../labor/labor_img/<?php echo $row5[0];?>/<?php echo $row5[16]; ?>" alt="">
+										<img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " class="img-fluid" src="<?php echo $imagename2; ?>" alt="">
 									<!-- </a>											 -->
 										<a href="#" class="text-uppercase">
 											<h3>

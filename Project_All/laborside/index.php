@@ -58,13 +58,13 @@ if(isset($_POST['logout']))
 				      </div>
 				      <nav id="nav-menu-container">
 				        <ul class="nav-menu">
-				          <li class="menu-active"><a href="#">Home</a></li>
+				          <li class="menu-active"><a href="index.php">Home</a></li>
 				          <li><a href="about-us.php">About Us</a></li>
 				          <li><a href="category.php">Category</a></li>
 				          <!-- <li><a href="price.php">Price</a></li> -->
 				          <!-- <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="contact.php">Contact</a></li>
-				          <li class="menu-has-children"><a href="">Pages</a>
+				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
 								<!-- <li><a href="elements.html">elements</a></li> -->
 								<li><a href="search.php">search</a></li>
@@ -83,21 +83,29 @@ if(isset($_POST['logout']))
 							{
 								$folder=$row[0];
 								$name=$row[1]." ".$row[2];
-								$imagename=$row[16];
+								if(empty($row[16]))
+								{
+									$imagename="../img/avatar-13.jpg";
+								}
+								else
+								{
+									$imagename="../Labor/labor_img/".$row[0].'/'.$row[16];
+								}
+
 								$status=$row[17];
-								   if($status=='available')
-						    	   {
-						    	   	$color='green';
-						    	    $status1='available';
-						    	   }
-						    	   else
-						    	   {
-						    	   	$color='red';
-						    	   	$status1='unavailable';			    	  
-						    	   }					
+							    if($status=='available')
+						        {
+						       		$color='green';
+						   	    	$status1='available';
+						        }
+						   	    else
+						   	    {
+						      		$color='red';
+						   	   		$status1='unavailable';			    	  
+						    	}					
 							}
 				          	?>
-				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="../Labor/labor_img/<?php echo $folder.'/'.$imagename; ?>" width="40" height="40" alt="" ></a>
+				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
 				            <ul>
 								<li>Signed in as</li>
 								<li><a href="profile.php"><?php echo $name;?></a></li>
@@ -331,7 +339,7 @@ if(isset($_POST['logout']))
 											}
 										}	
 									?>
-									<div class="col-lg-2 form-cols">
+									<div class="col-lg-2 form-cols" style="margin-top:11px;">
 
 <!-- 
 									    <button type="submit" class="btn btn-info" name="search">									    --> 	
@@ -340,7 +348,7 @@ if(isset($_POST['logout']))
 									      <span class="lnr lnr-magnifier"></span> &nbsp Search
 									      </a>
 									    <!-- </button> -->
-									</a>
+									<!-- </a> -->
 										
 									</div>								
 								</div>
@@ -553,8 +561,28 @@ if(isset($_POST['logout']))
 			<?php
 			if(isset($_REQUEST['hid']))
 			{
-			$qry3="delete from hiredlabor where h_id=".$_REQUEST['hid'];
-			$res3=mysqli_query($con,$qry3);
+
+				$qry="select * from hiredlabor where h_id=".$_REQUEST['hid'];
+				$res=mysqli_query($con,$qry);
+				while($row=mysqli_fetch_row($res))
+				{
+				 $lid=$row[2];
+				}
+
+				$qry="update labor set l_status='available' where l_id='$lid'";
+				$res=mysqli_query($con,$qry);
+				if($res>0)
+				{
+					// echo "update record into user table";
+				   // header("location:hiredlaboradmin.php");
+				}		
+				else
+				{
+					echo "error not update ";
+				}
+
+			    $qry3="delete from hiredlabor where h_id=".$_REQUEST['hid'];
+			    $res3=mysqli_query($con,$qry3);
 				if($res3==1)
 				{
 					// echo "delete record from hiredlabor table";
@@ -592,6 +620,8 @@ if(isset($_POST['logout']))
 					}
 					?> -->
 
+					<!-- display customer order start-->
+
 					<?php
 					
 							$qry="select * from hiredlabor h,customer c,labor l where h.h_laborid='$lid' and 
@@ -609,13 +639,15 @@ if(isset($_POST['logout']))
 								    </a>
 								</div>
 								<!-- &nbsp &nbsp &nbsp -->
-								<div class="details" style="margin-left:15px;">
+								<div class="details" style="margin-left:15px;width:600px;">
 									<div class="title d-flex flex-row justify-content-between">
 										<div class="titles">
-											<div class="row">
-												<div  class="col-sm-6"><h5>Job Id: <?php echo $row[0];?></h5></div>
-												<div style="text-align: right;" class="col-sm-6"><h5><?php echo $row[5];?></h5></div>	
-											</div>						
+											
+											<div class="row" style="width:600px;">
+												<div  class="col-sm-6"><h5>Hired Id: <?php echo $row[0];?></h5></div>
+												<div style="text-align:right;" class="col-sm-6"><h5><?php echo $row[5];?></h5></div>	
+											</div>		
+																	
 											<a href="customerprofile.php?cid=<?php echo $row[6]; ?>" class="text-uppercase"><h3>
 												<?php echo $row[7].' '.$row[8];?> 
 											</h3></a>
@@ -627,40 +659,16 @@ if(isset($_POST['logout']))
 									<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[11];?> </p>
 									<ul class="btns">
 										<li><a href="#" style="color:green;">Confirm Job</a></li>
-										<li><a href="index.php?hid=<?php echo $row[0]; ?>" style="color:red;">Cancle Job</a></li>								
-
-  <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">CANCLE JOB</button>	
-
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-
-          <h4 class="modal-title">Modal Header</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>Are you sure you want to delete.</p>
-        </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Confirm</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancle</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-	
+										<li><a href="index.php?hid=<?php echo $row[0]; ?>" style="color:red;" onclick="return confirm('Are you sure to delete job request ?')?true:false;">Cancle Job</a></li>								
 									</ul>
 								</div>
 							</div>
 
-					<?php
-				
-				}
+					<?php		
+					}
 					?>
+				    <!-- end customer order -->
+
 
 							<!-- <div class="single-post d-flex flex-row">
 								<div class="thumb">
@@ -867,7 +875,7 @@ if(isset($_POST['logout']))
 								</div>
 							</div> -->	
 							
-							<a class="text-uppercase loadmore-btn mx-auto d-block" href="category.php">Load More job Posts</a>
+							<a class="text-uppercase loadmore-btn mx-auto d-block" href="#">Load More job Posts</a>
 
 						</div>
 						<div class="col-lg-4 sidebar">

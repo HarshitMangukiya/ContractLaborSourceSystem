@@ -45,6 +45,36 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="../css/animate.min.css">
 			<link rel="stylesheet" href="../css/owl.carousel.css">
 			<link rel="stylesheet" href="../css/main.css">
+			<style type="text/css">
+			div.gallery {
+			  margin: 5px;
+			  border: 1px solid #ccc;
+			  float: left;
+			  width: 180px;
+			  border-radius:4px;			  
+			}
+
+			div.gallery:hover {
+			  /*border: 1px solid #777;*/
+			  max-width:100%;
+			  border-radius:4px;
+			  position:relative; 
+			  z-index:1;
+			  /*box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px;*/	
+			  box-shadow: 2px 10px 20px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			}
+
+			div.gallery img {
+			  width:178px;
+			  height:150px;
+			}
+
+			div.desc {
+			  padding: 15px;
+			  text-align: center;
+			}
+
+			</style>
 		</head>
 		<body>
             <form method="post" enctype="multipart/form-data">
@@ -62,7 +92,7 @@ if(isset($_POST['logout']))
 	<!-- 			          <li><a href="price.html">Price</a></li>
 				          <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="contact.php">Contact</a></li>
-				          <li class="menu-has-children"><a href="">Pages</a>
+				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
 								<!-- <li><a href="elements.html">elements</a></li> -->
 								<li><a href="search.php">search</a></li>
@@ -81,7 +111,14 @@ if(isset($_POST['logout']))
 							{
 								$folder=$row[0];
 								$name=$row[1]." ".$row[2];
-								$imagename=$row[16];
+								if(empty($row[16]))
+								{
+									$imagename="../img/avatar-13.jpg";
+								}
+								else
+								{
+									$imagename="../Labor/labor_img/".$row[0].'/'.$row[16];
+								}
 								$status=$row[17];
 								   if($status=='available')
 						    	   {
@@ -96,7 +133,7 @@ if(isset($_POST['logout']))
 		
 							}
 				          	?>
-				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="../Labor/labor_img/<?php echo $folder.'/'.$imagename; ?>" width="40" height="40" alt="" ></a>
+				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
 				            <ul>
 								<li>Signed in as</li>
 								<li><a href="profile.php"><?php echo $name;?></a></li>
@@ -185,23 +222,32 @@ if(isset($_POST['logout']))
 					<div class="row justify-content-center d-flex">
                     <?php
 
-	$qry="select * from labor where l_id='$lid'";
-	$res=mysqli_query($con,$qry);
-	while($row=mysqli_fetch_row($res))
+	$qry1="select * from labor where l_id='$lid'";
+	// echo $qry1;
+	$res1=mysqli_query($con,$qry1);
+	while($row=mysqli_fetch_row($res1))
 		{
+			if(empty($row[16]))
+			{
+				$imagename1="../img/avatar-13.jpg";
+			}
+			else
+			{
+				$imagename1="../Labor/labor_img/".$row[0].'/'.$row[16];
+			}
 			?>
 						<div class="col-lg-8 post-list">
 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
-									<img src="../labor/labor_img/<?php echo $row[0];?>/<?php echo $row[16]; ?>" width="100px" height=100 alt="">
+									<img src="<?php echo $imagename1; ?>" width="100px" height=100 alt="">
 
 									<ul class="tags">
-										<?php
+<!-- 										<?php
 											$qry1="select * from category where ca_id='$row[20]'";
 											$res1=mysqli_query($con,$qry1);
 											while($row1=mysqli_fetch_row($res1))
 												{
-										?>
+										?> -->
 									<!-- 	<li>
 											<a href="#">
 									    	<?php echo $row1[1];?>
@@ -212,10 +258,10 @@ if(isset($_POST['logout']))
 										</li>
 
 
-										<?php
+<!-- 										<?php
 										}
 										?>									
-	
+ -->	
 <!-- 										<li>
 											<a href="#">Art</a>
 										</li>
@@ -248,32 +294,172 @@ if(isset($_POST['logout']))
 									<p class="address"><span class="lnr lnr-database"></span> &#x20a8; <?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row[17];?></p>
 								</div>
 							</div>	
+<!-- insert image start -->
+<?php
+	if(isset($_POST['insertimg']))
+	{
 
-							<div class="single-post job-details">
-								<h4 class="single-title">Work Image</h4>
-								<p>
+	      $filetype=$_POST['filetype'];
+	      $laborid=$lid;
+	      
+	        if(isset($_FILES["workimage"]))
+	        {
+	          	$path="../Labor/labor_img/";
+	         	$foldername=$lid;
+	          
+	           	$myFile = $_FILES['workimage'];
+	            $fileCount = count($myFile["name"]);
+
+	                for ($i = 0; $i < $fileCount; $i++) {
+
+	                  $target_file = $path.basename($_FILES["workimage"]["name"][$i]);
+	                  //Select file type
+	                  $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+	                  //Valid file extensions
+	                  $extensions_arr = array("jpg","jpeg","png","gif");
+	                  //Check extension
+	                  $imgSize = $_FILES['workimage']['size'][$i];
+
+	 
+	                  if(in_array($imageFileType,$extensions_arr) )
+	                  {
+	                  
+	                    if($imgSize < 5000000)   
+	                    {
+	                      $myimg=time().$_FILES['workimage']["name"][$i];
+	                      //echo $myimg;
+	                      
+	                      $qry="insert into image values(0,'$myimg','$filetype','$laborid')";
+	                      // echo $qry;
+	                      $res=mysqli_query($con,$qry);
+	                      if($res>0)
+	                      {
+	                        // echo "insert record into image table";
+	                        // header("location:multiimageadmin.php");
+	                      }   
+	                      else
+	                      {
+	                        echo "erro not insert image";
+	                      }
+
+
+	                      $targetpath=$path.$foldername."/".$myimg;
+	                      if(move_uploaded_file($_FILES['workimage']['tmp_name'][$i],$targetpath))
+	                      {
+	                        // echo "insert multi image";
+	                      }
+
+	                    }
+	                    else
+	                    {
+	                      echo "file size too large";
+	                    }
+	                  }
+	                  else
+	                  {
+	                    echo "please Select valid extention front image file";
+	                  }
+
+	                }
+	        }
+	        else
+	        {
+	          echo "please Select image file";
+	        }
+	}
+
+
+	if(isset($_REQUEST['did']))
+	{
+
+	  $path1="../Labor/labor_img/";
+
+			
+			$qry1="select * from image where i_id=".$_REQUEST['did'];
+			$res1=mysqli_query($con,$qry1);
+			while($row1=mysqli_fetch_row($res1))
+			{
+				//$dirpath=$path.$row[0];
+				$oldimage1=$path1.$row1[3].'/'.$row1[1];
+				// echo $oldimage1;
+				unlink($oldimage1);
+				//echo $dirpath;
+				//rmdir($dirpath);
+			}
+
+
+			$qry2="delete from image where i_id=".$_REQUEST['did'];
+			$res2=mysqli_query($con,$qry2);
+			if($res2==1)
+			{
+				// echo "delete record from image table";
+				// header("location:multiimageadmin.php");
+			}
+			else
+			{
+				echo "not delete record";
+			}
+	}
+
+?>
+<!-- insert image End -->
+
+
+							<div class="single-post job-experience">
+								<!-- labor id:<input type="text" name="laborid"><br> -->
+				
+								 <h5>
+								<img src="../img/pages/list.jpg" alt=""> File Type: 
+								<input type="radio" name="filetype" value="1" style="margin-left:33px;"> image   
+								<input type="radio" name="filetype" value="2"> Video</h5>
+								
+							    <h5><img src="../img/pages/list.jpg" alt="">							
+								Work Image: <input type="file" name="workimage[]" multiple></h5>
+								
+								<input type="submit" name="insertimg" class="ticker-btn">
+
+							</div>
+
+
+							<!-- work image start -->
+                            <div class="row" style="margin-left:1px;margin-right:1px;">
+								<div class="single-post job-experience">
+
+									<h4 class="single-title job-details">Work Image</h4>
+								    
 									<?php
-									$count=0;
-									$qry4="select * from image where i_laborid='$lid' and i_flag='1'"; 
-								    $res4=mysqli_query($con,$qry4);
-									while($row4=mysqli_fetch_row($res4))
-							        {
-							        	$count++;
-							        if($count==5)
-							        {
-							           $count=0;
-							        ?>
-							        	<br>
-							        <?php
-							        }	   
-							        ?>
-									<img src="../labor/labor_img/<?php echo $row[0];?>/<?php echo $row4[1]; ?>" width="150px" height=150 alt="">
-									<?php
-								    }
-								    ?>
-								</p>
-								<br>
-								<p>
+										$count=0;
+										$qry4="select * from image where i_laborid='$lid' and i_flag='1' group by i_id"; 
+									    $res4=mysqli_query($con,$qry4);
+										while($row4=mysqli_fetch_row($res4))
+								        {
+
+								        if($count==4)
+								        {
+								           $count=0;
+								        ?>
+								        <br>
+								        <?php
+								        }	   
+								        ?>
+								        <div class="gallery">							        
+										<img src="../labor/labor_img/<?php echo $row[0];?>/<?php echo $row4[1]; ?>" >
+										<div class="desc"><a href="profile.php?did=<?php echo $row4[0]; ?>" class="ticker-btn" onclick="return confirm('Are you sure to delete image ?')?true:false;">Delete</a></div>
+										
+										</div>
+										<?php
+										$count++;
+									    }
+									?>
+									
+								</div>
+							</div>
+							<!-- work image End -->
+
+
+								<div class="single-post job-details">
+									
+									<p>
 									<h4 class="single-title">Work Video Link</h4>
 									<?php
 									$qry4="select * from image where i_laborid='$lid' and i_flag='2'"; 
@@ -287,8 +473,8 @@ if(isset($_POST['logout']))
 								    ?>
 
 							        <!-- <iframe width="200" height="200" src="https://www.youtube.com/embed/beqprrnaKFc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
-								</p>
-							</div>
+								    </p>
+								</div>
 
 							<div class="single-post job-details">
 								<h4 class="single-title">About Me</h4>
@@ -490,10 +676,18 @@ if(isset($_POST['logout']))
 							    $res5=mysqli_query($con,$qry5);
 								while($row5=mysqli_fetch_row($res5))
 							        {
+							   			if(empty($row5[16]))
+										{
+											$imagename2="../img/avatar-13.jpg";
+										}
+										else
+										{
+											$imagename2="../Labor/labor_img/".$row5[0].'/'.$row5[16];
+										}
 									?>
 									<div class="single-rated">
 										<!-- <a href="single.php?lid=<?php echo $row5[0]; ?>"> -->
-										<img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " class="img-fluid" src="../labor/labor_img/<?php echo $row5[0];?>/<?php echo $row5[16]; ?>" alt="">
+										<img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " class="img-fluid" src="<?php echo $imagename2; ?>" alt="">
 									<!-- </a>											 -->
 										<a href="#" class="text-uppercase"><h3>
 									    <?php echo $row5[1].' '.$row5[2];?>

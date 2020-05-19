@@ -179,7 +179,7 @@ $('#state').on('change',function(){
    if($_POST['password']==$_POST['confirmpassword'])
    {
         $password=$_POST['confirmpassword'];
-        $errpassword="";
+        // $errpassword="";
 
     $qry="insert into labor(l_id,l_firstname,l_lastname,l_gender,l_age,l_phone,l_aadharno,l_address,l_country,l_state,l_city,l_pincode,l_password,l_status,l_charge,l_date,l_categoryid,l_leaderid) values(0,'$firstname','$lastname','$gender','$age','$phone','$aadharno','$address','$country','$state','$city','$pincode','$password','$status','$charge',NOW(),'$category','$leaderid')";
 // echo $qry;
@@ -244,7 +244,7 @@ $('#state').on('change',function(){
     <p align="left">Aadhar Number *
     <input type="text" class="form-control mb-4" placeholder="Enter Aadhar Number" name="aadharno" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Aadhar Number'" required=""></p>
     
-    <p align="left">Address Number *
+    <p align="left">Home Address *
     <input type="text" class="form-control mb-4" placeholder="Enter Address" name="address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Address'" required=""></p>
 
 <div class="form-control col-sm-12">

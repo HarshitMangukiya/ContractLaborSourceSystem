@@ -146,7 +146,7 @@ function myFunction() {
 				          <!-- <li><a href="price.html">Price</a></li>
 				          <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="contact.php">Contact</a></li>
-				          <li class="menu-has-children"><a href="">Pages</a>
+				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
 								<!-- <li><a href="elements.html">elements</a></li> -->
 								<li><a href="search.php">search</a></li>
@@ -165,7 +165,14 @@ function myFunction() {
 							{
 								$folder=$row[0];
 								$name=$row[1]." ".$row[2];
-								$imagename=$row[16];
+								if(empty($row[16]))
+								{
+									$imagename="../img/avatar-13.jpg";
+								}
+								else
+								{
+									$imagename="../Labor/labor_img/".$row[0].'/'.$row[16];
+								}
 								$status=$row[17];
 								   if($status=='available')
 						    	   {
@@ -180,7 +187,7 @@ function myFunction() {
 		
 							}
 				          	?>
-				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="../Labor/labor_img/<?php echo $folder.'/'.$imagename; ?>" width="40" height="40" alt="" ></a>
+				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
 				            <ul>
 								<li>Signed in as</li>
 								<li><a href="profile.php"><?php echo $name;?></a></li>
@@ -441,7 +448,7 @@ function myFunction() {
                 $targetpath=$path.$folder."/".$myimg;
                 if(move_uploaded_file($_FILES['fimage']['tmp_name'],$targetpath))
                 {
-                  echo "insert image";
+                  // echo "insert image";
                 }
            
               }
