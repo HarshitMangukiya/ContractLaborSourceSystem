@@ -81,16 +81,25 @@ if(isset($_POST['logout']))
 							while($row=mysqli_fetch_row($res))
 							{
 								$name=$row[1]." ".$row[2];
-								$imagename=$row[13];
+								// $imagename=$row[13];
+							    if(empty($row[13]))
+								{
+									$imagename="img/avatar-13.jpg";
+								}
+								else
+								{
+									$imagename="Labor/customer_img/".$row[13];
+								}
+
 							}
 				          	?>
-				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="Labor/customer_img/<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
+				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
 				            <ul>
 								<li>Signed in as</li>
 								<li><a href="profile.php"><?php echo $name;?></a></li>
 								<div class="dropdown-divider"></div>
 								<li><a href="profile.php">Your Profile</a></li>
-								<li><a href="#">Your Order</a></li>
+								<li><a href="hiredlabor.php">Your Order</a></li>
 								<div class="dropdown-divider"></div>
 								<li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li>
 				            </ul>

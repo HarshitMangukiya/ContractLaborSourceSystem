@@ -42,8 +42,11 @@
     $lastname=$_POST['lastname'];
     $phone=$_POST['phone'];
     $email=$_POST['email'];
-    $password=$_POST['password'];
 
+    if($_POST['password']==$_POST['confirmpassword'])
+    {
+      $password=$_POST['confirmpassword'];
+    
      // $qry="insert into customer(c_firstname,c_lastname,c_email,c_phone,c_password,c_date) values(0,'$firstname','$lastname','$email','$phone','$password',NOW())";
 
    $qry="insert into customer(c_id,c_firstname,c_lastname,c_email,c_phone,c_country,c_state,c_city,c_password,c_date) values(0,'$firstname','$lastname','$email','$phone','5','16','24','$password',NOW());";
@@ -53,12 +56,46 @@
         {
           echo "insert record into customer table";
 
-          header("location:price.php");
+         if(!empty($_POST['email']) && !empty($password))
+          {
+             
+            $email=$_POST['email'];
+
+            $qry="select * from customer where c_email='$email' and c_password='$password'";    
+           // echo $qry;
+               if($res=mysqli_query($con,$qry))
+              {
+                if(mysqli_num_rows($res)==1)
+                {
+                    while($row=mysqli_fetch_row($res))
+                  {
+                    $_SESSION['emailname']=$row[0];
+                    //echo $email;
+                    header("location:price.php");
+                  }
+                }
+                else
+                {
+                  header("location:index.php"); 
+                  echo "Invalid Uasename or Password..."; 
+                }
+              }else
+              {
+                echo "Error while fetch database...";
+              }
+          }
+      
+          // header("location:price.php");
         }   
         else
         {
           echo "erro not insert customer";
         }
+      }
+      else
+      {
+        echo "Enter the same password";
+      }
 
 }
     ?>
@@ -84,18 +121,24 @@
     <!-- Form -->
     <form class="text-center" style="color:#757575;" method="post" enctype="multipart/form-data">
 
-    <input type="text" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Enter First name" name="firstname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter First name '" required="">
+    <p align="left">First Name *
+    <input type="text" class="form-control mb-4" placeholder="Enter First name" name="firstname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter First name '" required=""></p>
 
-    <input type="text" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Enter Last name" name="lastname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Last name '" required="">
+    <p align="left">Last Name *
+    <input type="text" class="form-control mb-4" placeholder="Enter Last name" name="lastname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Last name '" required=""></p>
    
-    <input type="text" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Enter Phone Number" name="phone" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Phone Number'" required="">
+    <p align="left">Phone Number *
+    <input type="text" class="form-control mb-4" placeholder="Enter Phone Number" name="phone" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Phone Number'" required=""></p>
 
-      <!-- Email -->
-    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Enter E-mail" name="email"
-    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter E-mail'" required="">
+    <p align="left">Email *
+    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Enter E-mail" name="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter E-mail'" required=""></p>
 
-    <!-- Password -->
-    <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Enter Password" name="password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password '" required="">
+    <p align="left">Password *
+    <input type="password" class="form-control mb-4" placeholder="Enter Password" name="password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password '" required=""></p>
+
+    <p align="left">Confirm Password *
+    <input type="password" class="form-control mb-4" placeholder="Enter Confirm password" name="confirmpassword" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Confirm Password '" required=""></p>
+
     <small id="materialRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
      At least 6 characters and 1 digit
      </small>

@@ -44,6 +44,7 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/animate.min.css">
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
+			
 		</head>
 		<body>
 <form method="post" enctype="multipart/form-data">
@@ -79,16 +80,24 @@ if(isset($_POST['logout']))
 							while($row=mysqli_fetch_row($res))
 							{
 								$name=$row[1]." ".$row[2];
-								$imagename=$row[13];
+								// $imagename=$row[13];
+								if(empty($row[13]))
+								{
+									$imagename="img/avatar-13.jpg";
+								}
+								else
+								{
+									$imagename="Labor/customer_img/".$row[13];
+								}
 							}
 				          	?>
-				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="Labor/customer_img/<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
+				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
 				            <ul>
 								<li>Signed in as</li>
 								<li><a href="profile.php"><?php echo $name;?></a></li>
 								<div class="dropdown-divider"></div>
 								<li><a href="profile.php">Your Profile</a></li>
-								<li><a href="#">Your Order</a></li>
+								<li><a href="hiredlabor.php">Your Order</a></li>
 								<div class="dropdown-divider"></div>
 								<li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li>
 				            </ul>
@@ -243,17 +252,55 @@ if(isset($_POST['logout']))
 						<?php
 						if(isset($_POST['submit']))
 						{
-					  	    $customerid=$_POST['customerid'];
-						    $method=$_POST['method']; 
-							$totalpayment=$_POST['totalpayment'];	      
+					  	    $customerid=$cid;
+						    $method='online'; 
+							$totalpayment='39';	      
 
 	                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
-	                        echo $qry;
+	                        // echo $qry;
 							$res=mysqli_query($con,$qry);
 							if($res>0)
 							{
-								echo "insert record into payment table";
-							    //header("location:index.php");
+								// echo "insert record into payment table";
+							    // header("location:index.php");
+							}		
+							else
+							{
+								echo "erro not insert payment";
+							}
+						}
+						if(isset($_POST['submit1']))
+						{
+					  	    $customerid=$cid;
+						    $method='online'; 
+							$totalpayment='69';	      
+
+	                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
+	                        // echo $qry;
+							$res=mysqli_query($con,$qry);
+							if($res>0)
+							{
+								// echo "insert record into payment table";
+							    // header("location:index.php");
+							}		
+							else
+							{
+								echo "erro not insert payment";
+							}
+						}
+						if(isset($_POST['submit2']))
+						{
+					  	    $customerid=$cid;
+						    $method='online'; 
+							$totalpayment='99';	      
+
+	                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
+	                        // echo $qry;
+							$res=mysqli_query($con,$qry);
+							if($res>0)
+							{
+								// echo "insert record into payment table";
+							    // header("location:index.php");
 							}		
 							else
 							{
@@ -274,10 +321,11 @@ if(isset($_POST['logout']))
 								</ul>
 								<div class="price-bottom">
 									<div class="price-wrap d-flex flex-row justify-content-center">
+										<!-- <p class="address"><span class="lnr lnr-database"></span> &#x20a8; 500</p> -->
 										<span class="price">$</span><h1> 39 </h1><span class="time">Per <br> Month</span>
 									</div>
 									<!-- <a href="#" class="primary-btn header-btn">Get Started</a> -->
-									<input type="submit" name="submit" value="Get started" class="primary-btn header-btn">
+									<input type="submit" name="submit" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;">
 								</div>
 								
 							</div>
@@ -295,10 +343,10 @@ if(isset($_POST['logout']))
 								</ul>
 								<div class="price-bottom">
 									<div class="price-wrap d-flex flex-row justify-content-center">
-										<span class="price">$</span><h1> 69 </h1><span class="time">Per <br> Month</span>
+										<span class="price">$</span><h1> 69 </h1><span class="time">Per Six<br> Month</span>
 									</div>
 									<!-- <a href="#" class="primary-btn header-btn">Get Started</a> -->
-							        <input type="submit" name="submit" value="Get started" class="primary-btn header-btn">
+							        <input type="submit" name="submit1" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;">
 								</div>
 							</div>
 						</div>
@@ -315,10 +363,10 @@ if(isset($_POST['logout']))
 								</ul>
 								<div class="price-bottom">
 									<div class="price-wrap d-flex flex-row justify-content-center">
-										<span class="price">$</span><h1> 99 </h1><span class="time">Per <br> Month</span>
+										<span class="price">$</span><h1> 99 </h1><span class="time">Per <br>Year</span>
 									</div>
 									<!-- <a href="#" class="primary-btn header-btn">Get Started</a> -->
-								    <input type="submit" name="submit" value="Get started" class="primary-btn header-btn">
+								    <input type="submit" name="submit2" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;">
 								</div>
 							</div>				
 						</div>								

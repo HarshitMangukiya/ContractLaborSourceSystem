@@ -1,23 +1,13 @@
-	<!DOCTYPE html>
+		<!DOCTYPE html>
 	<html lang="zxx" class="no-js">
-		<?php include('labor/dbConfig.php');
+	<?php include('labor/dbConfig.php');
 	session_start();
 	if(isset($_SESSION['emailname'])){
 		echo "welcome".$_SESSION['emailname'];
-				// echo "welcome".$_SESSION['city'];
-
 }
 else
 {
 	//header("location:index.php");	
-}
-	if(isset($_SESSION['category'])){
-		echo "welcome".$_SESSION['category'];
-		
-}
-else
-{
-	//header("location:login.php");	
 }
 if(isset($_POST['logout']))
 {
@@ -25,7 +15,8 @@ if(isset($_POST['logout']))
 		unset($_SESSION['emailname']);
         header("Location:index.php");
 }
-	 ?>
+?>
+
 	<head>
 		<!-- Mobile Specific Meta -->
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -54,11 +45,7 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/animate.min.css">
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
-			<style type="text/css">
-			li.x{
-               pointer-events: none;
-	           }
-			</style>
+
 		</head>
 		<body>
             <form method="post" enctype="multipart/form-data">
@@ -94,37 +81,42 @@ if(isset($_POST['logout']))
 							{
 								$name=$row[1]." ".$row[2];
 								// $imagename=$row[13];
+								$startdate=$row[14];
+								// echo $startdate;
+
 								if(empty($row[13]))
 								{
-									$imagename="img/avatar-13.jpg";
+								    $imagename="avatar-13.jpg";
 								}
 								else
 								{
-									$imagename="Labor/customer_img/".$row[13];
+							     	$imagename=$row[13];
 								}
 							}
 				          	?>
-				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
+				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="Labor/customer_img/<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
 				            <ul>
 								<li>Signed in as</li>
 								<li><a href="profile.php"><?php echo $name;?></a></li>
 								<div class="dropdown-divider"></div>
 								<li><a href="profile.php">Your Profile</a></li>
-								<li><a href="hiredlabor.php">Your Order</a></li>
+								<li><a href="#">Your Order</a></li>
 								<div class="dropdown-divider"></div>
 								<li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li>
 				            </ul>
 				          </li>
+				          
 				          	<!-- <li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li> -->
 				          <?php
 				          }
 				          else
 				          {?>
-				          <li><a class="ticker-btn" href="register">Signup</a></li>
-				          <li><button type="button" class="ticker-btn" data-toggle="modal" data-target="#myModal" style="border-width:0px;">Login</button></li>				        <?php	
+				          <li><a class="ticker-btn" href="register.php">Signup</a></li>
+<!-- 				          <li><button type="button" class="ticker-btn" data-toggle="modal" data-target="#myModal" style="border-width:0px;">Login</button></li>				      -->  
+				          <?php	
 				          }
-				          ?>
-				          		          				          
+				          ?>	
+
 				        </ul>
 				      </nav><!-- #nav-menu-container -->		    		
 			    	</div>
@@ -132,301 +124,193 @@ if(isset($_POST['logout']))
 			  </header><!-- #header -->
 
 
-
-<!-- login page -->
-<div class="container">
-
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-
-      	<h4 class="card-header info-color white-text text-center py-4" style="background-color: #17a2b8;color:white;" >
-		    <div id="logo">
-		        <img src="img/logo.png" alt="" title="" align="left" />
-		    </div> 
-	        <!-- <div class="modal-header"> -->
-	          <button type="button" class="close" data-dismiss="modal" style="color:black;">&times;</button>
-	        <!-- </div> -->
-        </h4>
-        <hr>
+        <!-- hiredlabor insert start -->
         <?php
-			if(isset($_POST['login']))
+		
+		$qry="select * from payment where p_customerid='$cid'";
+		// echo $qry;
+		$res=mysqli_query($con,$qry);
+		while($row=mysqli_fetch_row($res))
+		{
+			$price=$row[3];
+			if($price==39)
 			{
-			 if(!empty($_POST['email']) && !empty($_POST['password']))
-			  {
-			     
-			    $email=$_POST['email'];
-			    $password=$_POST['password'];
-
-			    $qry="select * from customer where c_email='$email' and c_password='$password'";    
-			   // echo $qry;
-			       if($res=mysqli_query($con,$qry))
-			      {
-			        if(mysqli_num_rows($res)==1)
-			        {
-			            while($row=mysqli_fetch_row($res))
-			          {
-			            $_SESSION['emailname']=$row[0];
-			            //echo $email;
-			           header("location:index.php"); 
-
-			          }
-			        }
-			        else
-			        {
-			          header("location:index.php"); 
-			          echo "Invalid Uasename or Password..."; 
-			        }
-			      }else
-			      {
-			        echo "Error while fetch database...";
-			      }
-			  }
+				$day=30;
 			}
-        ?>
-    
-    <div class="modal-body">
+			else if($price==69)
+			{
+				$day=90;
+			}
+			else if($price==99)
+			{
+				$day=360;			
+			}
+		}
 
-    <p align="left">Email *
-    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" name="email" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '">
+		// echo 'day ='.$day;
+		$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
+		echo $enddate;
+		if(date("Y-m-d")<$enddate)
+		{
+			echo "membership is not expired";
 
-    <!-- Password -->
-    <p align="left">Password *
-    <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
+			if(isset($_REQUEST['lid']))
+			{
+
+				$qry="select * from labor where l_id=".$_REQUEST['lid'];
+				$res=mysqli_query($con,$qry);
+				while($row=mysqli_fetch_row($res))
+				{
+				 $status=$row[17];
+				 $totalcharge=$row[18];
+				}
+                if($status=='available')
+                {
+					$customerid=$cid;
+				    $laborid=$_REQUEST['lid'];
+				    // $totallabor=$_POST['totallabor']; 
+
+					$qry="insert into hiredlabor values(0,'$customerid','$laborid','1','$totalcharge',NOW())";
+					// $qry;
+					$res=mysqli_query($con,$qry);
+					if($res>0)
+					{
+						// echo "insert record into hiredlabor table";
+					   // header("location:hiredlaboradmin.php");
+					}		
+					else
+					{
+						echo "erro not insert hiredlabor";
+					}
 
 
-      <div class="d-flex justify-content-around">
-        <!-- <div>
-           Remember me 
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="materialLoginFormRemember">
-            <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
-          </div>
-        </div> -->
-        <div>
-          <!-- Forgot password -->
-          <a href="#">Forgot password?</a>
-        </div>
-      </div>
+					$qry="update labor set l_status='unavailable' where l_id=".$_REQUEST['lid'];
+					$res=mysqli_query($con,$qry);
+					if($res>0)
+					{
+						// echo "update record into user table";
+					   // header("location:hiredlaboradmin.php");
+					}		
+					else
+					{
+						echo "error not update ";
+					}
+			    }
+			}
+		}
+		else
+		{
+			echo "membership has expired";
+		}
 
-        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login">Log In</button>
+		?>
+        <!-- hiredlabor insert end -->
 
-        <p align="center">Don't Have An Account ?
-	    <a href="register.php">Sign up!</a>
-	    </p>
-
-	    <p align="center">Are you labor ?
-        <a href="laborside/index.php">Login</a>
-        </p>
-
-        </div>
-       <!--  <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              Register
-        </div> -->
-      </div>
-      
-    </div>
-  </div>  
-</div>
 
 			<!-- start banner Area -->
 			<section class="banner-area relative" id="home">	
 				<div class="overlay overlay-bg"></div>
 				<div class="container">
-					<div class="row search-page-top d-flex align-items-center justify-content-center">
-						<div class="banner-content col-lg-12">
+					<div class="row d-flex align-items-center justify-content-center">
+						<div class="about-content col-lg-12">
 							<h1 class="text-white">
-								Search Results				
-							</h1>
-							<p class="text-white link-nav">
-								<a href="index.php">Home </a> <span class="lnr lnr-arrow-right"></span> <a href="search.html"> Job details page</a>
-							</p>	
-							<!-- <form action="#" class="serach-form-area"> -->
-								<div class="row justify-content-center form-wrap">
-									<div class="col-lg-4 form-cols">
-										<input type="text" class="form-control" name="search" placeholder="what are you looging for?">
-									</div>
-									<div class="col-lg-3 form-cols">
-										<div class="default-select" id="default-selects">
-											<select name="city">
-												<option value disabled selected>Select City
-												</option>
-												<?php
-									    	    $qry="select * from city"; 
-											    $res=mysqli_query($con,$qry);
-												while($row=mysqli_fetch_row($res))
-										        {
-												?>
-										        <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
-										        <?php
-										        }
-										        ?>	
-											</select>
-										</div>
-									</div>
-									<div class="col-lg-3 form-cols">
-										<div class="default-select" id="default-selects2">
-											<select name="category">
-													<option value disabled selected>Select Category
-												</option>
-												<?php
-									    	    $qry="select * from category"; 
-											    $res=mysqli_query($con,$qry);
-												while($row=mysqli_fetch_row($res))
-										        {
-												?>
-										        <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
-										        <?php
-										        }
-										        ?>	   
-											</select>
-										</div>										
-									</div>
-									<?php 
-									if(isset($_POST['search']))
-									{
-										if(!empty($_POST['city']))
-										{
-										  if(!empty($_POST['category']))
-											{
-										      $city1=$_POST['city'];
-										      $category1=$_POST['category'];
-											}
-										}
-									}
-									?>
-									<div class="col-lg-2 form-cols">
-									    <button type="submit" class="btn btn-info" name="search">
-									      <span class="lnr lnr-magnifier"></span>Search
-									    </button>
-									</div>								
-								</div>
-							<!-- </form>	 -->
-							<p class="text-white">49 Results found for <span>"Web developer"</span></p>
+								Hired Labor	Detail			
+							</h1>	
+							<p class="text-white link-nav"><a href="index.php">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="#"> Hired Labor Detail</a></p>
 						</div>											
 					</div>
 				</div>
 			</section>
 			<!-- End banner Area -->	
+
+            <!-- labor delete start-->
+			<?php
+			if(isset($_REQUEST['hid']))
+			{
+
+				$qry="select * from hiredlabor where h_id=".$_REQUEST['hid'];
+				$res=mysqli_query($con,$qry);
+				while($row=mysqli_fetch_row($res))
+				{
+				 $lid=$row[2];
+				}
+
+				$qry="update labor set l_status='available' where l_id='$lid'";
+				$res=mysqli_query($con,$qry);
+				if($res>0)
+				{
+					// echo "update record into user table";
+				   // header("location:hiredlaboradmin.php");
+				}		
+				else
+				{
+					echo "error not update ";
+				}
+
+				$qry3="delete from hiredlabor where h_id=".$_REQUEST['hid'];
+				$res3=mysqli_query($con,$qry3);
+				if($res3==1)
+				{
+					// echo "delete record from hiredlabor table";
+					// header("location:index.php");	
+				}
+				else
+				{
+					echo "not delete record";
+				}
+			}
+			?>
+            <!-- labor delete end-->
+
+
 			
 			<!-- Start post Area -->
 			<section class="post-area section-gap">
 				<div class="container">
 					<div class="row justify-content-center d-flex">
 						<div class="col-lg-8 post-list">
-
-						<?php
-						if(isset($_SESSION['city']))
-						{
-							// $city=$_SESSION['city'];
-						// echo $city;
-							if(isset($_SESSION['category']))
-							{
-							// $category=$_SESSION['category'];	
-							// /$qry="select * from labor where l_city='$city' and l_categoryid='$category'";
+							<?php
+							// if(isset($_REQUEST['lid']))
+							// {
+							// $lid=$_REQUEST['lid'];	
+							$qry="select * from labor l,hiredlabor h where h.h_laborid=l.l_id and h.h_customerid='$cid' group by h_id";
 							// echo $qry;
-							// unset($_SESSION['city']);
-							// unset($_SESSION['category']);
-							}
-						}
-						else
-						{
-							$qry="select * from labor";
-						}
-						
-						if(isset($_POST['search']))
-						{
-							$qry="select * from labor where l_city='$city1' and l_categoryid='$category1'";
-						}
-						
-							
 							$res=mysqli_query($con,$qry);
+
 							while($row=mysqli_fetch_row($res))
 							{
-								if(empty($row[16]))
-								{
-									$imagename1="img/avatar-13.jpg";
-								}
-								else
-								{
-									$imagename1="Labor/labor_img/".$row[0].'/'.$row[16];
-								}
+											if(empty($row[16]))
+											{
+												$imagename1="img/avatar-13.jpg";
+											}
+											else
+											{
+												$imagename1="Labor/labor_img/".$row[0].'/'.$row[16];
+											}								
 							?>
 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
 									<a href="single.php?lid=<?php echo $row[0]; ?>">
-									<img src="<?php echo $imagename1; ?>" width="100px" height=100 >
+									<img src="<?php echo $imagename1; ?>" width="100px" height=100 alt="" >
 								    </a>
 									<ul class="tags">
-										<?php
-											$qry1="select * from category where ca_id='$row[20]'";
-											$res1=mysqli_query($con,$qry1);
-											while($row1=mysqli_fetch_row($res1))
-												{
+									<!-- category start	 -->
+									<?php
+										$qry1="select * from category where ca_id='$row[20]'";
+										$res1=mysqli_query($con,$qry1);
+										while($row1=mysqli_fetch_row($res1))
+										{
+
 										?>
 										<li>
 											<a href="#">
 									    	<?php echo $row1[1];?>
 											</a>
 										</li>
-
-
 										<?php
 										}
-										?>									
-	
-										<!-- <li>
-											<a href="#">Media</a>
-										</li>
-										<li>
-											<a href="#">Design</a>					
-										</li> -->
-									</ul>
-								</div>
-
-								<div class="details" style="margin-left:15px;width:600px;">
-									<div class="title d-flex flex-row justify-content-between">
-										<div class="titles">
-											<a href="single.php?lid=<?php echo $row[0]; ?>" class="text-uppercase"><h3>
-												<?php echo $row[1].' '.$row[2];?> 
-											</h3></a>
-											<h5> Age: <?php echo $row[4];?> &nbsp &nbsp &nbsp Gender: <?php echo $row[3];?></h5>
-										</div>
-										<ul class="btns">
-											<li><a href="#"><span class="lnr lnr-heart"></span></a></li>
-                                            <?php 
-											if($row[17]=='unavailable')
-											{
-											    $class='x';
-											}
-											else
-											{
-												$class='';
-											}
-											?>											
-											<li class="<?php echo $class; ?>"><a href="hiredlabor.php?lid=<?php echo $row[0]; ?>"  onclick="return confirm('Are you sure you want to hire labor ?')?true:false;">hire me</a></li>
-										</ul>
-									</div>
-									<p><h6><?php echo $row[15];?></h6></p>
-									<h5>Job Nature: Full Day</h5>
-									<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[8];?> </p>
-									<p class="address"><span class="lnr lnr-database"></span> &#x20a8; <?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row[17];?></p>
-								</div>
-							</div>
-
-					<?php
-					}
-					?>
-<!-- 
-							<div class="single-post d-flex flex-row">
-								<div class="thumb">
-									<img src="img/post.png" alt="">
-									<ul class="tags">
-										<li>
+										?>					
+									<!-- 	<li>
 											<a href="#">Art</a>
 										</li>
 										<li>
@@ -434,30 +318,44 @@ if(isset($_POST['logout']))
 										</li>
 										<li>
 											<a href="#">Design</a>					
-										</li>
+										</li> -->
+									<!-- category end	 -->
+
 									</ul>
 								</div>
-								<div class="details">
+
+								<div class="details" style="margin-left:15px;width:600px;">
 									<div class="title d-flex flex-row justify-content-between">
 										<div class="titles">
-											<a href="single.php"><h4>Creative Art Designer</h4></a>
-											<h6>Premium Labels Limited</h6>					
+											<a href="single.php?lid=<?php echo $row[0]; ?>" class="text-uppercase">
+											<div class="row" style="width:400px;">
+												<div  class="col-sm-6"><h5>Hired Id: <?php echo $row[22];?></h5></div>
+												<div style="text-align: right;" class="col-sm-6"><h5><?php echo $row[27];?></h5></div>	
+											</div>		
+											<h3>
+												<?php echo $row[1].' '.$row[2];?> 
+											</h3></a>
+											<h5> Age: <?php echo $row[4];?> &nbsp &nbsp &nbsp Gender: <?php echo $row[3];?></h5>
+											<h5>Job Nature: Full Day</h5>					
 										</div>
 										<ul class="btns">
-											<li><a href="#"><span class="lnr lnr-heart"></span></a></li>
-											<li><a href="#">Apply</a></li>
+				<!-- 							<li><a href="#"><span class="lnr lnr-heart"></span></a></li>
+											<li><a href="#">Hire Me</a></li> -->
+											<li><a href="#" style="color:green;">Confirm Job</a></li><br><br>
+											<li><a href="hiredlabor.php?hid=<?php echo $row[22]; ?>" style="color:red;margin-right:9px;" onclick="return confirm('Are you sure to delete your order ?')?true:false;">Cancle Job</a></li>
 										</ul>
+
 									</div>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
-									</p>
-									<h5>Job Nature: Full time</h5>
-									<p class="address"><span class="lnr lnr-map"></span> 56/8, Panthapath Dhanmondi Dhaka</p>
-									<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
+									<!-- <p><h6><?php echo $row[15];?></h6></p> -->
+
+									<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[8];?></p>
+									<p class="address"><span class="lnr lnr-database"></span> &#x20a8; <?php echo $row[18];?> <!-- &nbsp &nbsp &nbsp Status: <?php echo $row[17];?> --></p>
 								</div>
 							</div>
- -->
-
+							<?php
+						}
+					// }
+							?>
 <!-- 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
 									<img src="img/post.png" alt="">
@@ -661,12 +559,11 @@ if(isset($_POST['logout']))
 									<p class="address"><span class="lnr lnr-map"></span> 56/8, Panthapath Dhanmondi Dhaka</p>
 									<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
 								</div>
-							</div>	
- -->
+							</div>	 -->
+
 						</div>
 						<div class="col-lg-4 sidebar">
-
-							<div class="single-slidebar">
+ 							<div class="single-slidebar">
 								<h4>Labor by Location</h4>
 								<ul class="cat-list">
                                 <?php
@@ -676,7 +573,7 @@ if(isset($_POST['logout']))
 									{
 									$stateid=$row1[0];
 										?>
-	 					            <li><a class="justify-content-between d-flex" href="category.php">
+	 					            <li><a class="justify-content-between d-flex" href="#">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
 									$qry2="select count(*) as sta from labor where l_state='$stateid' group by l_state";
@@ -688,22 +585,22 @@ if(isset($_POST['logout']))
 						            <?php
 	          							}
 	          						}
-    	      					 ?>
-								<!-- 	<li><a class="justify-content-between d-flex" href="#"><p>New York</p><span>37</span></a></li>
-									<li><a class="justify-content-between d-flex" href="#"><p>Park Montana</p><span>57</span></a></li>
-									<li><a class="justify-content-between d-flex" href="#"><p>Atlanta</p><span>33</span></a></li>
-									<li><a class="justify-content-between d-flex" href="#"><p>Arizona</p><span>36</span></a></li>
-									<li><a class="justify-content-between d-flex" href="#"><p>Florida</p><span>47</span></a></li>
-									<li><a class="justify-content-between d-flex" href="#"><p>Rocky Beach</p><span>27</span></a></li>
-									<li><a class="justify-content-between d-flex" href="#"><p>Chicago</p><span>17</span></a></li> -->
-								</ul>
-							</div>
+    	      					 ?> 
 
-							<div class="single-slidebar">
-								<h4>Top rated Labor</h4>
+<!-- 									<li><a class="justify-content-between d-flex" href="category.php"><p>New York</p><span>37</span></a></li>
+									<li><a class="justify-content-between d-flex" href="category.php"><p>Park Montana</p><span>57</span></a></li>
+									<li><a class="justify-content-between d-flex" href="category.php"><p>Atlanta</p><span>33</span></a></li>
+									<li><a class="justify-content-between d-flex" href="category.php"><p>Arizona</p><span>36</span></a></li>
+									<li><a class="justify-content-between d-flex" href="category.php"><p>Florida</p><span>47</span></a></li>
+									<li><a class="justify-content-between d-flex" href="category.php"><p>Rocky Beach</p><span>27</span></a></li>
+									<li><a class="justify-content-between d-flex" href="category.php"><p>Chicago</p><span>17</span></a></li> -->
+								 </ul>
+							</div> 
+
+							<!-- <div class="single-slidebar">
+								<h4>Top rated job posts</h4>
 								<div class="active-relatedjob-carusel">
-									
-							<?php
+									<?php
 					    	    $qry="select * from labor l,review r where l.l_id=r.r_laborid ORDER by r_rating DESC
 					    	    LIMIT 3"; 
 							    $res=mysqli_query($con,$qry);
@@ -711,21 +608,10 @@ if(isset($_POST['logout']))
 							        {
 							        	// print_r($row);
 							        	// die;
-
-										if(empty($row[16]))
-										{
-											$imagename2="img/avatar-13.jpg";
-										}
-										else
-										{
-											$imagename2="Labor/labor_img/".$row[0].'/'.$row[16];
-										}
 									?>
 									<div class="single-rated">
 										<a href="single.php?lid=<?php echo $row[0]; ?>">
-
-										<img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " src="<?php echo $imagename2;?>" ></a>
-
+										<img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " class="img-fluid" src="labor/labor_img/<?php echo $row[0];?>/<?php echo $row[16]; ?>" alt=""></a>
 										<a href="single.php?lid=<?php echo $row[0]; ?>" class="text-uppercase"><h3>
 									    <?php echo $row[1].' '.$row[2];?>
 										</h3></a>
@@ -736,29 +622,15 @@ if(isset($_POST['logout']))
 										<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[8];?> </p>
 										<p class="address"><span class="lnr lnr-database"></span> &#x20a8; 
 											<?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row[17];?></p>
-										<?php 
-											if($row[17]=='unavailable')
-											{
-											    $class='x';
-											}
-											else
-											{
-												$class='';
-											}
-										?>
-
-										<ul>
-										<li class="<?php echo $class; ?>"><a href="hiredlabor.php?lid=<?php echo $row[0]; ?>" class="btns text-uppercase"  onclick="return confirm('Are you sure you want to hire labor ?')?true:false;">Hire Me</a></li>
-										</ul>
+										<a href="#" class="btns text-uppercase">Hire Me</a>
 									</div>
 									 <?php
 										}
 							        ?>
-
-
+ -->
 									<!-- <div class="single-rated">
 										<img class="img-fluid" src="img/r1.jpg" alt="">
-										<h4>Creative Art Designer</h4>
+										<a href="single.php"><h4>Creative Art Designer</h4></a>
 										<h6>Premium Labels Limited</h6>
 										<p>
 											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
@@ -770,7 +642,7 @@ if(isset($_POST['logout']))
 									</div>
 									<div class="single-rated">
 										<img class="img-fluid" src="img/r1.jpg" alt="">
-										<h4>Creative Art Designer</h4>
+										<a href="single.php"><h4>Creative Art Designer</h4></a>
 										<h6>Premium Labels Limited</h6>
 										<p>
 											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
@@ -782,7 +654,7 @@ if(isset($_POST['logout']))
 									</div>
 									<div class="single-rated">
 										<img class="img-fluid" src="img/r1.jpg" alt="">
-										<h4>Creative Art Designer</h4>
+										<a href="single.php"><h4>Creative Art Designer</h4></a>
 										<h6>Premium Labels Limited</h6>
 										<p>
 											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
@@ -791,22 +663,23 @@ if(isset($_POST['logout']))
 										<p class="address"><span class="lnr lnr-map"></span> 56/8, Panthapath Dhanmondi Dhaka</p>
 										<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
 										<a href="#" class="btns text-uppercase">Apply job</a>
-									</div -->																	
+									</div> -->																		<!-- 
 								</div>
-							</div>							
+							</div>							 -->
 
-							<div class="single-slidebar">
+								<div class="single-slidebar">
 								<h4>Labor by Category</h4>
 								<ul class="cat-list">
-									<?php
+
+								<?php
 									$qry1="select * from category";
 									$res1=mysqli_query($con,$qry1);
 									while($row1=mysqli_fetch_row($res1))
 									{
 									$catid=$row1[0];
 										?>
-	 					      <li><a class="justify-content-between d-flex" href="category.php">
-	 								<p><?php echo $row1[1];?></p>
+	 					      		<li><a class="justify-content-between d-flex" href="category.php">
+	 								<?php echo $row1[1];?>
 									<?php
 									$qry2="select count(*) as cat from labor where l_categoryid='$catid' group by l_categoryid";
 									$res2=mysqli_query($con,$qry2);
@@ -818,21 +691,22 @@ if(isset($_POST['logout']))
 	          							}
 	          						}
     	      					 ?>
-									<!-- <li><a class="justify-content-between d-flex" href="#"><p>Technology</p><span>37</span></a></li>
-									<li><a class="justify-content-between d-flex" href="#"><p>Media & News</p><span>57</span></a></li>
-									<li><a class="justify-content-between d-flex" href="#"><p>Goverment</p><span>33</span></a></li>
-									<li><a class="justify-content-between d-flex" href="#"><p>Medical</p><span>36</span></a></li>
-									<li><a class="justify-content-between d-flex" href="#"><p>Restaurants</p><span>47</span></a></li>
-									<li><a class="justify-content-between d-flex" href="#"><p>Developer</p><span>27</span></a></li>
-									<li><a class="justify-content-between d-flex" href="#"><p>Accounting</p><span>17</span></a></li> -->
+
+									<!-- <li><a class="justify-content-between d-flex" href="category.php"><p>Technology</p><span>37</span></a></li>
+									<li><a class="justify-content-between d-flex" href="category.php"><p>Media & News</p><span>57</span></a></li>
+									<li><a class="justify-content-between d-flex" href="category.php"><p>Goverment</p><span>33</span></a></li>
+									<li><a class="justify-content-between d-flex" href="category.php"><p>Medical</p><span>36</span></a></li>
+									<li><a class="justify-content-between d-flex" href="category.php"><p>Restaurants</p><span>47</span></a></li>
+									<li><a class="justify-content-between d-flex" href="category.php"><p>Developer</p><span>27</span></a></li>
+									<li><a class="justify-content-between d-flex" href="category.php"><p>Accounting</p><span>17</span></a></li> -->
 								</ul>
 							</div>
 
-						<!-- 	<div class="single-slidebar">
+<!-- 							<div class="single-slidebar">
 								<h4>Carrer Advice Blog</h4>
 								<div class="blog-list">
 									<div class="single-blog " style="background:#000 url(img/blog1.jpg);">
-										<a href="#"><h4>Home Audio Recording <br>
+										<a href="single.php"><h4>Home Audio Recording <br>
 										For Everyone</h4></a>
 										<div class="meta justify-content-between d-flex">
 											<p>
@@ -847,7 +721,7 @@ if(isset($_POST['logout']))
 										</div>
 									</div>
 									<div class="single-blog " style="background:#000 url(img/blog2.jpg);">
-										<a href="#"><h4>Home Audio Recording <br>
+										<a href="single.php"><h4>Home Audio Recording <br>
 										For Everyone</h4></a>
 										<div class="meta justify-content-between d-flex">
 											<p>
@@ -862,7 +736,7 @@ if(isset($_POST['logout']))
 										</div>
 									</div>
 									<div class="single-blog " style="background:#000 url(img/blog1.jpg);">
-										<a href="#"><h4>Home Audio Recording <br>
+										<a href="single.php"><h4>Home Audio Recording <br>
 										For Everyone</h4></a>
 										<div class="meta justify-content-between d-flex">
 											<p>
@@ -877,14 +751,13 @@ if(isset($_POST['logout']))
 										</div>
 									</div>																		
 								</div>
-							</div>	 -->						
+							</div> -->							
 
 						</div>
 					</div>
 				</div>	
 			</section>
 			<!-- End post Area -->
-
 
 			<!-- Start callto-action Area -->
 			<section class="callto-action-area section-gap">
@@ -895,13 +768,13 @@ if(isset($_POST['logout']))
 								<h1 class="mb-10 text-white">Join us today without any hesitation</h1>
 								<p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
 								<a class="primary-btn" href="register.php">I am a Customer</a>
-								<a class="primary-btn" href="laborside/laborregister.php">I am a Labor</a>
+								<a class="primary-btn" href="#">i am a Labor</a>
 							</div>
 						</div>
 					</div>	
 				</div>	
 			</section>
-			<!-- End calto-action Area -->		
+			<!-- End calto-action Area -->			
 		
 			<!-- start footer Area -->		
 			<footer class="footer-area section-gap">
@@ -990,8 +863,8 @@ if(isset($_POST['logout']))
 			<script src="js/jquery.nice-select.min.js"></script>			
 			<script src="js/parallax.min.js"></script>		
 			<script src="js/mail-script.js"></script>	
-			<script src="js/main.js"></script>	
-		</form>
+			<script src="js/main.js"></script>
+			</form>	
 		</body>
 	</html>
 

@@ -45,7 +45,12 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/animate.min.css">
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
-			
+			<style type="text/css">
+			li.x{
+               pointer-events: none;
+	           }
+
+			</style>
 		</head>
 		<body>
 			<form method="post" enctype="multipart/form-data">
@@ -81,16 +86,26 @@ if(isset($_POST['logout']))
 							while($row=mysqli_fetch_row($res))
 							{
 								$name=$row[1]." ".$row[2];
-								$imagename=$row[13];
+								// $imagename=$row[13];
+								$startdate=$row[14];
+								// echo $startdate;
+								if(empty($row[13]))
+								{
+									$imagename="img/avatar-13.jpg";
+								}
+								else
+								{
+									$imagename="Labor/customer_img/".$row[13];
+								}
 							}
 				          	?>
-				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="Labor/customer_img/<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
+				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
 				            <ul>
 								<li>Signed in as</li>
 								<li><a href="profile.php"><?php echo $name;?></a></li>
 								<div class="dropdown-divider"></div>
 								<li><a href="profile.php">Your Profile</a></li>
-								<li><a href="#">Your Order</a></li>
+								<li><a href="hiredlabor.php">Your Order</a></li>
 								<div class="dropdown-divider"></div>
 								<li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li>
 				            </ul>
@@ -223,7 +238,21 @@ if(isset($_POST['logout']))
 					<div class="row fullscreen d-flex align-items-center justify-content-center">
 						<div class="banner-content col-lg-12">
 							<h1 class="text-white">
-								<span>1500+</span> Jobs posted last week				
+								<span>1500+</span> Jobs posted last week	
+								<?php 
+echo $startdate;
+$p=30;
+$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$p day"));
+echo $enddate;
+if(date("Y-m-d")<$enddate)
+{
+	echo "membership is not expired";
+}
+else
+{
+	echo "membership has expired";
+}
+?>			
 							</h1>	
 							<!-- <form action="search.php" class="serach-form-area"> -->
 								<div class="row justify-content-center form-wrap">
@@ -283,7 +312,7 @@ if(isset($_POST['logout']))
 											}
 										}	
 									?>
-									<div class="col-lg-2 form-cols">
+									<div class="col-lg-2 form-cols" style="margin-top:11px;">
 
 <!-- 
 									    <button type="submit" class="btn btn-info" name="search">									    --> 	
@@ -519,11 +548,19 @@ if(isset($_POST['logout']))
 							$res=mysqli_query($con,$qry);
 							while($row=mysqli_fetch_row($res))
 							{
+								if(empty($row[16]))
+								{
+									$imagename1="img/avatar-13.jpg";
+								}
+								else
+								{
+									$imagename1="Labor/labor_img/".$row[0].'/'.$row[16];
+								}
 							?>
 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
 									<a href="single.php?lid=<?php echo $row[0]; ?>">
-									<img src="labor/labor_img/<?php echo $row[0];?>/<?php echo $row[16]; ?>" width="100" height="100" >
+									<img src="<?php echo $imagename1;?>" width="100" height="100" >
 								    </a>
 									<ul class="tags">
 										<?php
@@ -533,7 +570,7 @@ if(isset($_POST['logout']))
 												{
 										?>
 										<li>
-											<a href="#">
+											<a href="category.php">
 									    	<?php echo $row1[1];?>
 											</a>
 										</li>
@@ -552,7 +589,7 @@ if(isset($_POST['logout']))
 									</ul>
 								</div>
 								
-								<div class="details" style="margin-left:15px;">
+								<div class="details" style="margin-left:15px;width:600px;">
 									<div class="title d-flex flex-row justify-content-between">
 										<div class="titles">
 											<a href="single.php?lid=<?php echo $row[0]; ?>" class="text-uppercase"><h3>
@@ -562,7 +599,17 @@ if(isset($_POST['logout']))
 										</div>
 										<ul class="btns">
 											<li><a href="#"><span class="lnr lnr-heart"></span></a></li>
-											<li><a href="#">hire me</a></li>
+											<?php 
+											if($row[17]=='unavailable')
+											{
+											    $class='x';
+											}
+											else
+											{
+												$class='';
+											}
+											?>											
+											<li class="<?php echo $class; ?>"><a href="hiredlabor.php?lid=<?php echo $row[0]; ?>" onclick="return confirm('Are you sure you want to hire labor ?')?true:false;">hire me</a></li>
 										</ul>
 									</div>
 									<p><h6><?php echo $row[15];?></h6></p>
@@ -830,23 +877,51 @@ if(isset($_POST['logout']))
 							    $res=mysqli_query($con,$qry);
 								while($row=mysqli_fetch_row($res))
 							        {
+
+										if(empty($row[16]))
+										{
+											$imagename2="img/avatar-13.jpg";
+										}
+										else
+										{
+											$imagename2="Labor/labor_img/".$row[0].'/'.$row[16];
+										}
+
 							        	?>
 									
 									<div class="single-rated">
 										<a href="single.php?lid=<?php echo $row[0]; ?>">
 										<!-- <img class="img-fluid"src="labor/labor_img/<?php echo $row[0];?>/<?php echo $row[16]; ?>" width="100" height="100" alt=""></a> -->
-										<img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " src="labor/labor_img/<?php echo $row[0];?>/<?php echo $row[16]; ?>" alt=""></a>
+										<img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " src="<?php echo $imagename2; ?>" alt=""></a>
+
 										<a href="single.php?lid=<?php echo $row[0]; ?>" class="text-uppercase"><h3>
 									    <?php echo $row[1].' '.$row[2];?>
 										</h3></a>
+	                                    
 	                                    <h5> Age: <?php echo $row[4];?> &nbsp &nbsp &nbsp 
 	                                    	Gender: <?php echo $row[3];?></h5>					
+									    
 									    <p><h6><?php echo $row[15];?></h6></p>
 										<h5>Job Nature: Full Day</h5>
 										<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[8];?> </p>
+
 										<p class="address"><span class="lnr lnr-database"></span>
 										&#x20a8; <?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row[17];?></p>
-										<a href="#" class="btns text-uppercase" >Hire Me</a>
+										
+										<?php 
+											if($row[17]=='unavailable')
+											{
+											    $class='x';
+											}
+											else
+											{
+												$class='';
+											}
+										?>
+
+										<ul>
+										<li class="<?php echo $class; ?>"><a href="hiredlabor.php?lid=<?php echo $row[0]; ?>" class="btns text-uppercase"  onclick="return confirm('Are you sure you want to hire labor ?')?true:false;">Hire Me</a></li>
+										</ul>
 									</div>
 									 <?php
 										}

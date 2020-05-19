@@ -46,6 +46,12 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
 			<script src="Labor/jquery.js"></script>
+			<style type="text/css">
+			li.x{
+               pointer-events: none;
+	           }
+			</style>
+						
   <script type="text/javascript">
 
 $(document).ready(function(){
@@ -121,9 +127,14 @@ $('#state').on('change',function(){
 <script type="text/javascript">
 
 function myFunction() {
-	alert("hello"); 
-  // location.replace("profile.php");
-  window.location.href ="profile.php";
+$.ajax({
+
+type:'POST',
+
+url:'index.php',
+
+});
+alert("cxvxc");
 }
 
 </script>
@@ -160,7 +171,15 @@ function myFunction() {
 							while($row=mysqli_fetch_row($res))
 							{
 								$name=$row[1]." ".$row[2];
-								$imagename=$row[13];
+								// $imagename=$row[13];
+								if(empty($row[13]))
+								{
+									$imagename="avatar-13.jpg";
+								}
+								else
+								{
+									$imagename=$row[13];
+								}
 							}
 				          	?>
 				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="Labor/customer_img/<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
@@ -169,7 +188,7 @@ function myFunction() {
 								<li><a href="profile.php"><?php echo $name;?></a></li>
 								<div class="dropdown-divider"></div>
 								<li><a href="profile.php">Your Profile</a></li>
-								<li><a href="#">Your Order</a></li>
+								<li><a href="hiredlabor.php">Your Order</a></li>
 								<div class="dropdown-divider"></div>
 								<li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li>
 				            </ul>
@@ -309,9 +328,9 @@ function myFunction() {
 							<div class="single-post job-experience">
 								<h4 class="single-title">Personal Information</h4>
 <?php
-    $qry="select * from customer where c_id='$cid'";
-    $res=mysqli_query($con,$qry);
-    while($row=mysqli_fetch_row($res))
+    $qry6="select * from customer where c_id='$cid'";
+    $res6=mysqli_query($con,$qry6);
+    while($row=mysqli_fetch_row($res6))
     {
         $firstname=$row[1];
 		$lastname=$row[2];
@@ -562,6 +581,9 @@ function myFunction() {
 										<input type="submit" class="ticker-btn" name="submit" value="Update profile" onclick="myFunction()">
 									</li>
 
+
+
+
 <!-- 
 
 									<li>
@@ -649,7 +671,7 @@ function myFunction() {
 									{
 									$stateid=$row1[0];
 										?>
-	 					            <li><a class="justify-content-between d-flex" href="category.html">
+	 					            <li><a class="justify-content-between d-flex" href="category.php">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
 									$qry2="select count(*) as sta from labor where l_state='$stateid' group by l_state";
@@ -696,7 +718,21 @@ function myFunction() {
 										<p class="address"><span class="lnr lnr-map"></span> <?php echo $row5[8];?> </p>
 										<p class="address"><span class="lnr lnr-database"></span> &#x20a8;
 										  <?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row5[17];?></p>
-										<a href="#" class="btns text-uppercase">Hire Me</a>
+										
+										<?php 				
+											if($row5[17]=='unavailable')
+											{
+											    $class='x';
+											}
+											else
+											{
+												$class='';
+											}
+										?>	
+
+										<ul>
+										<li class="<?php echo $class; ?>"><a href="hiredlabor.php?lid=<?php echo $row5[0]; ?>" class="btns text-uppercase" >Hire Me</a></li>
+										</ul>
 									</div>
 									 <?php
 										}
@@ -753,7 +789,7 @@ function myFunction() {
 									{
 									$catid=$row1[0];
 										?>
-	 					            <li><a class="justify-content-between d-flex" href="category.html">
+	 					            <li><a class="justify-content-between d-flex" href="category.php">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
 									$qry2="select count(*) as cat from labor where l_categoryid='$catid' group by l_categoryid";

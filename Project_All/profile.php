@@ -45,7 +45,11 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/animate.min.css">
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
-		
+			<style type="text/css">
+			li.x{
+               pointer-events: none;
+	           }
+			</style>			
 		</head>
 		<body>
             <form method="post" enctype="multipart/form-data">
@@ -80,7 +84,17 @@ if(isset($_POST['logout']))
 							while($row=mysqli_fetch_row($res))
 							{
 								$name=$row[1]." ".$row[2];
-								$imagename=$row[13];
+								// $imagename=$row[13];
+
+									if(empty($row[13]))
+									{
+										$imagename="avatar-13.jpg";
+										// echo $img1;
+									}
+									else
+									{
+										$imagename=$row[13];
+									}
 							}
 				          	?>
 				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="Labor/customer_img/<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
@@ -89,7 +103,7 @@ if(isset($_POST['logout']))
 								<li><a href="profile.php"><?php echo $name;?></a></li>
 								<div class="dropdown-divider"></div>
 								<li><a href="#">Your Profile</a></li>
-								<li><a href="#">Your Order</a></li>
+								<li><a href="hiredlabor.php">Your Order</a></li>
 								<div class="dropdown-divider"></div>
 								<li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li>
 				            </ul>
@@ -138,11 +152,20 @@ if(isset($_POST['logout']))
 	$res=mysqli_query($con,$qry);
 	while($row=mysqli_fetch_row($res))
 		{
+			if(empty($row[13]))
+			{
+				$img1="avatar-13.jpg";
+				// echo $img1;
+			}
+			else
+			{
+				$img1=$row[13];
+			}
 			?>
 						<div class="col-lg-8 post-list">
 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
-									<img src="Labor/customer_img/<?php echo $row[13]; ?>" width="100px" height=100 alt="">
+									<img src="Labor/customer_img/<?php echo $img1; ?>" width="100px" height=100 alt="">
 
  									<ul class="tags">
 										<li>
@@ -439,7 +462,20 @@ if(isset($_POST['logout']))
 										<p class="address"><span class="lnr lnr-map"></span> <?php echo $row5[8];?> </p>
 										<p class="address"><span class="lnr lnr-database"></span> &#x20a8; 
 											<?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row5[17];?></p>
-										<a href="#" class="btns text-uppercase">Hire Me</a>
+										<?php 
+											if($row5[17]=='unavailable')
+											{
+											    $class='x';
+											}
+											else
+											{
+												$class='';
+											}
+										?>	
+
+										<ul>
+										<li class="<?php echo $class; ?>"><a href="hiredlabor.php?lid=<?php echo $row5[0]; ?>" class="btns text-uppercase"  onclick="return confirm('Are you sure you want to hire labor ?')?true:false;">Hire Me</a></li>
+										</ul>
 									</div>
 									 <?php
 										}
