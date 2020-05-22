@@ -170,7 +170,7 @@ if(isset($_POST['logout']))
 				    $laborid=$_REQUEST['lid'];
 				    // $totallabor=$_POST['totallabor']; 
 
-					$qry="insert into hiredlabor values(0,'$customerid','$laborid','1','$totalcharge',NOW())";
+					$qry="insert into hiredlabor values(0,'$customerid','$laborid','1','$totalcharge',NOW(),'0')";
 					// $qry;
 					$res=mysqli_query($con,$qry);
 					if($res>0)
@@ -247,17 +247,29 @@ if(isset($_POST['logout']))
 					echo "error not update ";
 				}
 
-				$qry3="delete from hiredlabor where h_id=".$_REQUEST['hid'];
+				$qry3="update hiredlabor set h_flag='1' where h_id=".$_REQUEST['hid'];
 				$res3=mysqli_query($con,$qry3);
-				if($res3==1)
+				if($res3>0)
 				{
-					// echo "delete record from hiredlabor table";
-					// header("location:index.php");	
-				}
+					// echo "update record into user table";
+				   // header("location:hiredlaboradmin.php");
+				}		
 				else
 				{
-					echo "not delete record";
+					echo "error not update ";
 				}
+
+				// $qry3="delete from hiredlabor where h_id=".$_REQUEST['hid'];
+				// $res3=mysqli_query($con,$qry3);
+				// if($res3==1)
+				// {
+				// 	// echo "delete record from hiredlabor table";
+				// 	// header("location:index.php");	
+				// }
+				// else
+				// {
+				// 	echo "not delete record";
+				// }
 			}
 			?>
             <!-- labor delete end-->
@@ -342,14 +354,32 @@ if(isset($_POST['logout']))
 				<!-- 							<li><a href="#"><span class="lnr lnr-heart"></span></a></li>
 											<li><a href="#">Hire Me</a></li> -->
 											<li><a href="#" style="color:green;">Confirm Job</a></li><br><br>
-											<li><a href="hiredlabor.php?hid=<?php echo $row[22]; ?>" style="color:red;margin-right:9px;" onclick="return confirm('Are you sure to delete your order ?')?true:false;">Cancle Job</a></li>
+											<li><a href="hiredlabor.php?hid=<?php echo $row[22]; ?>" style="color:red;margin-right:9px;" onclick="return confirm('Are you sure to delete your order ?')?true:false;">Cancel Job</a></li>
 										</ul>
 
 									</div>
 									<!-- <p><h6><?php echo $row[15];?></h6></p> -->
 
 									<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[8];?></p>
-									<p class="address"><span class="lnr lnr-database"></span> &#x20a8; <?php echo $row[18];?> <!-- &nbsp &nbsp &nbsp Status: <?php echo $row[17];?> --></p>
+									<p class="address"><span class="lnr lnr-database"></span> &#x20a8; <?php echo $row[18];?> <!-- &nbsp &nbsp &nbsp Status: <?php echo $row[17];?> --></p>			
+
+									<?php
+								 	if($row[28]==0)
+									{?>
+									<h4 style="color:red;">Wait for labor confirmation.</h4>
+									<?php
+									}
+									else if($row[28]==2)
+									{?>
+									<h4 style="color:red;">Labor will not do your job thay rejected your job request.</h4>
+									<?php
+									}
+									else if($row[28]==3)
+									{?>
+									<h4 style="color:green;">Labor will do your job.</h4>
+									<?php
+									}
+									?>
 								</div>
 							</div>
 							<?php

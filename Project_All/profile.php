@@ -7,7 +7,7 @@
 }
 else
 {
-	//header("location:index.php");	
+	// header("location:index.php");	
 }
 if(isset($_POST['logout']))
 {
@@ -88,16 +88,16 @@ if(isset($_POST['logout']))
 
 									if(empty($row[13]))
 									{
-										$imagename="avatar-13.jpg";
+										$imagename="img/avatar-13.jpg";
 										// echo $img1;
 									}
 									else
 									{
-										$imagename=$row[13];
+										$imagename="Labor/customer_img/".$row[13];
 									}
 							}
 				          	?>
-				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="Labor/customer_img/<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
+				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
 				            <ul>
 								<li>Signed in as</li>
 								<li><a href="profile.php"><?php echo $name;?></a></li>
@@ -154,18 +154,58 @@ if(isset($_POST['logout']))
 		{
 			if(empty($row[13]))
 			{
-				$img1="avatar-13.jpg";
+				$imagename1="img/avatar-13.jpg";
 				// echo $img1;
 			}
 			else
 			{
-				$img1=$row[13];
+				$imagename1="Labor/customer_img/".$row[13];
 			}
+			
+			$register1 = date("d-m-Y", strtotime($row[14]));  
+
+
+			 $qry6="select * from payment where p_customerid='$cid'";
+							// echo $qry;
+							$res6=mysqli_query($con,$qry6);
+							while($row6=mysqli_fetch_row($res6))
+							{
+								$price=$row6[3];
+								$startdate=$row6[4];
+								if($price==39)
+								{
+									$day=30;
+								}
+								else if($price==69)
+								{
+									$day=90;
+								}
+								else if($price==99)
+								{
+									$day=360;			
+								}
+
+							}
+							// echo 'day ='.$day;
+							$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
+							$startdate1 = date("d-m-Y", strtotime($startdate));  
+							$enddate1 = date("d-m-Y", strtotime($enddate));  
+				
+							if(date("Y-m-d")<$enddate)
+							{
+								$color2='green';
+								$membershipstatus='Membership is not expired';
+							}
+							else
+							{
+								$color2='red';
+								$membershipstatus='Membership has expired';
+							}			
 			?>
 						<div class="col-lg-8 post-list">
 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
-									<img src="Labor/customer_img/<?php echo $img1; ?>" width="100px" height=100 alt="">
+									<img src="<?php echo $imagename1; ?>" width="100px" height="100px" >
 
  									<ul class="tags">
 										<li>
@@ -185,9 +225,12 @@ if(isset($_POST['logout']))
 									</ul>
 								</div>
 
-								<div class="details" style="margin-left:15px;">
+								<div class="details" style="margin-left:15px;width:540px;">
 									<div class="title d-flex flex-row justify-content-between">
 										<div class="titles">
+												<h5>Customer Id: <?php echo $row[0];?><strong style="margin-left:200px;color:<?php echo $color2; ?>"><?php echo $membershipstatus; ?></strong></h5>
+												
+													
 											<a href="#"><h3 class="text-uppercase">
 											<?php echo $row[1].' '.$row[2];?>
 											</h3></a>
@@ -314,11 +357,11 @@ if(isset($_POST['logout']))
 										<span>Pincode: <?php echo $row[10]; ?></span>
 									</li>
 
-									<li>
+<!-- 									<li>
 										<img src="img/pages/list.jpg" alt="">
 										<span>Password: <?php echo $row[11]; ?></span>		
-									</li>
-<!-- 
+									</li> -->
+									<!-- 
 
 									<li>
 										<img src="img/pages/list.jpg" alt="">
@@ -331,12 +374,22 @@ if(isset($_POST['logout']))
 										        	echo $row3[1].' '.$row3[2];
 											    }
 										        ?></span>
-									</li> -->
+									</li> -->	
 
 
 									<li>
 										<img src="img/pages/list.jpg" alt="">
-										<span>Registration Date: <?php echo $row[14]; ?></span>		
+										<span>Registration Date: <?php echo $register1; ?></span>		
+									</li>
+
+									<li>
+										<img src="img/pages/list.jpg" alt="">
+										<span>Membership start Date: <?php echo $startdate1; ?></span>		
+									</li>
+
+									<li>
+										<img src="img/pages/list.jpg" alt="">
+										<span>Membership End Date: <?php echo $enddate1; ?></span>		
 									</li>
 									<!-- <li>	
 										<img src="img/pages/list.jpg" alt="">
@@ -414,7 +467,7 @@ if(isset($_POST['logout']))
 									{
 									$stateid=$row1[0];
 										?>
-	 					            <li><a class="justify-content-between d-flex" href="category.html">
+	 					            <li><a class="justify-content-between d-flex" href="category.php">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
 									$qry2="select count(*) as sta from labor where l_state='$stateid' group by l_state";
@@ -461,14 +514,17 @@ if(isset($_POST['logout']))
 										<h5>Job Nature: Full Day</h5>
 										<p class="address"><span class="lnr lnr-map"></span> <?php echo $row5[8];?> </p>
 										<p class="address"><span class="lnr lnr-database"></span> &#x20a8; 
-											<?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row5[17];?></p>
+											<?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <strong style="color:<?php echo $color;?>;text-transform:capitalize;"> <?php echo $row5[17];?></strong></p>
 										<?php 
 											if($row5[17]=='unavailable')
 											{
+												$color='red';
 											    $class='x';
+											    echo $row5[17];
 											}
 											else
 											{
+												$color='green';
 												$class='';
 											}
 										?>	
@@ -532,7 +588,7 @@ if(isset($_POST['logout']))
 									{
 									$catid=$row1[0];
 										?>
-	 					            <li><a class="justify-content-between d-flex" href="category.html">
+	 					            <li><a class="justify-content-between d-flex" href="category.php">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
 									$qry2="select count(*) as cat from labor where l_categoryid='$catid' group by l_categoryid";

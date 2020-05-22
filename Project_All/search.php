@@ -191,11 +191,13 @@ if(isset($_POST['logout']))
     <div class="modal-body">
 
     <p align="left">Email *
-    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" name="email" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '">
+    <input type="email" id="email" class="form-control mb-4" name="email" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"></p>
+    <span id="error_email" class="text-danger"></span>
 
     <!-- Password -->
     <p align="left">Password *
-    <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
+    <input type="password" id="password" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
+    <span id="error_password" class="text-danger"></span>
 
 
       <div class="d-flex justify-content-around">
@@ -212,7 +214,7 @@ if(isset($_POST['logout']))
         </div>
       </div>
 
-        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login">Log In</button>
+        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login">Log In</button>
 
         <p align="center">Don't Have An Account ?
 	    <a href="register.php">Sign up!</a>
@@ -232,6 +234,7 @@ if(isset($_POST['logout']))
     </div>
   </div>  
 </div>
+<!-- login page end -->
 
 			<!-- start banner Area -->
 			<section class="banner-area relative" id="home">	
@@ -401,10 +404,12 @@ if(isset($_POST['logout']))
                                             <?php 
 											if($row[17]=='unavailable')
 											{
+												$color='red';
 											    $class='x';
 											}
 											else
 											{
+												$color='green';
 												$class='';
 											}
 											?>											
@@ -414,7 +419,7 @@ if(isset($_POST['logout']))
 									<p><h6><?php echo $row[15];?></h6></p>
 									<h5>Job Nature: Full Day</h5>
 									<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[8];?> </p>
-									<p class="address"><span class="lnr lnr-database"></span> &#x20a8; <?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row[17];?></p>
+									<p class="address"><span class="lnr lnr-database"></span> &#x20a8; <?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <strong style="color:<?php echo $color;?>;text-transform:capitalize;"> <?php echo $row[17];?></strong></p>
 								</div>
 							</div>
 
@@ -735,14 +740,16 @@ if(isset($_POST['logout']))
 										<h5>Job Nature: Full Day</h5>
 										<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[8];?> </p>
 										<p class="address"><span class="lnr lnr-database"></span> &#x20a8; 
-											<?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row[17];?></p>
+											<?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <strong style="color:<?php echo $color1;?>;text-transform:capitalize;"> <?php echo $row[17];?></strong></p>
 										<?php 
 											if($row[17]=='unavailable')
 											{
+												$color1='red';
 											    $class='x';
 											}
 											else
 											{
+												$color1='green';
 												$class='';
 											}
 										?>
@@ -991,6 +998,8 @@ if(isset($_POST['logout']))
 			<script src="js/parallax.min.js"></script>		
 			<script src="js/mail-script.js"></script>	
 			<script src="js/main.js"></script>	
+			<script src="js/login.js"></script>	
+
 		</form>
 		</body>
 	</html>

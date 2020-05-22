@@ -80,7 +80,7 @@ if(isset($_POST['logout']))
 							while($row=mysqli_fetch_row($res))
 							{
 								$name=$row[1]." ".$row[2];
-								// $imagename=$row[13];
+								// $imagename=$row[13];								
 								if(empty($row[13]))
 								{
 									$imagename="img/avatar-13.jpg";
@@ -117,6 +117,8 @@ if(isset($_POST['logout']))
 			    	</div>
 			    </div>
 			  </header><!-- #header -->
+
+
 
 
 <!-- login page -->
@@ -177,11 +179,13 @@ if(isset($_POST['logout']))
     <div class="modal-body">
 
     <p align="left">Email *
-    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" name="email" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '">
+    <input type="email" id="email" class="form-control mb-4" name="email" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"></p>
+    <span id="error_email" class="text-danger"></span>
 
     <!-- Password -->
     <p align="left">Password *
-    <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
+    <input type="password" id="password" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
+    <span id="error_password" class="text-danger"></span>
 
 
       <div class="d-flex justify-content-around">
@@ -198,7 +202,7 @@ if(isset($_POST['logout']))
         </div>
       </div>
 
-        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login">Log In</button>
+        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login">Log In</button>
 
         <p align="center">Don't Have An Account ?
 	    <a href="register.php">Sign up!</a>
@@ -218,7 +222,7 @@ if(isset($_POST['logout']))
     </div>
   </div>  
 </div>
-
+<!-- login page end -->
 
 
 			<!-- start banner Area -->
@@ -228,6 +232,7 @@ if(isset($_POST['logout']))
 					<div class="row d-flex align-items-center justify-content-center">
 						<div class="about-content col-lg-12">
 							<h1 class="text-white">
+						
 								Pricing Plan				
 							</h1>	
 							<p class="text-white link-nav"><a href="index.php">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="#"> Pricing Plan</a></p>
@@ -249,65 +254,178 @@ if(isset($_POST['logout']))
 						</div>
 					</div>						
 					<div class="row">
-						<?php
+					<?php
+					// $day='';
+					// $enddate='';
+					// $startdate='';
+					if(!empty($_SESSION['emailname']))
+					{
 						if(isset($_POST['submit']))
 						{
-					  	    $customerid=$cid;
-						    $method='online'; 
-							$totalpayment='39';	      
-
-	                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
-	                        // echo $qry;
+					  	    $qry="select * from payment where p_customerid='$cid'";
+							// echo $qry;
 							$res=mysqli_query($con,$qry);
-							if($res>0)
+							while($row=mysqli_fetch_row($res))
 							{
-								// echo "insert record into payment table";
-							    // header("location:index.php");
-							}		
-							else
-							{
-								echo "erro not insert payment";
+								$price=$row[3];
+								$startdate=$row[4];
+								if($price==39)
+								{
+									$day=30;
+								}
+								else if($price==69)
+								{
+									$day=90;
+								}
+								else if($price==99)
+								{
+									$day=360;			
+								}
+
 							}
+
+							// echo 'day ='.$day;
+							$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
+
+
+							// if(date("Y-m-d")<$enddate)
+							// {
+							// 	echo "membership is not expired";
+
+						  	    $customerid=$cid;
+							    $method='online'; 
+								$totalpayment='39';	      
+
+		                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
+		                        // echo $qry;
+								$res=mysqli_query($con,$qry);
+								if($res>0)
+								{
+									// echo "insert record into payment table";
+								    // header("location:index.php");
+								}		
+								else
+								{
+									echo "erro not insert payment";
+								}
+								// }
+							// else
+							// {
+							// 	echo "membership is expired";
+							// }
 						}
 						if(isset($_POST['submit1']))
 						{
-					  	    $customerid=$cid;
-						    $method='online'; 
-							$totalpayment='69';	      
-
-	                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
-	                        // echo $qry;
+					  	   $qry="select * from payment where p_customerid='$cid'";
+							// echo $qry;
 							$res=mysqli_query($con,$qry);
-							if($res>0)
+							while($row=mysqli_fetch_row($res))
 							{
-								// echo "insert record into payment table";
-							    // header("location:index.php");
-							}		
-							else
-							{
-								echo "erro not insert payment";
+								$price=$row[3];
+								$startdate=$row[4];								
+								if($price==39)
+								{
+									$day=30;
+								}
+								else if($price==69)
+								{
+									$day=90;
+								}
+								else if($price==99)
+								{
+									$day=360;			
+								}
 							}
+
+							// echo 'day ='.$day;
+							$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
+							// echo $enddate;
+							// echo $startdate;
+							// if(date("Y-m-d")<$enddate)
+							// {
+							// 	echo "membership is not expired";
+
+						  	    $customerid=$cid;
+							    $method='online'; 
+								$totalpayment='69';	      
+
+		                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
+		                        // echo $qry;
+								$res=mysqli_query($con,$qry);
+								if($res>0)
+								{
+									// echo "insert record into payment table";
+								    // header("location:index.php");
+								}		
+								else
+								{
+									echo "erro not insert payment";
+								}
+								// }
+							// else
+							// {
+							// 	echo "membership is expired";
+							// }
 						}
 						if(isset($_POST['submit2']))
 						{
-					  	    $customerid=$cid;
-						    $method='online'; 
-							$totalpayment='99';	      
-
-	                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
-	                        // echo $qry;
+					  	    $qry="select * from payment where p_customerid='$cid'";
+							// echo $qry;
 							$res=mysqli_query($con,$qry);
-							if($res>0)
+							while($row=mysqli_fetch_row($res))
 							{
-								// echo "insert record into payment table";
-							    // header("location:index.php");
-							}		
-							else
-							{
-								echo "erro not insert payment";
+								$price=$row[3];
+								$startdate=$row[4];								
+								if($price==39)
+								{
+									$day=30;
+								}
+								else if($price==69)
+								{
+									$day=90;
+								}
+								else if($price==99)
+								{
+									$day=360;			
+								}
 							}
+
+							// echo 'day ='.$day;
+							$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
+							// echo $enddate;
+							// echo $startdate;
+							// if(date("Y-m-d")<$enddate)
+							// {
+							// 	echo "membership is not expired";
+
+						  	    $customerid=$cid;
+							    $method='online'; 
+								$totalpayment='99';	      
+
+		                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
+		                        // echo $qry;
+								$res=mysqli_query($con,$qry);
+								if($res>0)
+								{
+									// echo "insert record into payment table";
+								    // header("location:index.php");
+								}		
+								else
+								{
+									echo "erro not insert payment";
+								}
+								// }
+							// else
+							// {
+							// 	echo "membership is expired";
+							// }
 						}
-						?>
+					}
+					else
+					{
+						// header("location:index.php");
+					}
+					?>
 						<div class="col-lg-4">
 							<div class="single-price no-padding">
 								<div class="price-top">
@@ -325,7 +443,7 @@ if(isset($_POST['logout']))
 										<span class="price">$</span><h1> 39 </h1><span class="time">Per <br> Month</span>
 									</div>
 									<!-- <a href="#" class="primary-btn header-btn">Get Started</a> -->
-									<input type="submit" name="submit" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;">
+									<input type="submit" name="submit" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;" >
 								</div>
 								
 							</div>
@@ -537,6 +655,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			<script src="js/parallax.min.js"></script>		
 			<script src="js/mail-script.js"></script>	
 			<script src="js/main.js"></script>	
+			<script src="js/login.js"></script>	
+
 		</form>
 		</body>
 	</html>

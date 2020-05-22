@@ -49,6 +49,26 @@ if(isset($_POST['logout']))
 			li.x{
                pointer-events: none;
 	           }
+
+	        img.gallery:hover {
+			  /*border: 1px solid #777;*/
+			  max-width:100%;
+			  border-radius:4px;
+			  position:relative; 
+			  z-index:1;
+			  /*box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px;*/	
+			  box-shadow: 2px 10px 20px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			}
+			img.gallery {
+			  margin: 5px;
+			  border: 1px solid #ccc;
+			  float: left;
+			  width: 180px;
+			  border-radius:4px;	
+			  height:150px;		  
+			}
+
+
 			</style>
 		</head>
 		<body>
@@ -184,11 +204,13 @@ if(isset($_POST['logout']))
     <div class="modal-body">
 
     <p align="left">Email *
-    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" name="email" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '">
+    <input type="email" id="email" class="form-control mb-4" name="email" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"></p>
+    <span id="error_email" class="text-danger"></span>
 
     <!-- Password -->
     <p align="left">Password *
-    <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
+    <input type="password" id="password" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
+    <span id="error_password" class="text-danger"></span>
 
 
       <div class="d-flex justify-content-around">
@@ -205,7 +227,7 @@ if(isset($_POST['logout']))
         </div>
       </div>
 
-        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login">Log In</button>
+        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login">Log In</button>
 
         <p align="center">Don't Have An Account ?
 	    <a href="register.php">Sign up!</a>
@@ -225,6 +247,7 @@ if(isset($_POST['logout']))
     </div>
   </div>  
 </div>
+<!-- login page end -->
 
 			<!-- start banner Area -->
 			<section class="banner-area relative" id="home">	
@@ -262,6 +285,9 @@ if(isset($_POST['logout']))
 							{
 								$imagename1="Labor/labor_img/".$row[0].'/'.$row[16];
 							}
+					
+							$register1 = date("d-m-Y", strtotime($row[19]));  
+
 							?>
 						<div class="col-lg-8 post-list">
 							<div class="single-post d-flex flex-row">
@@ -301,6 +327,8 @@ if(isset($_POST['logout']))
 								<div class="details" style="margin-left:15px;width:600px;">
 									<div class="title d-flex flex-row justify-content-between">
 										<div class="titles">
+											<h5>Labor Id: <?php echo $row[0];?></h5>
+
 											<a href="#"><h3>
 											<?php echo $row[1].' '.$row[2];?>
 											</h3></a>
@@ -311,10 +339,12 @@ if(isset($_POST['logout']))
 											<?php 
 											if($row[17]=='unavailable')
 											{
+												$color='red';
 											    $class='x';
 											}
 											else
 											{
+												$color='green';
 												$class='';
 											}
 											?>											
@@ -324,10 +354,10 @@ if(isset($_POST['logout']))
 	<!-- 								<p><h6><?php echo $row[15];?></h6></p> -->
 									<h5>Job Nature: Full Day</h5>
 									<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[8];?> </p>
-									<p class="address"><span class="lnr lnr-database"></span> &#x20a8; <?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row[17];?></p>
+									<p class="address"><span class="lnr lnr-database"></span> &#x20a8; <?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <strong style="color:<?php echo $color;?>;text-transform:capitalize;"> <?php echo $row[17];?></strong></p>
 								</div>
 							</div>	
-
+                            <div class="row" style="margin-right:1px;margin-left:1px;">
 							<div class="single-post job-details">
 								<h4 class="single-title">Work Image</h4>
 								<p>
@@ -336,22 +366,24 @@ if(isset($_POST['logout']))
 									$qry4="select * from image where i_laborid='$row[0]' and i_flag='1'"; 
 								    $res4=mysqli_query($con,$qry4);
 									while($row4=mysqli_fetch_row($res4))
-							        {
-							        	$count++;
-							        if($count==5)
+							        {							        	
+							        if($count==4)
 							        {
 							           $count=0;
 							        ?>
-							        	<br>
+							        <br>
 							        <?php
 							        }	   
 							        ?>
-									<img src="labor/labor_img/<?php echo $row[0];?>/<?php echo $row4[1]; ?>" width="150px" height=150 alt="">
+									<img src="labor/labor_img/<?php echo $row[0];?>/<?php echo $row4[1]; ?>" class="gallery">
 									<?php
+									$count++;
 								    }
 								    ?>
 								</p>
-								<br>
+							</div>
+							</div>
+							<div class="single-post job-details">							
 								<p>
 									<h4 class="single-title">Work Video Link</h4>
 									<?php
@@ -365,7 +397,7 @@ if(isset($_POST['logout']))
 								    }
 								    ?>
 
-							        <iframe width="200" height="200" src="https://www.youtube.com/embed/beqprrnaKFc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							        <!-- <iframe width="200" height="200" src="https://www.youtube.com/embed/beqprrnaKFc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 								</p>
 							</div>
 
@@ -457,7 +489,7 @@ if(isset($_POST['logout']))
 
 									<li>
 										<img src="img/pages/list.jpg" alt="">
-										<span>Registration Date: <?php echo $row[19]; ?></span>		
+										<span>Registration Date: <?php echo $register1; ?></span>		
 									</li>
 									<!-- <li>	
 										<img src="img/pages/list.jpg" alt="">
@@ -590,14 +622,16 @@ if(isset($_POST['logout']))
 										<h5>Job Nature: Full Day</h5>
 										<p class="address"><span class="lnr lnr-map"></span> <?php echo $row5[8];?> </p>
 										<p class="address"><span class="lnr lnr-database"></span> &#x20a8;
-										 <?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row5[17];?></p>
+										 <?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <strong style="color:<?php echo $color1;?>;text-transform:capitalize;"> <?php echo $row5[17];?></strong></p>
 										<?php 
 											if($row5[17]=='unavailable')
 											{
+												$color1='green';
 											    $class='x';
 											}
 											else
 											{
+												$color1='red';
 												$class='';
 											}
 										?>
@@ -847,6 +881,8 @@ if(isset($_POST['logout']))
 			<script src="js/parallax.min.js"></script>		
 			<script src="js/mail-script.js"></script>	
 			<script src="js/main.js"></script>	
+			<script src="js/login.js"></script>	
+
 		</form>
 		</body>
 	</html>

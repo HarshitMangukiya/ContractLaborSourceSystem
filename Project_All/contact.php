@@ -142,11 +142,11 @@ if(isset($_POST['logout']))
         <?php
 			if(isset($_POST['login']))
 			{
-			 if(!empty($_POST['email']) && !empty($_POST['password']))
+			 if(!empty($_POST['email4']) && !empty($_POST['password4']))
 			  {
 			     
-			    $email=$_POST['email'];
-			    $password=$_POST['password'];
+			    $email=$_POST['email4'];
+			    $password=$_POST['password4'];
 
 			    $qry="select * from customer where c_email='$email' and c_password='$password'";    
 			   // echo $qry;
@@ -178,11 +178,13 @@ if(isset($_POST['logout']))
     <div class="modal-body">
 
     <p align="left">Email *
-    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" name="email" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '">
+    <input type="email" id="email" class="form-control mb-4" name="email4" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"></p>
+    <span id="error_email" class="text-danger"></span>
 
     <!-- Password -->
     <p align="left">Password *
-    <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
+    <input type="password" id="password" class="form-control mb-4" name="password4" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
+    <span id="error_password" class="text-danger"></span>
 
 
       <div class="d-flex justify-content-around">
@@ -199,7 +201,7 @@ if(isset($_POST['logout']))
         </div>
       </div>
 
-        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login">Log In</button>
+        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login">Log In</button>
 
         <p align="center">Don't Have An Account ?
 	    <a href="register.php">Sign up!</a>
@@ -219,6 +221,7 @@ if(isset($_POST['logout']))
     </div>
   </div>  
 </div>
+<!-- login page end -->
 
 			<!-- start banner Area -->
 			<section class="banner-area relative" id="home">	
@@ -250,12 +253,12 @@ if(isset($_POST['logout']))
 							<form class="form-area " id="myForm" action="mail.php" method="post" class="contact-form text-right">
 								<div class="row">	
 									<div class="col-lg-12 form-group">
-										<input name="name" placeholder="Enter your name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" class="common-input mb-20 form-control" required="" type="text">
+										<input name="name" placeholder="Enter your name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" class="common-input mb-20 form-control" type="text">
 									
-										<input name="email" placeholder="Enter email address" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" class="common-input mb-20 form-control" required="" type="email">
+										<input name="email" placeholder="Enter email address" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" class="common-input mb-20 form-control" type="email">
 
-										<input name="subject" placeholder="Enter your subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your subject'" class="common-input mb-20 form-control" required="" type="text">
-										<textarea class="common-textarea mt-10 form-control" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
+										<input name="subject" placeholder="Enter your subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your subject'" class="common-input mb-20 form-control" type="text">
+										<textarea class="common-textarea mt-10 form-control" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" ></textarea>
 										<button class="primary-btn mt-20 text-white" style="float: right;">Send Message</button>
 										<div class="mt-20 alert-msg" style="text-align: left;"></div>
 									</div>
@@ -356,6 +359,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			<script src="js/parallax.min.js"></script>		
 			<script src="js/mail-script.js"></script>	
 			<script src="js/main.js"></script>
+			<script src="js/login.js"></script>
+
 			</form>	
 		</body>
 	</html>

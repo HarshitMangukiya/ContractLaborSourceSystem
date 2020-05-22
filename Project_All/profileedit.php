@@ -174,15 +174,16 @@ alert("cxvxc");
 								// $imagename=$row[13];
 								if(empty($row[13]))
 								{
-									$imagename="avatar-13.jpg";
+									$imagename="img/avatar-13.jpg";
+									// echo $img1;
 								}
 								else
 								{
-									$imagename=$row[13];
+									$imagename="Labor/customer_img/".$row[13];
 								}
 							}
 				          	?>
-				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="Labor/customer_img/<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
+				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
 				            <ul>
 								<li>Signed in as</li>
 								<li><a href="profile.php"><?php echo $name;?></a></li>
@@ -325,6 +326,67 @@ alert("cxvxc");
 									Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 								</p>
 							</div> -->
+
+<!-- 							<div class="single-post job-experience">
+								<h4 class="single-title">Profile picture</h4>
+								<?php
+									if(isset($_REQUEST['ddid']))
+									{
+										// echo "hello".$_REQUEST['ddid'];
+
+										$path6="Labor/customer_img/";
+				
+			
+										$qry6="select * from customer where c_id=".$_REQUEST['ddid'];
+										// echo $qry6;
+										$res6=mysqli_query($con,$qry6);
+										while($row6=mysqli_fetch_row($res6))
+										{
+										    if(!empty($row6[13]))
+										    {
+												$oldimage6=$path6.$row6[13];
+												// echo $oldimage6;
+												unlink($oldimage6);
+												echo "delete image";
+
+											}
+											else
+											{
+												echo "select image";
+											}
+										}
+
+									}
+
+									$qry="select * from customer where c_id='$cid'";
+									$res=mysqli_query($con,$qry);
+									while($row=mysqli_fetch_row($res))
+									{
+
+										if(empty($row[13]))
+										{
+											$imagename2="img/avatar-13.jpg";
+										}
+										else
+										{
+											$imagename2="Labor/customer_img/".$row[13];
+										}
+
+									}
+						        ?>
+								<div class="thumb">
+									<img src="<?php echo $imagename2; ?>" width="120px" height="120px" style="border-radius:5px;">
+
+ 									<ul class="tags">
+										<li>
+											<a href="profileedit.php?ddid=<?php echo $cid; ?>" style="text-align:center;font-weight: bold;">Delete photo</a>
+										</li>
+
+									</ul>
+								</div>
+
+							</div>
+ -->
 							<div class="single-post job-experience">
 								<h4 class="single-title">Personal Information</h4>
 <?php
@@ -362,7 +424,7 @@ alert("cxvxc");
       $pincode=$_POST['pincode'];
       $password=$_POST['password'];
       $about=$_POST['about'];
-      
+      $flag='';
       
       	if($_FILES["fimage"]["name"]!=null)
       	{
@@ -388,7 +450,7 @@ alert("cxvxc");
 
 			        if(move_uploaded_file($_FILES['fimage']['tmp_name'],$path.$myimg))
 			        {
-			          echo "insert image";
+			          // echo "insert image";
 
 			        }
 		        
@@ -443,42 +505,52 @@ alert("cxvxc");
 									<li>
 										<img src="img/pages/list.jpg" alt="">
 										<span>First name:
-									    <input type="text" class="form-control mb-4" placeholder="Enter First name" name="firstname" value="<?php echo $firstname; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter First name'" required="">
+									    <input type="text" class="form-control mb-4" placeholder="Enter First name" id="firstname" name="firstname" value="<?php echo $firstname; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter First name'" >
 										</span>
+    									<span id="error_firstname" class="text-danger"></span>
 									</li>
 
 
 									<li>
 										<img src="img/pages/list.jpg" alt="">
 										<span>Last name: 
-                                        <input type="text" class="form-control mb-4" placeholder="Enter Last name" name="lastname" value="<?php echo $lastname; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Last name'" required="">
+                                        <input type="text" class="form-control mb-4" placeholder="Enter Last name" id="lastname" name="lastname" value="<?php echo $lastname; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Last name'" >
 										</span>
+    									<span id="error_lastname" class="text-danger"></span>										
 									</li>
 
 									<li>
 										<img src="img/pages/list.jpg" alt="">
 										<span>About Me:
-										<input type="text" class="form-control mb-4" placeholder="Enter About Me" name="about" value="<?php echo $about; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter About Me'" required="">
+										<input type="text" class="form-control mb-4" placeholder="Enter About Me" id="about" name="about" value="<?php echo $about; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter About Me'" >
 										</span>
+    									<span id="error_about" class="text-danger"></span>
+
 									</li>
 
 									<li>
 										<img src="img/pages/list.jpg" alt="">
 										<span>Phone Number:
-										<input type="text" class="form-control mb-4" placeholder="Enter Phone Number" name="phone" value="<?php echo $phone; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Phone Number'" required=""></span>
+										<input type="text" class="form-control mb-4" placeholder="Enter Phone Number" id="phone" name="phone" value="<?php echo $phone; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Phone Number'" ></span>
+    									<span id="error_phone" class="text-danger"></span>
+
 									</li>
 
 
 									<li>
 										<img src="img/pages/list.jpg" alt="">
 										<span>Address:
-										<input type="text" class="form-control mb-4" placeholder="Enter Address" name="address" value="<?php echo $address; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Address'" required=""></span>
+										<input type="text" class="form-control mb-4" placeholder="Enter Address" id="address" name="address" value="<?php echo $address; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Address'" ></span>
+    									<span id="error_address" class="text-danger"></span>
+
 									</li>
 
 									<li>
 										<img src="img/pages/list.jpg" alt="">
 										<span>Location:
-										<input type="text" class="form-control mb-4" placeholder="Enter Location" name="location" value="<?php echo $location; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Location'" required=""></span>
+										<input type="text" class="form-control mb-4" placeholder="Enter Location" id="location" name="location" value="<?php echo $location; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Location'"></span>
+    									<span id="error_location" class="text-danger"></span>
+
 									</li>
 
 									<li>
@@ -514,6 +586,7 @@ alert("cxvxc");
 										?>
 
                                     </select>
+    									<span id="error_country" class="text-danger"></span>
 
 									</li>
 
@@ -522,7 +595,7 @@ alert("cxvxc");
 										<span>State Name: 
 											</span>
 									    <select name="state" id="state" style="border-radius:5px;">
-										<!-- <option value="">Select state first</option> -->
+										<option value="">Select state first</option>
 										<?php
 										      $qry="select * from state where s_id='$state'"; 
 										      $res=mysqli_query($con,$qry);
@@ -534,6 +607,8 @@ alert("cxvxc");
 										      }   
 										    ?>
 										</select>
+    									<span id="error_state" class="text-danger"></span>
+
 
 									</li>
 
@@ -541,7 +616,7 @@ alert("cxvxc");
 										<img src="img/pages/list.jpg" alt="">
 										<span>City Name:</span>
 										<select name="city" id="city" style="border-radius:5px;">
-										<!-- <option value="">Select state first</option> -->
+										<option value="">Select state first</option>
 										<?php
 										      $qry="select * from city where ci_id='$city'"; 
 										      $res=mysqli_query($con,$qry);
@@ -554,19 +629,24 @@ alert("cxvxc");
 										        ?>
 
 										</select>
+    									<span id="error_city" class="text-danger"></span>
 
 									</li>
 
 									<li>
 										<img src="img/pages/list.jpg" alt="">
 										<span>Pincode: 
-										<input type="text" class="form-control mb-4" placeholder="Enter Pincode" name="pincode" value="<?php echo $pincode; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Pincode'" required=""></span>
+										<input type="text" class="form-control mb-4" placeholder="Enter Pincode" id="pincode" name="pincode" value="<?php echo $pincode; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Pincode'"></span>
+    									<span id="error_pincode" class="text-danger"></span>
+
 									</li>
 
 									<li>
 										<img src="img/pages/list.jpg" alt="">
 										<span>Password: 
-										<input type="text" class="form-control mb-4" placeholder="Enter Password" name="password" value="<?php echo $password; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" required=""></span>		
+										<input type="text" class="form-control mb-4" placeholder="Enter Password" id="password2" name="password" value="<?php echo $password; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></span>
+    									<span id="error_password2" class="text-danger"></span>
+
 									</li>
 
 									<li>
@@ -578,7 +658,7 @@ alert("cxvxc");
 									</li>
 
 									<li>
-										<input type="submit" class="ticker-btn" name="submit" value="Update profile" onclick="myFunction()">
+										<input type="submit" class="ticker-btn" name="submit" id="customerupdate" value="Update profile">
 									</li>
 
 
@@ -717,15 +797,17 @@ alert("cxvxc");
 										<h5>Job Nature: Full Day</h5>
 										<p class="address"><span class="lnr lnr-map"></span> <?php echo $row5[8];?> </p>
 										<p class="address"><span class="lnr lnr-database"></span> &#x20a8;
-										  <?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row5[17];?></p>
+										  <?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <strong style="color:<?php echo $color;?>;text-transform:capitalize;"> <?php echo $row5[17];?></strong></p>
 										
 										<?php 				
 											if($row5[17]=='unavailable')
 											{
+												$color='red';
 											    $class='x';
 											}
 											else
 											{
+												$color='green';
 												$class='';
 											}
 										?>	
@@ -975,6 +1057,7 @@ alert("cxvxc");
 			<script src="js/parallax.min.js"></script>		
 			<script src="js/mail-script.js"></script>	
 			<script src="js/main.js"></script>	
+			<script src="js/customerprofileedit.js"></script>
 		</form>
 		</body>
 	</html>

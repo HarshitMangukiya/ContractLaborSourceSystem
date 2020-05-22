@@ -47,7 +47,7 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/main.css">
 			<style type="text/css">
 			li.x{
-               pointer-events: none;
+               pointer-events: none;                   
 	           }
 
 			</style>
@@ -78,6 +78,7 @@ if(isset($_POST['logout']))
 				          </li>
 				         &nbsp &nbsp	
 				          <?php
+				          // $startdate='';
 				          if(isset($_SESSION['emailname']))
 				          {
 				          	$cid=$_SESSION['emailname'];
@@ -87,7 +88,7 @@ if(isset($_POST['logout']))
 							{
 								$name=$row[1]." ".$row[2];
 								// $imagename=$row[13];
-								$startdate=$row[14];
+								// $startdate=$row[14];
 								// echo $startdate;
 								if(empty($row[13]))
 								{
@@ -186,11 +187,13 @@ if(isset($_POST['logout']))
     <div class="modal-body">
 
     <p align="left">Email *
-    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" name="email" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '">
+    <input type="email" id="email" class="form-control mb-4" name="email" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"></p>
+    <span id="error_email" class="text-danger"></span>
 
     <!-- Password -->
     <p align="left">Password *
-    <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
+    <input type="password" id="password" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
+    <span id="error_password" class="text-danger"></span>
 
 
       <div class="d-flex justify-content-around">
@@ -207,7 +210,7 @@ if(isset($_POST['logout']))
         </div>
       </div>
 
-        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login">Log In</button>
+        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login">Log In</button>
 
         <p align="center">Don't Have An Account ?
 	    <a href="register.php">Sign up!</a>
@@ -239,7 +242,7 @@ if(isset($_POST['logout']))
 						<div class="banner-content col-lg-12">
 							<h1 class="text-white">
 								<span>1500+</span> Jobs posted last week	
-								<?php 
+<!-- 								<?php 
 echo $startdate;
 $p=30;
 $enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$p day"));
@@ -252,7 +255,7 @@ else
 {
 	echo "membership has expired";
 }
-?>			
+?> -->			
 							</h1>	
 							<!-- <form action="search.php" class="serach-form-area"> -->
 								<div class="row justify-content-center form-wrap">
@@ -602,10 +605,12 @@ else
 											<?php 
 											if($row[17]=='unavailable')
 											{
+												$color='red';
 											    $class='x';
 											}
 											else
 											{
+												$color='green';
 												$class='';
 											}
 											?>											
@@ -615,7 +620,7 @@ else
 									<p><h6><?php echo $row[15];?></h6></p>
 									<h5>Job Nature: Full Day</h5>
 									<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[8];?> </p>
-									<p class="address"><span class="lnr lnr-database"></span> &#x20a8; <?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row[17];?></p>
+									<p class="address"><span class="lnr lnr-database"></span> &#x20a8; <?php echo $row[18];?> &nbsp &nbsp &nbsp Status:<strong style="color:<?php echo $color;?>;text-transform:capitalize;"> <?php echo $row[17];?></strong></p>
 								</div>
 							</div>
 
@@ -906,15 +911,17 @@ else
 										<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[8];?> </p>
 
 										<p class="address"><span class="lnr lnr-database"></span>
-										&#x20a8; <?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row[17];?></p>
+										&#x20a8; <?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <strong style="color:<?php echo $color1;?>;text-transform:capitalize;"> <?php echo $row[17];?></strong></p>
 										
 										<?php 
 											if($row[17]=='unavailable')
 											{
+												$color1='red';
 											    $class='x';
 											}
 											else
 											{
+												$color1='green';
 												$class='';
 											}
 										?>
@@ -1193,6 +1200,8 @@ else
 			<script src="js/parallax.min.js"></script>		
 			<script src="js/mail-script.js"></script>	
 			<script src="js/main.js"></script>
+			<script src="js/login.js"></script>
+
 			</form>	
 		</body>
 	</html>
