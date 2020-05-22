@@ -43,6 +43,19 @@
       <link rel="stylesheet" href="../css/animate.min.css">
       <link rel="stylesheet" href="../css/owl.carousel.css">
       <link rel="stylesheet" href="../css/main.css">
+      <style type="text/css">
+        div.gallery{
+        /*border: 1px solid #777;*/
+        max-width:100%;
+        border-radius:5px;
+        position:relative; 
+        z-index:1;
+        /*box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px;*/ 
+        box-shadow: 2px 10px 20px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+
+      </style>
+
 
 <script src="../Labor/jquery.js"></script>
   <script type="text/javascript">
@@ -140,8 +153,8 @@ $('#state').on('change',function(){
         $folder=$row['id'];
       }
 
-      $firstname=$_POST['firstname'];
-      $lastname=$_POST['lastname'];
+      $firstname=ucfirst($_POST['firstname']);
+      $lastname=ucfirst($_POST['lastname']);
       $gender=$_POST['gender'];
       $age=$_POST['age'];
       $phone=$_POST['phone'];
@@ -151,7 +164,7 @@ $('#state').on('change',function(){
       $state=$_POST['state'];
       $city=$_POST['city'];
       $pincode=$_POST['pincode'];
-
+      $password=$_POST['confirmpassword'];
       $status='available';
       $charge=$_POST['charge'];
       $category=$_POST['category'];
@@ -176,10 +189,7 @@ $('#state').on('change',function(){
       }
 
      // $qry="insert into customer(c_firstname,c_lastname,c_email,c_phone,c_password,c_date) values(0,'$firstname','$lastname','$email','$phone','$password',NOW())";
-   if($_POST['password']==$_POST['confirmpassword'])
-   {
-        $password=$_POST['confirmpassword'];
-        // $errpassword="";
+
 
     $qry="insert into labor(l_id,l_firstname,l_lastname,l_gender,l_age,l_phone,l_aadharno,l_address,l_country,l_state,l_city,l_pincode,l_password,l_status,l_charge,l_date,l_categoryid,l_leaderid) values(0,'$firstname','$lastname','$gender','$age','$phone','$aadharno','$address','$country','$state','$city','$pincode','$password','$status','$charge',NOW(),'$category','$leaderid')";
 // echo $qry;
@@ -198,54 +208,294 @@ $('#state').on('change',function(){
         {
           echo "erro not insert customer";
         }
-    }
-    else
-    { 
-      echo "Enter the same password";
-    }
     
 }
     ?>
 
 <body style="overflow-x:hidden;">
+
+  <form method="post" enctype="multipart/form-data">
+
+        <header id="header" id="home" style="background-color:black;">
+          <div class="container">
+            <div class="row align-items-center justify-content-between d-flex">
+              <div id="logo">
+                <a href="index.php"><img src="../img/logo.png" alt="" title="" /></a>
+              </div>
+              <nav id="nav-menu-container">
+                <ul class="nav-menu">
+                  <li class="menu-active"><a href="index.php">Home</a></li>
+                  <li><a href="about-us.php">About Us</a></li>
+                  <!-- <li><a href="category.php">Category</a></li> -->
+                  <!-- <li><a href="price.php">Price</a></li> -->
+                  <!-- <li><a href="blog-home.html">Blog</a></li> -->
+                  <li><a href="contact.php">Contact</a></li>
+                  <li class="menu-has-children"><a href="#">Pages</a>
+                    <ul>
+                <!-- <li><a href="elements.html">elements</a></li> -->
+                <!-- <li><a href="search.php">search</a></li> -->
+                <li><a href="customerprofile.php">single</a></li>
+                    </ul>
+                  </li>
+                   &nbsp &nbsp  
+                  <?php
+                  if(isset($_SESSION['laborname']))
+                  {
+      
+                      $lid=$_SESSION['laborname'];
+                      $qry="select * from labor where l_id='$lid'";
+                      $res=mysqli_query($con,$qry);
+                      while($row=mysqli_fetch_row($res))
+                      {
+                        $folder=$row[0];
+                        $name=$row[1]." ".$row[2];
+                        if(empty($row[16]))
+                        {
+                          $imagename="../img/avatar-13.jpg";
+                        }
+                        else
+                        {
+                          $imagename="../Labor/labor_img/".$row[0].'/'.$row[16];
+                        }
+
+                        $status=$row[17];
+                          if($status=='available')
+                            {
+                              $color='green';
+                              $status1='available';
+                            }
+                            else
+                            {
+                              $color='red';
+                              $status1='unavailable';             
+                          }         
+                      }
+
+                    ?>
+                    <li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
+                    <ul>
+                <li>Signed in as</li>
+                <li><a href="profile.php"><?php echo $name;?></a></li>
+                <div class="dropdown-divider"></div>
+                <li><a href="profile.php">Your Profile</a></li>
+                <li><a href="#">Your Order</a></li>
+                <div class="dropdown-divider"></div>
+                <li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li>
+                    </ul>
+                  </li>
+
+                            <!-- Job Status logic --> 
+                <?php
+                      
+                if(isset($_POST['currentstatus']))
+                {
+                $status1=$_POST['currentstatus'];
+
+
+                   if($status1=='available')
+                   {
+                    $color='red';
+                   $status1='unavailable';
+                   }
+                   else
+                   {
+                    $color='green';
+                     $status1='available';              
+                   }
+
+
+                  $qry="update labor set l_status='$status1' where l_id='$lid'";
+                  // echo $qry;
+                    $res=mysqli_query($con,$qry);
+                    if($res>0)
+                    {
+                      //echo "update record into customer table";
+                    }   
+                    else
+                    {
+                      echo "erro not update customer";
+                    }
+
+                  }
+                ?>
+
+                  <li>
+                    <p style="color:white;margin-left:8px;">Job Status</p>
+                    <button type="submit" name="currentstatus" value="<?php echo $status1;?>" style="width:90px;height:30px;background-color:<?php echo $color;?>;color:white;border-width:1px;border-radius:5px;border:1px solid;position:relative; box-shadow:0 5px 20px rgba(0,0,0,0.2); ">
+                    <?php echo $status1;?></button>
+                  </li> 
+                    <!-- <li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li> -->
+                  <?php
+                  }
+                  else
+                  {?>
+                  <li><a class="ticker-btn" href="laborregister.php">Signup</a></li>
+                  <li><button type="button" class="ticker-btn" data-toggle="modal" data-target="#myModal" style="border-width:0px;">Login</button></li>
+                  
+
+                  <!-- <li><a class="ticker-btn" href="laborlogin.php">Login</a></li> -->
+                  <?php 
+                  }
+                  ?>
+                  
+               </ul>
+              </nav><!-- #nav-menu-container -->
+            </div>
+          </div>
+        </header> <!-- #header -->
+
+<!-- login page -->
+<div class="container">
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+
+        <h4 class="card-header info-color white-text text-center py-4" style="background-color: #17a2b8;color:white;" >
+        <div id="logo">
+            <img src="../img/logo.png" alt="" title="" align="left" />
+        </div> 
+          <!-- <div class="modal-header"> -->
+            <button type="button" class="close" data-dismiss="modal" style="color:black;">&times;</button>
+          <!-- </div> -->
+        </h4>
+        <hr>
+        <?php
+      if(isset($_POST['login']))
+      {
+        if(!empty($_POST['phone4']) && !empty($_POST['password4']))
+        {
+           
+          $phone=$_POST['phone4'];
+          $password=$_POST['password4'];
+
+          $qry="select * from labor where l_phone='$phone' and l_password='$password'";   
+          
+         //echo $qry;
+             if($res=mysqli_query($con,$qry))
+            {
+              if(mysqli_num_rows($res)==1)
+              {
+                  while($row=mysqli_fetch_row($res))
+                {
+                  $_SESSION['laborname']=$row[0];
+                  header("location:index.php"); 
+                }
+              }
+              else
+              {
+                header("location:index.php"); 
+                echo "Invalid Uasename or Password..."; 
+              }
+            }else
+            {
+              echo "Error while fetch database...";
+            }
+        }
+      }
+        ?>
+    
+    <div class="modal-body">
+
+    <p align="left">Contact Number *
+    <input type="text" id="phone1" class="form-control mb-4" name="phone4" placeholder="Enter Phone Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Phone Number'"></p> 
+    <span id="error_phone1" class="text-danger"></span>
+
+    <!-- Password -->
+    <p align="left">Password *
+    <input type="password" id="password1" class="form-control mb-4" name="password4" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
+    <span id="error_password1" class="text-danger"></span>
+
+      <div class="d-flex justify-content-around">
+        <!-- <div>
+           Remember me 
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="materialLoginFormRemember">
+            <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
+          </div>
+        </div> -->
+        <div>
+          <!-- Forgot password -->
+          <a href="#">Forgot password?</a>
+        </div>
+      </div>
+
+        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login1">Log In</button>
+
+        <p align="center">Don't Have An Account ?
+      <a href="laborregister.php">Sign up!</a>
+      </p>
+        </div>
+       <!--  <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              Register
+        </div> -->
+      </div>
+      
+    </div>
+  </div>  
+</div>
+<!-- login End -->
  
  <!-- Material form login -->
-<div class="row">
+<div class="row" style="margin-top:8%;margin-bottom:3%;">
   <div class="col-sm-4"></div>
-  <div class="col-sm-4">
-  <h4 class="card-header info-color white-text text-center py-4" style="background-color: #17a2b8;color:white;" >
+  
+  <div class="col-sm-4 gallery">
 
-    <div id="logo">
-    <img src="../img/logo.png" alt="" title="" align="left" />
-    <strong>Labor&nbsp Sign In</strong>
-    </div> 
-  </h4>
-  <!--Card content-->
-<br>
+    <div class="gallery" style="margin-top:15px;">
+      <h4 class="card-header info-color white-text text-center py-4" style="background-color: #17a2b8;color:white;border-radius:5px;" >
+        <div id="logo">
+        <img src="../img/logo.png" alt="" title="" align="left" />
+        <strong>Labor&nbsp Sign Up</strong>
+        </div> 
+      </h4>
+    </div>
+    <!--Card content-->
+    
+    <br>
     <!-- Form -->
     <form class="text-center" style="color:#757575;" method="post" enctype="multipart/form-data" >
     <p align="left">First Name *   
-    <input type="text" class="form-control mb-4" placeholder="Enter First name" name="firstname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter First name '" required=""></p>
+    <input type="text" class="form-control mb-4" placeholder="Enter First name" id="firstname3" name="firstname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter First name '" ></p>
+    <span id="error_firstname3" class="text-danger"></span>
+
 
     <p align="left">Last Name *
-    <input type="text" class="form-control mb-4" placeholder="Enter Last name" name="lastname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Last name '" required=""></p>
-<div class="form-control mb-4">
-    gender: 
-    <input type="radio" name="gender" value="female"> Female
-    <input type="radio" name="gender" value="male"> male
-    &nbsp&nbsp&nbsp&nbsp
-    Age:
-    <input type="text" class="col-sm-4" placeholder="Enter Age" name="age" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Age '" required="" style="border-radius:4px;border-width:1px;">
-</div>
+    <input type="text" class="form-control mb-4" placeholder="Enter Last name" id="lastname3" name="lastname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Last name '" ></p>
+    <span id="error_lastname3" class="text-danger"></span>
+
+
+    <div class="form-control mb-4">
+      gender: 
+      <input type="radio" name="gender" id="genderfemale" value="female"> Female
+      <input type="radio" name="gender" id="gendermale" value="male"> male
+      <span id="error_gender" class="text-danger"></span>
+
+      &nbsp&nbsp&nbsp&nbsp
+      Age:
+      <input type="text" class="col-sm-4" placeholder="Enter Age" name="age" id="age3" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Age '" style="border-radius:4px;border-width:1px;">
+      <span id="error_age3" class="text-danger"></span>
+
+    </div>
 
     <p align="left">Contact Number *
-    <input type="text" class="form-control mb-4" placeholder="Enter Phone Number" name="phone" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Phone Number'" required=""></p>
+    <input type="text" class="form-control mb-4" placeholder="Enter Phone Number" id="phone3" name="phone" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Phone Number'" ></p>
+    <span id="error_phone3" class="text-danger"></span>
+
 
     <p align="left">Aadhar Number *
-    <input type="text" class="form-control mb-4" placeholder="Enter Aadhar Number" name="aadharno" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Aadhar Number'" required=""></p>
+    <input type="text" class="form-control mb-4" placeholder="Enter Aadhar Number" name="aadharno" id="aadharno3" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Aadhar Number'" ></p>
+    <span id="error_aadharno3" class="text-danger"></span>
+
     
     <p align="left">Home Address *
-    <input type="text" class="form-control mb-4" placeholder="Enter Address" name="address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Address'" required=""></p>
+    <input type="text" class="form-control mb-4" placeholder="Enter Address" id="address3" name="address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Address'" ></p>
+    <span id="error_address3" class="text-danger"></span>
+
 
 <div class="form-control col-sm-12">
 <?php
@@ -280,22 +530,28 @@ $rowCount = $query->num_rows;
 
 </select>
 </p>
+    <span id="error_country3" class="text-danger"></span>
+
 
 <p align="left">State Name:
 <select name="state" id="state" style="border-radius:4px;border-width:1px;">
 <option value="">Select state first</option>
 </select>
 </p>
+<span id="error_state3" class="text-danger"></span>
+
 <p align="left">City Name:
 <select name="city" id="city" style="border-radius:4px;border-width:1px;">
 <option value="">Select state first</option>
 </select></p>
+<span id="error_city3" class="text-danger"></span>
+
 </div>
 <br>
 
 <div class="form-control col-sm-12">
 <p align="left">Select Category:
-<select name="category" style="border-radius:4px;border-width:1px;">
+<select name="category" id="category3" style="border-radius:4px;border-width:1px;">
 <option value disabled selected>select category</option>
     <?php
       $qry="select * from category"; 
@@ -310,20 +566,30 @@ $rowCount = $query->num_rows;
     ?>
 </select>
 </p>
+<span id="error_category3" class="text-danger"></span>
+
 </div>
 <br>
     <p align="left">Pincode Number *
-    <input type="text" class="form-control mb-4" placeholder="Enter Pincode Number" name="pincode" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Pincode Number '" required=""></p>
+    <input type="text" class="form-control mb-4" placeholder="Enter Pincode Number" name="pincode" id="pincode3" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Pincode Number '" ></p>
+    <span id="error_pincode3" class="text-danger"></span>
+
 
     <p align="left">Your Per Day Charge *
-    <input type="text" class="form-control mb-4" placeholder="Enter Your Charge" name="charge" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Your Charge '" required=""></p>
+    <input type="text" class="form-control mb-4" placeholder="Enter Your Charge" id="charge3" name="charge" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Your Charge '"></p>
+    <span id="error_charge3" class="text-danger"></span>
+
 
     <!-- Password -->
     <p align="left">Password *
-    <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Enter Password" name="password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password '" required=""></p>
+    <input type="password" class="form-control mb-4" placeholder="Enter Password" id="password3" name="password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password '" ></p>
+    <span id="error_password3" class="text-danger"></span>
+
 
     <p align="left">Confirm Password *
-    <input type="password" class="form-control mb-4" placeholder="Enter Confirm password" name="confirmpassword" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Confirm Password '" required=""></p>
+    <input type="password" class="form-control mb-4" placeholder="Enter Confirm password" id="confirmpassword3" name="confirmpassword" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Confirm Password '" ></p>
+    <span id="error_confirmpassword3" class="text-danger"></span>
+
 
     <small id="materialRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
      At least 6 characters and 1 digit
@@ -337,11 +603,116 @@ $rowCount = $query->num_rows;
     <div id="dvPassport" style="display: none">
     
     <p align="left">Leader Id *
-    <input type="text" class="form-control mb-4" placeholder="Enter Leader Id" name="leaderid" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Leader Id'"></p>
+    <input type="text" class="form-control mb-4" placeholder="Enter Leader Id" name="leaderid" id="leaderid3" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Leader Id'"></p>
+    <span id="error_leaderid3" class="text-danger"></span>
+
     </div>
    
       <!-- Sign in button -->
-      <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="register">Sign In</button>
+    <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="register" id="signup3">Sign Up</button>
+
+     </div>
+<div class="col-sm-4"></div>
+    </div>
+    </form>
+
+
+          <!-- Start callto-action Area -->
+      <section class="callto-action-area section-gap" id="join">
+        <div class="container">
+          <div class="row d-flex justify-content-center">
+            <div class="menu-content col-lg-9">
+              <div class="title text-center">
+                <h1 class="mb-10 text-white">Join us today without any hesitation</h1>
+                <p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                <a class="primary-btn" href="../register.php">I am a Customer</a>
+                <a class="primary-btn" href="laborregister.php">I am a Labor</a>
+              </div>
+            </div>
+          </div>  
+        </div>  
+      </section>
+      <!-- End calto-action Area -->
+
+
+
+
+      <!-- start footer Area -->    
+      <footer class="footer-area section-gap">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3  col-md-12">
+              <div class="single-footer-widget">
+                <h6>Top Products</h6>
+                <ul class="footer-nav">
+                  <li><a href="#">Managed Website</a></li>
+                  <li><a href="#">Manage Reputation</a></li>
+                  <li><a href="#">Power Tools</a></li>
+                  <li><a href="#">Marketing Service</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-6  col-md-12">
+              <div class="single-footer-widget newsletter">
+                <h6>Newsletter</h6>
+                <p>You can trust us. we only send promo offers, not a single spam.</p>
+                <div id="mc_embed_signup">
+                  <form target="_blank" novalidate="true" method="get" class="form-inline">
+
+                    <div class="form-group row" style="width: 100%">
+                      <div class="col-lg-8 col-md-12">
+                        <input name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '" type="email">
+                        <div style="position: absolute; left: -5000px;">
+                          <!-- <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text"> -->
+                        </div>
+                      </div> 
+                    
+                      <div class="col-lg-4 col-md-12">
+                        <button class="nw-btn primary-btn">Subscribe<span class="lnr lnr-arrow-right"></span></button>
+                      </div> 
+                    </div>    
+                    <div class="info"></div>
+                  </form>
+                </div>    
+              </div>
+            </div>
+            <div class="col-lg-3  col-md-12">
+              <div class="single-footer-widget mail-chimp">
+                <h6 class="mb-20">Instragram Feed</h6>
+                <ul class="instafeed d-flex flex-wrap">
+                  <li><img src="../img/i1.jpg" alt=""></li>
+                  <li><img src="../img/i2.jpg" alt=""></li>
+                  <li><img src="../img/i3.jpg" alt=""></li>
+                  <li><img src="../img/i4.jpg" alt=""></li>
+                  <li><img src="../img/i5.jpg" alt=""></li>
+                  <li><img src="../img/i6.jpg" alt=""></li>
+                  <li><img src="../img/i7.jpg" alt=""></li>
+                  <li><img src="../img/i8.jpg" alt=""></li>
+                </ul>
+              </div>
+            </div>            
+          </div>
+
+          <div class="row footer-bottom d-flex justify-content-between">
+            <p class="col-lg-8 col-sm-12 footer-text m-0 text-white">
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+<!-- Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> -->
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+            <div class="col-lg-4 col-sm-12 footer-social">
+              <a href="#"><i class="fa fa-facebook"></i></a>
+              <a href="#"><i class="fa fa-twitter"></i></a>
+              <a href="#"><i class="fa fa-dribbble"></i></a>
+              <a href="#"><i class="fa fa-behance"></i></a>
+            </div>
+          </div>
+        </div>
+      </footer>
+      <!-- End footer Area -->    
+
+
+
+
 
 
       <script src="../js/vendor/jquery-2.2.4.min.js"></script>
@@ -359,17 +730,10 @@ $rowCount = $query->num_rows;
       <script src="../js/parallax.min.js"></script>    
       <script src="../js/mail-script.js"></script> 
       <script src="../js/main.js"></script>
+      <script src="../js/login.js"></script>
+      <script src="../js/signup.js"></script>
+
       
-      <!-- </div> -->
-  </div>
-<div class="col-sm-4"></div>
-
-</div>
-
-    </form>
-    <!-- Form -->
-
-<!-- Material form login -->
-
+</form>
 </body>
 </html>

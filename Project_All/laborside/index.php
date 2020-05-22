@@ -60,22 +60,23 @@ if(isset($_POST['logout']))
 				        <ul class="nav-menu">
 				          <li class="menu-active"><a href="index.php">Home</a></li>
 				          <li><a href="about-us.php">About Us</a></li>
-				          <li><a href="category.php">Category</a></li>
+				          <!-- <li><a href="category.php">Category</a></li> -->
 				          <!-- <li><a href="price.php">Price</a></li> -->
 				          <!-- <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="contact.php">Contact</a></li>
 				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
 								<!-- <li><a href="elements.html">elements</a></li> -->
-								<li><a href="search.php">search</a></li>
+								<!-- <li><a href="search.php">search</a></li> -->
 								<li><a href="customerprofile.php">single</a></li>
 				            </ul>
 				          </li>
 				           &nbsp &nbsp	
 				          <?php
+				          
+				          $lid='';				          
 				          if(isset($_SESSION['laborname']))
 				          {
-    
 				          	$lid=$_SESSION['laborname'];
 				          	$qry="select * from labor where l_id='$lid'";
 							$res=mysqli_query($con,$qry);
@@ -149,7 +150,7 @@ if(isset($_POST['logout']))
 							        echo "erro not update customer";
 						        }
 
-						    	}
+						    }
 					    	?>
 
 				          <li>
@@ -234,12 +235,13 @@ if(isset($_POST['logout']))
     <div class="modal-body">
 
     <p align="left">Contact Number *
-    <input type="text" id="defaultLoginFormphone" class="form-control mb-4" name="phone" placeholder="Enter Phone Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Phone Number'"></p>
+    <input type="text" id="phone1" class="form-control mb-4" name="phone" placeholder="Enter Phone Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Phone Number'"></p>
+    <span id="error_phone1" class="text-danger"></span>
 
     <!-- Password -->
     <p align="left">Password *
-    <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
-
+    <input type="password" id="password1" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
+    <span id="error_password1" class="text-danger"></span>
 
       <div class="d-flex justify-content-around">
         <!-- <div>
@@ -255,7 +257,7 @@ if(isset($_POST['logout']))
         </div>
       </div>
 
-        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login">Log In</button>
+        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login1">Log In</button>
 
         <p align="center">Don't Have An Account ?
 	    <a href="laborregister.php">Sign up!</a>
@@ -270,6 +272,7 @@ if(isset($_POST['logout']))
     </div>
   </div>  
 </div>
+<!-- login End -->
 
 			<!-- start banner Area -->
 			<form method="post" action="search.php" enctype="multipart/form-data">
@@ -559,6 +562,23 @@ if(isset($_POST['logout']))
 			<!-- End feature-cat Area -->
 			
 			<?php
+			if(isset($_REQUEST['upid']))
+			{
+				$qry6="update hiredlabor set h_flag='3' where h_id=".$_REQUEST['upid'];
+				$res6=mysqli_query($con,$qry6);
+				if($res6>0)
+				{
+					// echo "update record into user table";
+				   // header("location:hiredlaboradmin.php");
+				}		
+				else
+				{
+					echo "error not update ";
+				}
+			}
+
+
+
 			if(isset($_REQUEST['hid']))
 			{
 
@@ -581,17 +601,29 @@ if(isset($_POST['logout']))
 					echo "error not update ";
 				}
 
-			    $qry3="delete from hiredlabor where h_id=".$_REQUEST['hid'];
-			    $res3=mysqli_query($con,$qry3);
-				if($res3==1)
+				$qry5="update hiredlabor set h_flag='2' where h_id=".$_REQUEST['hid'];
+				$res5=mysqli_query($con,$qry5);
+				if($res5>0)
 				{
-					// echo "delete record from hiredlabor table";
-					// header("location:index.php");	
-				}
+					// echo "update record into user table";
+				   // header("location:hiredlaboradmin.php");
+				}		
 				else
 				{
-					echo "not delete record";
+					echo "error not update ";
 				}
+
+			 //    $qry3="delete from hiredlabor where h_id=".$_REQUEST['hid'];
+			 //    $res3=mysqli_query($con,$qry3);
+				// if($res3==1)
+				// {
+				// 	// echo "delete record from hiredlabor table";
+				// 	// header("location:index.php");	
+				// }
+				// else
+				// {
+				// 	echo "not delete record";
+				// }
 			}
 			?>
 
@@ -631,11 +663,20 @@ if(isset($_POST['logout']))
 							$res=mysqli_query($con,$qry);
 							while($row=mysqli_fetch_row($res))
 							{
+								if(empty($row[20]))
+											{
+												$imagename1="../img/avatar-13.jpg";
+
+											}
+											else
+											{
+												$imagename1="../Labor/customer_img/".$row[20];
+											}			
 							?>
 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
-									<a href="customerprofile.php?cid=<?php echo $row[6]; ?>">
-									<img src="../labor/customer_img/<?php echo $row[19]; ?>" width="100" height="100" >
+									<a href="customerprofile.php?cid=<?php echo $row[7]; ?>">
+									<img src="<?php echo $imagename1; ?>" width="100" height="100" >
 								    </a>
 								</div>
 								<!-- &nbsp &nbsp &nbsp -->
@@ -648,19 +689,26 @@ if(isset($_POST['logout']))
 												<div style="text-align:right;" class="col-sm-6"><h5><?php echo $row[5];?></h5></div>	
 											</div>		
 																	
-											<a href="customerprofile.php?cid=<?php echo $row[6]; ?>" class="text-uppercase"><h3>
-												<?php echo $row[7].' '.$row[8];?> 
+											<a href="customerprofile.php?cid=<?php echo $row[7]; ?>" class="text-uppercase"><h3>
+												<?php echo $row[8].' '.$row[9];?> 
 											</h3></a>
-		                                    <h5>Phone Number: <?php echo $row[10];?></h5> 
-											<h5>E-mail: <?php echo $row[9];?></h5>	
+		                                    <h5>Phone Number: <?php echo $row[11];?></h5> 
+											<h5>E-mail: <?php echo $row[10];?></h5>	
 											
 										</div>
 									</div>
-									<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[11];?> </p>
+									<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[12];?> </p>
 									<ul class="btns">
-										<li><a href="#" style="color:green;">Confirm Job</a></li>
-										<li><a href="index.php?hid=<?php echo $row[0]; ?>" style="color:red;" onclick="return confirm('Are you sure to delete job request ?')?true:false;">Cancle Job</a></li>								
+										<li><a href="index.php?upid=<?php echo $row[0]; ?>" style="color:green;" onclick="return confirm('Are you sure to delete job request ?')?true:false;">Confirm Job</a></li>
+										<li><a href="index.php?hid=<?php echo $row[0]; ?>" style="color:red;" onclick="return confirm('Are you sure to delete job request ?')?true:false;">Cancel Job</a></li>								
 									</ul>
+									<?php
+								 	if($row[6]==1)
+									{?>
+									<h4 style="color:red;">Customer canceled your job.</h4>
+									<?php
+									}
+									?>
 								</div>
 							</div>
 
@@ -1214,6 +1262,8 @@ if(isset($_POST['logout']))
 			<script src="../js/parallax.min.js"></script>		
 			<script src="../js/mail-script.js"></script>	
 			<script src="../js/main.js"></script>
+			<script src="../js/login.js"></script>
+
 			</form>	
 		</body>
 	</html>

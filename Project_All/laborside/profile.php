@@ -55,7 +55,7 @@ if(isset($_POST['logout']))
 			}
 
 			div.gallery:hover {
-			  /*border: 1px solid #777;*/
+			  border: 1px solid #777;
 			  max-width:100%;
 			  border-radius:4px;
 			  position:relative; 
@@ -235,6 +235,10 @@ if(isset($_POST['logout']))
 			{
 				$imagename1="../Labor/labor_img/".$row[0].'/'.$row[16];
 			}
+			
+			$register4 = date("d-m-Y", strtotime($row[19]));  
+
+
 			?>
 						<div class="col-lg-8 post-list">
 							<div class="single-post d-flex flex-row">
@@ -564,7 +568,7 @@ if(isset($_POST['logout']))
 
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
-										<span>Registration Date: <?php echo $row[19]; ?></span>		
+										<span>Registration Date: <?php echo $register4; ?></span>		
 									</li>
 									<!-- <li>	
 										<img src="img/pages/list.jpg" alt="">

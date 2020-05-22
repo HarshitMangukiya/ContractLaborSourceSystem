@@ -532,66 +532,82 @@ function myFunction() {
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>First name:
-									    <input type="text" class="form-control mb-4" placeholder="Enter First name" name="firstname" value="<?php echo $firstname; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter First name'" required="">
+									    <input type="text" class="form-control mb-4" placeholder="Enter First name" id="firstname3" name="firstname" value="<?php echo $firstname; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter First name'" required="">
 										</span>
+    									<span id="error_firstname3" class="text-danger"></span>
 									</li>
 
 
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Last name: 
-                                        <input type="text" class="form-control mb-4" placeholder="Enter Last name" name="lastname" value="<?php echo $lastname; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Last name'" required="">
+                                        <input type="text" class="form-control mb-4" placeholder="Enter Last name" id="lastname3" name="lastname" value="<?php echo $lastname; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Last name'" required="">
 										</span>
+    									<span id="error_lastname3" class="text-danger"></span>
+
 									</li>
 
 
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Gender : 
-                                        <input type="radio" name="gender" value="female" 
+                                        <input type="radio" name="gender" value="female" id="genderfemale" 
 										<?php if (isset($gender) && $gender=="female") echo "checked";?> >Female
-										<input type="radio" name="gender" value="male"
+										<input type="radio" name="gender" value="male" id="gendermale"
 										<?php if (isset($gender) && $gender=="male") echo "checked";?>>Male
 										</span>
+    									<span id="error_gender" class="text-danger"></span>
 									</li>
 
 
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Age: 
-                                        <input type="text" class="form-control mb-4" placeholder="Enter age" name="age" value="<?php echo $age; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Age'" required="">
+                                        <input type="text" class="form-control mb-4" placeholder="Enter age" id="age3" name="age" value="<?php echo $age; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Age'" required="">
 										</span>
+    									<span id="error_age3" class="text-danger"></span>
+
 									</li>
 
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>About Me:
-										<input type="text" class="form-control mb-4" placeholder="Enter About Me" name="about" value="<?php echo $about; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter About Me'" required="">
+										<input type="text" class="form-control mb-4" placeholder="Enter About Me" id="about3" name="about" value="<?php echo $about; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter About Me'" required="">
 										</span>
+    									<span id="error_about3" class="text-danger"></span>
+
 									</li>
 
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Email:
-										<input type="email" class="form-control mb-4" placeholder="Enter E-mail" name="email" value="<?php echo $email; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter E-mail'" required=""></span>
+										<input type="email" class="form-control mb-4" placeholder="Enter E-mail" id="email3" name="email" value="<?php echo $email; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter E-mail'" required=""></span>
+    									<span id="error_email3" class="text-danger"></span>
+
 									</li>
 
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Aadhar No.:
-										<input type="text" class="form-control mb-4" placeholder="Enter Aadhar Number" name="aadharno" value="<?php echo $aadharno; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Aadhar Number'" required=""></span>
+										<input type="text" class="form-control mb-4" placeholder="Enter Aadhar Number" id="aadharno3" name="aadharno" value="<?php echo $aadharno; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Aadhar Number'" required=""></span>
+    									<span id="error_aadharno3" class="text-danger"></span>
+
 									</li>
 
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Address:
-										<input type="text" class="form-control mb-4" placeholder="Enter Address" name="address" value="<?php echo $address; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Address'" required=""></span>
+										<input type="text" class="form-control mb-4" placeholder="Enter Address" id="address3" name="address" value="<?php echo $address; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Address'" required=""></span>
+    									<span id="error_address3" class="text-danger"></span>
+
 									</li>
 
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Location:
-										<input type="text" class="form-control mb-4" placeholder="Enter Location" name="location" value="<?php echo $location; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Location'" required=""></span>
+										<input type="text" class="form-control mb-4" placeholder="Enter Location" id="location3" name="location" value="<?php echo $location; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Location'" required=""></span>
+    									<span id="error_location3" class="text-danger"></span>
+
 									</li>
 
 									<li>
@@ -627,6 +643,7 @@ function myFunction() {
 										?>
 
                                     </select>
+    									<span id="error_country3" class="text-danger"></span>
 
 									</li>
 
@@ -647,6 +664,8 @@ function myFunction() {
 										      }   
 										    ?>
 										</select>
+    									<span id="error_state3" class="text-danger"></span>
+
 
 									</li>
 
@@ -667,19 +686,25 @@ function myFunction() {
 										        ?>
 
 										</select>
+    									<span id="error_city3" class="text-danger"></span>
+
 
 									</li>
 
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Pincode: 
-										<input type="text" class="form-control mb-4" placeholder="Enter Pincode" name="pincode" value="<?php echo $pincode; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Pincode'" required=""></span>
+										<input type="text" class="form-control mb-4" placeholder="Enter Pincode" id="pincode3" name="pincode" value="<?php echo $pincode; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Pincode'" required=""></span>
+    									<span id="error_pincode3" class="text-danger"></span>
+
 									</li>
 
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Password: 
-										<input type="text" class="form-control mb-4" placeholder="Enter Password" name="password" value="<?php echo $password; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" required=""></span>		
+										<input type="text" class="form-control mb-4" placeholder="Enter Password" id="password3" name="password" value="<?php echo $password; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" required=""></span>
+    									<span id="error_password3" class="text-danger"></span>
+
 									</li>
 
 									<li>
@@ -705,13 +730,15 @@ function myFunction() {
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Charge: 
-										<input type="text" class="form-control mb-4" placeholder="Enter  Your Per day Charge" name="charge" value="<?php echo $charge; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Your Per day Charge'" required=""></span>
+										<input type="text" class="form-control mb-4" placeholder="Enter  Your Per day Charge" id="charge3" name="charge" value="<?php echo $charge; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Your Per day Charge'" required=""></span>
+    									<span id="error_charge3" class="text-danger"></span>
+
 									</li>
 
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Category: 
-										<select name="category" style="border-radius:5px;">
+										<select name="category" id="category3" style="border-radius:5px;">
 										<option value disabled selected>select category</option>
 										    <?php
 										      $qry="select * from category"; 
@@ -734,17 +761,21 @@ function myFunction() {
 										    ?>
 										</select>
 										</span>
+    									<span id="error_category3" class="text-danger"></span>
+
 									</li>
 
 
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Leader Id: 
-										<input type="text" class="form-control mb-4" placeholder="Enter leader Id" name="leaderid" value="<?php echo $leaderid1; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Leader Id'"></span>
+										<input type="text" class="form-control mb-4" placeholder="Enter leader Id" id="leaderid3" name="leaderid" value="<?php echo $leaderid1; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Leader Id'"></span>
+    									<span id="error_leaderid3" class="text-danger"></span>
+
 									</li>
 
 									<li>
-										<input type="submit" class="ticker-btn" name="submit" value="Update profile" >
+										<input type="submit" class="ticker-btn" id="laborupdate" name="submit" value="Update profile" >
 									</li>
 
 <!-- 
@@ -1124,7 +1155,9 @@ function myFunction() {
 			<script src="../js/jquery.nice-select.min.js"></script>			
 			<script src="../js/parallax.min.js"></script>		
 			<script src="../js/mail-script.js"></script>	
-			<script src="../js/main.js"></script>	
+			<script src="../js/main.js"></script>
+			<script src="../js/profileedit.js"></script>
+
 		</form>
 		</body>
 	</html>

@@ -59,14 +59,14 @@ if(isset($_POST['logout']))
 				        <ul class="nav-menu">
 				          <li class="menu-active"><a href="index.php">Home</a></li>
 				          <li><a href="about-us.php">About Us</a></li>
-				          <li><a href="category.php">Category</a></li>
+				          <!-- <li><a href="category.php">Category</a></li> -->
 				          <!-- <li><a href="price.html">Price</a></li> -->
 				          <!-- <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="contact.php">Contact</a></li>
 				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
 								<!-- <li><a href="elements.html">elements</a></li> -->
-								<li><a href="search.php">search</a></li>
+								<!-- <li><a href="search.php">search</a></li> -->
 								<li><a href="customerprofile.php">single</a></li>
 
 				            </ul>
@@ -122,6 +122,7 @@ if(isset($_POST['logout']))
 			    </div>
 			  </header><!-- #header -->
 
+<!-- login page -->
 <div class="container">
 
   <!-- Modal -->
@@ -178,12 +179,13 @@ if(isset($_POST['logout']))
     <div class="modal-body">
 
     <p align="left">Contact Number *
-    <input type="text" id="defaultLoginFormphone" class="form-control mb-4" name="phone" placeholder="Enter Phone Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Phone Number'"></p>
+    <input type="text" id="phone1" class="form-control mb-4" name="phone" placeholder="Enter Phone Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Phone Number'"></p>
+    <span id="error_phone1" class="text-danger"></span>
 
     <!-- Password -->
     <p align="left">Password *
-    <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
-
+    <input type="password" id="password1" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
+    <span id="error_password1" class="text-danger"></span>
 
       <div class="d-flex justify-content-around">
         <!-- <div>
@@ -199,7 +201,7 @@ if(isset($_POST['logout']))
         </div>
       </div>
 
-        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login">Log In</button>
+        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login1">Log In</button>
 
         <p align="center">Don't Have An Account ?
 	    <a href="laborregister.php">Sign up!</a>
@@ -214,6 +216,8 @@ if(isset($_POST['logout']))
     </div>
   </div>  
 </div>
+<!-- login End -->
+
 
 			<!-- start banner Area -->
 			<section class="banner-area relative" id="home">	
@@ -239,7 +243,7 @@ if(isset($_POST['logout']))
                    
     if(isset($_REQUEST['cid']))
     {
-	$qry="select * from Customer where c_id=".$_REQUEST['cid'];
+	$qry="select * from customer where c_id=".$_REQUEST['cid'];
 	$res=mysqli_query($con,$qry);
 	while($row=mysqli_fetch_row($res))
 		{
@@ -251,12 +255,15 @@ if(isset($_POST['logout']))
 			else
 			{	
 				$imagename1="../Labor/customer_img/".$row[13];
+				
 			}
+			$register1 = date("d-m-Y", strtotime($row[14]));  
+
 			?>
 						<div class="col-lg-8 post-list">
 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
-									<img src="<?php echo $row[13]; ?>" width="100px" height=100 alt="">
+									<img src="<?php echo $imagename1; ?>" width="100px" height="100px">
 
 <!--  									<ul class="tags">
 										<li>
@@ -427,7 +434,7 @@ if(isset($_POST['logout']))
 
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
-										<span>Registration Date: <?php echo $row[14]; ?></span>		
+										<span>Registration Date: <?php echo $register1; ?></span>		
 									</li>
 									<!-- <li>	
 										<img src="img/pages/list.jpg" alt="">
@@ -807,7 +814,9 @@ if(isset($_POST['logout']))
 			<script src="../js/jquery.nice-select.min.js"></script>			
 			<script src="../js/parallax.min.js"></script>		
 			<script src="../js/mail-script.js"></script>	
-			<script src="../js/main.js"></script>	
+			<script src="../js/main.js"></script>
+			<script src="../js/login.js"></script>
+
 		</form>
 		</body>
 	</html>
