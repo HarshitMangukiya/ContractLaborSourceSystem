@@ -120,18 +120,18 @@ $('#state').on('change',function(){
 </script>
 <script type="text/javascript">
 
-function myFunction() {
-	alert("hello"); 
-  // location.replace("index.php");
-  window.location.href ="index.php";
+// function myFunction() {
+// 	alert("hello"); 
+//   // location.replace("index.php");
+//   window.location.href ="index.php";
    
-}
+// }
 
 
 </script>
 		</head>
 		<body>
-            <form method="post" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data" action="profile.php">
 			  <header id="header" id="home">
 			    <div class="container">
 			    	<div class="row align-items-center justify-content-between d-flex">
@@ -269,7 +269,7 @@ function myFunction() {
 				</div>
 			</section>
 			<!-- End banner Area -->	
-				
+		
 			<!-- Start post Area -->
 			<section class="post-area section-gap">
 				<div class="container">
@@ -400,131 +400,7 @@ function myFunction() {
 
     }
 
-
-	if(isset($_POST['submit']))
-    {
-
-	  $firstname=$_POST['firstname'];
-      $lastname=$_POST['lastname'];
-      $gender=$_POST['gender'];
-      $age=$_POST['age'];
-      $email=$_POST['email'];
-      // $phone=$_POST['phone'];
-      $aadharno=$_POST['aadharno'];
-      $address=$_POST['address'];
-      $location=$_POST['location'];
-      $country=$_POST['country'];
-      $state=$_POST['state'];
-      $city=$_POST['city'];
-      $pincode=$_POST['pincode'];
-      $password=$_POST['password'];
-      $about=$_POST['about'];
-      
-      	  
-      $path="../Labor/labor_img/";
-      
-   if($_FILES["fimage"]["name"]!=null)
-      {
-      $oldimage=$path.$folder.'/'.$fimage;
-      echo $oldimage;
-      unlink($oldimage);
-
-      $target_file = $path.basename($_FILES["fimage"]["name"]);
-      // Select file type
-      $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-      // Valid file extensions
-      $extensions_arr = array("jpg","jpeg","png","gif");
-      // Check extension  
-      $imgSize = $_FILES['fimage']['size'];
-          if(in_array($imageFileType,$extensions_arr) )
-          {
-
-              if($imgSize < 5000000)   
-              {
-
-                $myimg=time().$_FILES['fimage']['name'];
-                echo $myimg;
-
-                $targetpath=$path.$folder."/".$myimg;
-                if(move_uploaded_file($_FILES['fimage']['tmp_name'],$targetpath))
-                {
-                  // echo "insert image";
-                }
-           
-              }
-              else{
-                echo "Sorry, your file is too large.";
-              }
-                
-          }
-          else
-          {
-            echo "please Select valid extention front image file";
-          }
-        }
-        else
-        { 
-          $flag=1;
-        }
-
-      // $status=$_POST['status'];
-      $charge=$_POST['charge'];
-      $categoryid=$_POST['category'];
-
-	         // $leaderid=$_POST['leaderid'];	
- 
-	     if(!empty($_POST['leaderid']))
-	    {   
-		    if(isset($_POST['leaderid']))
-		    {
-		      	$le=$_POST['leaderid'];
-		      	$qry="select * from labor where l_id='$le'"; 
-			    $res=mysqli_query($con,$qry);
-		        if(mysqli_num_rows($res)==1)
-		        {
-		         $leaderid=$_POST['leaderid'];	
-		         // echo "dsvcccv";
-		        }
-		      	else
-		     	{
-		      		echo "Enter the another Leader Id";
-		            $leaderid=$leaderid1;	
-
-		     	}
-		    }
-        }
-
-
-
-
-    if($flag==1)
-    {  
-      $qry="update labor set l_firstname='$firstname',l_lastname='$lastname',l_gender='$gender',l_age='$age',l_email='$email',l_aadharno='$aadharno',l_address='$address',l_location='$location',l_country='$country',l_state='$state',l_city='$city',l_pincode='$pincode',l_password='$password',l_about='$about',l_charge='$charge',l_categoryid='$categoryid',l_leaderid='$leaderid' where l_id='$lid'";
-      $flag=0;
-      // echo $qry;
-    }
-    else
-    {
-      $qry="update labor set l_firstname='$firstname',l_lastname='$lastname',l_gender='$gender',l_age='$age',l_email='$email',l_aadharno='$aadharno',l_address='$address',l_location='$location',l_country='$country',l_state='$state',l_city='$city',l_pincode='$pincode',l_password='$password',l_about='$about',l_image='$myimg',l_charge='$charge',l_categoryid='$categoryid',l_leaderid='$leaderid' where l_id='$lid'";
-      // echo $qry;
-
-    }
-      $res=mysqli_query($con,$qry);
-        if($res>0)
-        {
-          echo "update record into customer table";
-           // header("location:index.php");
-        }   
-        else
-        {
-          echo "erro not update customer";
-        }
-    
-
-    }
-    
-  
-  ?>
+?>
 
 
 								
@@ -550,11 +426,11 @@ function myFunction() {
 
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
-										<span>Gender : 
+										<span>Gender :      
                                         <input type="radio" name="gender" value="female" id="genderfemale" 
-										<?php if (isset($gender) && $gender=="female") echo "checked";?> >Female
+										<?php if (isset($gender) && $gender=="female") echo "checked";?> > Female
 										<input type="radio" name="gender" value="male" id="gendermale"
-										<?php if (isset($gender) && $gender=="male") echo "checked";?>>Male
+										<?php if (isset($gender) && $gender=="male") echo "checked";?>> Male
 										</span>
     									<span id="error_gender" class="text-danger"></span>
 									</li>
@@ -775,7 +651,7 @@ function myFunction() {
 									</li>
 
 									<li>
-										<input type="submit" class="ticker-btn" id="laborupdate" name="submit" value="Update profile" >
+										<input type="submit" class="ticker-btn" id="laborupdate" name="xx" value="Update profile" >
 									</li>
 
 <!-- 

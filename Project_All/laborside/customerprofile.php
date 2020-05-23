@@ -96,7 +96,7 @@ if(isset($_POST['logout']))
 				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
 				            <ul>
 								<li>Signed in as</li>
-								<li><a href="single.php"><?php echo $name;?></a></li>
+								<li><a href="profile.php"><?php echo $name;?></a></li>
 								<div class="dropdown-divider"></div>
 								<li><a href="profile.php">Your Profile</a></li>
 								<li><a href="#">Your Order</a></li>
@@ -263,7 +263,7 @@ if(isset($_POST['logout']))
 						<div class="col-lg-8 post-list">
 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
-									<img src="<?php echo $imagename1; ?>" width="100px" height="100px">
+									<img src="<?php echo $imagename1; ?>" width="110px" height="110px" style="border-radius:5px;position:relative;z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2);">
 
 <!--  									<ul class="tags">
 										<li>

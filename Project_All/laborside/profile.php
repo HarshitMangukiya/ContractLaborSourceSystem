@@ -75,7 +75,9 @@ if(isset($_POST['logout']))
 			}
 
 			</style>
+	
 		</head>
+
 		<body>
             <form method="post" enctype="multipart/form-data">
 			  <header id="header" id="home">
@@ -199,6 +201,136 @@ if(isset($_POST['logout']))
 			    </div>
 			  </header><!-- #header -->
 
+<!-- labor profile update start -->
+<?php
+	if(isset($_POST['xx']))
+    {
+     
+		  $firstname=$_POST['firstname'];
+	      $lastname=$_POST['lastname'];
+	      $gender=$_POST['gender'];
+	      $age=$_POST['age'];
+	      $email=$_POST['email'];
+	      // $phone=$_POST['phone'];
+	      $aadharno=$_POST['aadharno'];
+	      $address=$_POST['address'];
+	      $location=$_POST['location'];
+	      $country=$_POST['country'];
+	      $state=$_POST['state'];
+	      $city=$_POST['city'];
+	      $pincode=$_POST['pincode'];
+	      $password=$_POST['password'];
+	      $about=$_POST['about'];
+		  $flag='';
+
+	      
+	      	  
+	      $path="../Labor/labor_img/";
+	      
+	   	  	if($_FILES["fimage"]["name"]!=null)
+	      	{
+	      	    $qry="select * from labor where l_id='$lid'";
+				$res=mysqli_query($con,$qry);
+				while($row=mysqli_fetch_row($res))
+				{
+					$fimage=$row[16];
+				}
+		      $oldimage=$path.$folder.'/'.$fimage;
+		      // echo $oldimage;
+		      unlink($oldimage);
+
+		      $target_file = $path.basename($_FILES["fimage"]["name"]);
+		      // Select file type
+		      $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+		      // Valid file extensions
+		      $extensions_arr = array("jpg","jpeg","png","gif");
+		      // Check extension  
+		      $imgSize = $_FILES['fimage']['size'];
+	          if(in_array($imageFileType,$extensions_arr) )
+	          {
+
+	              if($imgSize < 5000000)   
+	              {
+
+	                $myimg=time().$_FILES['fimage']['name'];
+	                echo $myimg;
+
+	                $targetpath=$path.$folder."/".$myimg;
+	                if(move_uploaded_file($_FILES['fimage']['tmp_name'],$targetpath))
+	                {
+	                  // echo "insert image";
+	                }
+	           
+	              }
+	              else{
+	                echo "Sorry, your file is too large.";
+	              }
+	                
+	          }
+	          else
+	          {
+	            echo "please Select valid extention front image file";
+	          }
+	        }
+	        else
+	        { 
+	          $flag=1;
+	        }
+
+	      // $status=$_POST['status'];
+	      $charge=$_POST['charge'];
+	      $categoryid=$_POST['category'];
+
+
+		    if(!empty($_POST['leaderid']))
+		    {   
+			    if(isset($_POST['leaderid']))
+			    {
+			      	$le=$_POST['leaderid'];
+			      	$qry="select * from labor where l_id='$le'"; 
+				    $res=mysqli_query($con,$qry);
+			        if(mysqli_num_rows($res)==1)
+			        {
+			         $leaderid=$_POST['leaderid'];	
+			         // echo "dsvcccv";
+			        }
+			      	else
+			     	{
+			      		echo "Enter the another Leader Id";
+			            $leaderid=$leaderid1;	
+
+			     	}
+			    }
+	        }
+
+
+
+
+	    if($flag==1)
+	    {  
+	      $qry="update labor set l_firstname='$firstname',l_lastname='$lastname',l_gender='$gender',l_age='$age',l_email='$email',l_aadharno='$aadharno',l_address='$address',l_location='$location',l_country='$country',l_state='$state',l_city='$city',l_pincode='$pincode',l_password='$password',l_about='$about',l_charge='$charge',l_categoryid='$categoryid',l_leaderid='$leaderid' where l_id='$lid'";
+	      $flag=0;
+	      // echo $qry;
+	    }
+	    else
+	    {
+	      $qry="update labor set l_firstname='$firstname',l_lastname='$lastname',l_gender='$gender',l_age='$age',l_email='$email',l_aadharno='$aadharno',l_address='$address',l_location='$location',l_country='$country',l_state='$state',l_city='$city',l_pincode='$pincode',l_password='$password',l_about='$about',l_image='$myimg',l_charge='$charge',l_categoryid='$categoryid',l_leaderid='$leaderid' where l_id='$lid'";
+	      // echo $qry;
+	    }
+
+	      $res=mysqli_query($con,$qry);
+	        if($res>0)
+	        {
+	          // echo "update record into customer table";
+	           // header("location:index.php");
+	        }   
+	        else
+	        {
+	          echo "erro not update customer";
+	        }
+    }
+?>
+<!-- labor profile update end -->
 
 			<!-- start banner Area -->
 			<section class="banner-area relative" id="home">	
@@ -243,7 +375,8 @@ if(isset($_POST['logout']))
 						<div class="col-lg-8 post-list">
 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
-									<img src="<?php echo $imagename1; ?>" width="100px" height=100 alt="">
+									<img src="<?php echo $imagename1; ?>" width="110px" height="110px"
+									style="border-radius:5px;position:relative;z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2);">
 
 									<ul class="tags">
 <!-- 										<?php
