@@ -47,7 +47,7 @@ if(isset($_POST['logout']))
 			
 		</head>
 		<body>
-<form method="post" enctype="multipart/form-data">
+			<form method="post" enctype="multipart/form-data" action="index.php">
 			  <header id="header" id="home">
 			    <div class="container">
 			    	<div class="row align-items-center justify-content-between d-flex">
@@ -60,7 +60,7 @@ if(isset($_POST['logout']))
 				          <li><a href="about-us.php">About Us</a></li>
 				          <li><a href="category.php">Category</a></li>
 				          <li><a href="#">Price</a></li>
-				          <li><a href="blog-home.html">Blog</a></li>
+				          <!-- <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="contact.php">Contact</a></li>
 				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
@@ -243,6 +243,7 @@ if(isset($_POST['logout']))
 			<!-- End banner Area -->	
 				
 			<!-- Start price Area -->
+
 			<section class="price-area section-gap" id="price">
 				<div class="container">
 					<div class="row d-flex justify-content-center">
@@ -254,7 +255,7 @@ if(isset($_POST['logout']))
 						</div>
 					</div>						
 					<div class="row">
-					<?php
+			<!-- 		<?php
 					// $day='';
 					// $enddate='';
 					// $startdate='';
@@ -425,7 +426,7 @@ if(isset($_POST['logout']))
 					{
 						// header("location:index.php");
 					}
-					?>
+					?> -->
 						<div class="col-lg-4">
 							<div class="single-price no-padding">
 								<div class="price-top">
@@ -443,7 +444,7 @@ if(isset($_POST['logout']))
 										<span class="price">$</span><h1> 39 </h1><span class="time">Per <br> Month</span>
 									</div>
 									<!-- <a href="#" class="primary-btn header-btn">Get Started</a> -->
-									<input type="submit" name="submit" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;" >
+									<input type="submit" name="package1" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;" >
 								</div>
 								
 							</div>
@@ -464,7 +465,7 @@ if(isset($_POST['logout']))
 										<span class="price">$</span><h1> 69 </h1><span class="time">Per Six<br> Month</span>
 									</div>
 									<!-- <a href="#" class="primary-btn header-btn">Get Started</a> -->
-							        <input type="submit" name="submit1" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;">
+							        <input type="submit" name="package2" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;">
 								</div>
 							</div>
 						</div>
@@ -484,7 +485,7 @@ if(isset($_POST['logout']))
 										<span class="price">$</span><h1> 99 </h1><span class="time">Per <br>Year</span>
 									</div>
 									<!-- <a href="#" class="primary-btn header-btn">Get Started</a> -->
-								    <input type="submit" name="submit2" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;">
+								    <input type="submit" name="package3" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;">
 								</div>
 							</div>				
 						</div>								
@@ -656,7 +657,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			<script src="js/mail-script.js"></script>	
 			<script src="js/main.js"></script>	
 			<script src="js/login.js"></script>	
-
 		</form>
 		</body>
 	</html>

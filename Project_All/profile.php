@@ -65,7 +65,7 @@ if(isset($_POST['logout']))
 				          <li><a href="about-us.php">About Us</a></li>
 				          <li><a href="category.php">Category</a></li>
 				          <li><a href="price.php">Price</a></li>
-				          <li><a href="blog-home.html">Blog</a></li>
+				          <!-- <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="contact.php">Contact</a></li>
 				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
@@ -125,6 +125,105 @@ if(isset($_POST['logout']))
 			    </div>
 			  </header><!-- #header -->
 
+<!-- customer update profile start -->
+	<?php
+	    if(isset($_POST['updateprofile']))
+		{
+
+		      $firstname=$_POST['firstname'];
+		      $lastname=$_POST['lastname'];
+		      // $email=$_POST['email'];
+		      $phone=$_POST['phone'];
+		      $address=$_POST['address'];
+		      $location=$_POST['location'];
+		      $country=$_POST['country'];
+		      $state=$_POST['state'];
+		      $city=$_POST['city'];
+		      $pincode=$_POST['pincode'];
+		      $password=$_POST['password'];
+		      $about=$_POST['about'];
+		      $flag='';
+		      
+		      	if($_FILES["fimage"]["name"]!=null)
+		      	{
+		      	  $path="Labor/customer_img/"; 
+		      	  
+		      	  $qry="select * from customer where c_id='$cid'";
+				  $res=mysqli_query($con,$qry);
+	     		  while($row=mysqli_fetch_row($res))
+				  {
+				  	$fimage=$row[13];
+				  }
+
+			      $oldimage=$path.$fimage;
+			      unlink($oldimage);
+
+			      $target_file = $path.basename($_FILES["fimage"]["name"]);
+			      // Select file type
+			      $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+			      // Valid file extensions
+			      $extensions_arr = array("jpg","jpeg","png","gif");
+			      // Check extension  
+			      $imgSize = $_FILES['fimage']['size'];
+			      	if(in_array($imageFileType,$extensions_arr) )
+			      	{
+
+				        if($imgSize < 5000000)   
+				        {
+				        $myimg=$firstname.time().$_FILES['fimage']['name'];
+
+
+					        if(move_uploaded_file($_FILES['fimage']['tmp_name'],$path.$myimg))
+					        {
+					          // echo "insert image";
+
+					        }
+				        
+				        }
+				        else
+				        {
+				          echo "Sorry, your file is too large.";
+				        }
+			          
+			        }
+			        else
+			        {
+			          echo "please Select front image file";
+			        }
+		        }
+		        else
+		        { 
+		            $flag=1;
+		        }
+
+			    if($flag==1)
+			    {
+			      $qry="update customer set c_firstname='$firstname',c_lastname='$lastname',c_phone='$phone',c_address='$address',c_location='$location',c_country='$country',c_state='$state',c_city='$city',c_pincode='$pincode',c_password='$password',c_about='$about' where c_id='$cid'";
+			      $flag=0;
+			    }
+			    else
+			    {
+
+			      $qry="update customer set c_firstname='$firstname',c_lastname='$lastname',c_phone='$phone',c_address='$address',c_location='$location',c_country='$country',c_state='$state',c_city='$city',c_pincode='$pincode',c_password='$password',c_about='$about',c_image='$myimg' where c_id='$cid'";
+			    }
+
+		      	$res=mysqli_query($con,$qry);
+		        
+		        if($res>0)
+		        {
+		          // echo "update record into customer table";
+
+		         // header("location:index.php");
+		        }   
+		        else
+		        {
+		          echo "erro not update customer";
+		        }
+	    }
+
+    ?>
+	<!-- customer update profile End -->
+
 
 			<!-- start banner Area -->
 			<section class="banner-area relative" id="home">	
@@ -165,7 +264,7 @@ if(isset($_POST['logout']))
 			$register1 = date("d-m-Y", strtotime($row[14]));  
 
 
-			 $qry6="select * from payment where p_customerid='$cid'";
+			 $qry6="select * from payment where p_customerid='$cid' order by p_date desc limit 1";
 							// echo $qry;
 							$res6=mysqli_query($con,$qry6);
 							while($row6=mysqli_fetch_row($res6))
@@ -186,15 +285,29 @@ if(isset($_POST['logout']))
 								}
 
 							}
+
+							function dateDiffInDays($date1, $date2)  
+							{ 
+							    // Calulating the difference in timestamps 
+							    $diff = strtotime($date2) - strtotime($date1); 
+							      
+							    // 1 day = 24 hours 
+							    // 24 * 60 * 60 = 86400 seconds 
+							    return abs(round($diff / 86400)); 
+							} 
+
 							// echo 'day ='.$day;
 							$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
 							$startdate1 = date("d-m-Y", strtotime($startdate));  
 							$enddate1 = date("d-m-Y", strtotime($enddate));  
-				
+						
+
+							$dateDiff =dateDiffInDays($startdate1, $enddate1); 
+
 							if(date("Y-m-d")<$enddate)
 							{
 								$color2='green';
-								$membershipstatus='Membership is not expired';
+								$membershipstatus=$dateDiff." days left in membership";
 							}
 							else
 							{
@@ -205,7 +318,7 @@ if(isset($_POST['logout']))
 						<div class="col-lg-8 post-list">
 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
-									<img src="<?php echo $imagename1; ?>" width="100px" height="100px" >
+									<img src="<?php echo $imagename1; ?>" width="110px" height="110px" style="border-radius:5px;position:relative;z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2);" >
 
  									<ul class="tags">
 										<li>
@@ -228,7 +341,7 @@ if(isset($_POST['logout']))
 								<div class="details" style="margin-left:15px;width:540px;">
 									<div class="title d-flex flex-row justify-content-between">
 										<div class="titles">
-												<h5>Customer Id: <?php echo $row[0];?><strong style="margin-left:200px;color:<?php echo $color2; ?>"><?php echo $membershipstatus; ?></strong></h5>
+												<h5>Customer Id: <?php echo $row[0];?><strong style="margin-left:150px;color:<?php echo $color2; ?>"><?php echo $membershipstatus; ?></strong></h5>
 												
 													
 											<a href="#"><h3 class="text-uppercase">
@@ -668,8 +781,7 @@ if(isset($_POST['logout']))
 			</section>
 			<!-- End post Area -->
 
-
-			<!-- Start callto-action Area -->
+		<!-- Start callto-action Area -->
 			<section class="callto-action-area section-gap">
 				<div class="container">
 					<div class="row d-flex justify-content-center">
@@ -678,14 +790,14 @@ if(isset($_POST['logout']))
 								<h1 class="mb-10 text-white">Join us today without any hesitation</h1>
 								<p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
 								<a class="primary-btn" href="register.php">I am a Customer</a>
-								<a class="primary-btn" href="#">i am a labor</a>
+								<a class="primary-btn" href="laborside/laborregister.php">I am a Labor</a>
 							</div>
 						</div>
 					</div>	
 				</div>	
 			</section>
 			<!-- End calto-action Area -->
-
+			
 			<!-- start footer Area -->		
 			<footer class="footer-area section-gap">
 				<div class="container">

@@ -4,21 +4,13 @@
 	session_start();
 	if(isset($_SESSION['emailname'])){
 		echo "welcome".$_SESSION['emailname'];
-				// echo "welcome".$_SESSION['city'];
 
 }
 else
 {
 	//header("location:index.php");	
 }
-	if(isset($_SESSION['category'])){
-		echo "welcome".$_SESSION['category'];
-		
-}
-else
-{
-	//header("location:login.php");	
-}
+
 if(isset($_POST['logout']))
 {
 	 //session_destroy();
@@ -74,7 +66,7 @@ if(isset($_POST['logout']))
 				          <li><a href="about-us.php">About Us</a></li>
 				          <li><a href="category.php">Category</a></li>
 				          <li><a href="price.php">Price</a></li>
-				          <li><a href="blog-home.html">Blog</a></li>
+				          <!-- <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="contact.php">Contact</a></li>
 				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
@@ -251,7 +243,7 @@ if(isset($_POST['logout']))
 							<!-- <form action="#" class="serach-form-area"> -->
 								<div class="row justify-content-center form-wrap">
 									<div class="col-lg-4 form-cols">
-										<input type="text" class="form-control" name="search" placeholder="what are you looging for?">
+										<input type="text" class="form-control" name="searchname" placeholder="what are you looging for?">
 									</div>
 									<div class="col-lg-3 form-cols">
 										<div class="default-select" id="default-selects">
@@ -288,20 +280,7 @@ if(isset($_POST['logout']))
 										        ?>	   
 											</select>
 										</div>										
-									</div>
-									<?php 
-									if(isset($_POST['search']))
-									{
-										if(!empty($_POST['city']))
-										{
-										  if(!empty($_POST['category']))
-											{
-										      $city1=$_POST['city'];
-										      $category1=$_POST['category'];
-											}
-										}
-									}
-									?>
+									</div>									
 									<div class="col-lg-2 form-cols">
 									    <button type="submit" class="btn btn-info" name="search">
 									      <span class="lnr lnr-magnifier"></span>Search
@@ -316,6 +295,23 @@ if(isset($_POST['logout']))
 			</section>
 			<!-- End banner Area -->	
 			
+					<!-- Start callto-action Area -->
+			<section class="callto-action-area section-gap">
+				<div class="container">
+					<div class="row d-flex justify-content-center">
+						<div class="menu-content col-lg-9">
+							<div class="title text-center">
+								<h1 class="mb-10 text-white">Join us today without any hesitation</h1>
+								<p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+								<a class="primary-btn" href="register.php">I am a Customer</a>
+								<a class="primary-btn" href="laborside/laborregister.php">I am a Labor</a>
+							</div>
+						</div>
+					</div>	
+				</div>	
+			</section>
+			<!-- End calto-action Area -->
+			
 			<!-- Start post Area -->
 			<section class="post-area section-gap">
 				<div class="container">
@@ -323,30 +319,27 @@ if(isset($_POST['logout']))
 						<div class="col-lg-8 post-list">
 
 						<?php
-						if(isset($_SESSION['city']))
+						$city1=0;
+						$category1=0;
+						$searchname=0;
+						if(isset($_POST['search']))
 						{
-							// $city=$_SESSION['city'];
-						// echo $city;
-							if(isset($_SESSION['category']))
-							{
-							// $category=$_SESSION['category'];	
-							// /$qry="select * from labor where l_city='$city' and l_categoryid='$category'";
-							// echo $qry;
-							// unset($_SESSION['city']);
-							// unset($_SESSION['category']);
-							}
+
+					    	$city1=$_POST['city'];
+							$category1=$_POST['category'];
+							$searchname=$_POST['searchname'];
+							
+						$qry="select * from labor where l_city='$city1' or l_categoryid='$category1' or l_id='$searchname' or l_firstname='$searchname' or l_lastname='$searchname' or l_age='$searchname' or l_pincode='$searchname' ";
+						echo $qry."one";
+						$city1=0;
+						$category1=0;
+						$searchname=0;
 						}
 						else
 						{
 							$qry="select * from labor";
-						}
-						
-						if(isset($_POST['search']))
-						{
-							$qry="select * from labor where l_city='$city1' and l_categoryid='$category1'";
-						}
-						
-							
+							echo $qry."two";
+						}	
 							$res=mysqli_query($con,$qry);
 							while($row=mysqli_fetch_row($res))
 							{

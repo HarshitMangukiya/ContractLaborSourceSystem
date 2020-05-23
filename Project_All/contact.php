@@ -60,7 +60,7 @@ if(isset($_POST['logout']))
 				          <li><a href="about-us.php">About Us</a></li>
 				          <li><a href="category.php">Category</a></li>
 				          <li><a href="price.php">Price</a></li>
-				          <li><a href="blog-home.html">Blog</a></li>
+				          <!-- <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="#">Contact</a></li>
 				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>

@@ -53,7 +53,7 @@ if(isset($_POST['logout']))
 			</style>
 		</head>
 		<body>
-			<form method="post" enctype="multipart/form-data">
+			<form method="post" enctype="multipart/form-data" action="search.php">
 
 			  <header id="header" id="home">
 			    <div class="container">
@@ -67,7 +67,7 @@ if(isset($_POST['logout']))
 				          <li><a href="about-us.php">About Us</a></li>
 				          <li><a href="category.php">Category</a></li>
 				          <li><a href="price.php">Price</a></li>
-				          <li><a href="blog-home.html">Blog</a></li>
+				          <!-- <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="contact.php">Contact</a></li>
 				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
@@ -128,6 +128,179 @@ if(isset($_POST['logout']))
 			    	</div>
 			    </div>
 			  </header><!-- #header -->
+
+			  		<?php
+					// $day='';
+					// $enddate='';
+					// $startdate='';
+					if(!empty($_SESSION['emailname']))
+					{
+						if(isset($_POST['package1']))
+						{
+					  	    $qry="select * from payment where p_customerid='$cid'";
+							// echo $qry;
+							$res=mysqli_query($con,$qry);
+							while($row=mysqli_fetch_row($res))
+							{
+								$price=$row[3];
+								$startdate=$row[4];
+								if($price==39)
+								{
+									$day=30;
+								}
+								else if($price==69)
+								{
+									$day=90;
+								}
+								else if($price==99)
+								{
+									$day=360;			
+								}
+
+							}
+
+							// echo 'day ='.$day;
+							$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
+
+
+							// if(date("Y-m-d")<$enddate)
+							// {
+							// 	echo "membership is not expired";
+
+						  	    $customerid=$cid;
+							    $method='online'; 
+								$totalpayment='39';	      
+
+		                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
+		                        // echo $qry;
+								$res=mysqli_query($con,$qry);
+								if($res>0)
+								{
+									// echo "insert record into payment table";
+								    // header("location:index.php");
+								}		
+								else
+								{
+									echo "erro not insert payment";
+								}
+								// }
+							// else
+							// {
+							// 	echo "membership is expired";
+							// }
+						}
+						if(isset($_POST['package2']))
+						{
+					  	   $qry="select * from payment where p_customerid='$cid'";
+							// echo $qry;
+							$res=mysqli_query($con,$qry);
+							while($row=mysqli_fetch_row($res))
+							{
+								$price=$row[3];
+								$startdate=$row[4];								
+								if($price==39)
+								{
+									$day=30;
+								}
+								else if($price==69)
+								{
+									$day=90;
+								}
+								else if($price==99)
+								{
+									$day=360;			
+								}
+							}
+
+							// echo 'day ='.$day;
+							$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
+							// echo $enddate;
+							// echo $startdate;
+							// if(date("Y-m-d")<$enddate)
+							// {
+							// 	echo "membership is not expired";
+
+						  	    $customerid=$cid;
+							    $method='online'; 
+								$totalpayment='69';	      
+
+		                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
+		                        // echo $qry;
+								$res=mysqli_query($con,$qry);
+								if($res>0)
+								{
+									// echo "insert record into payment table";
+								    // header("location:index.php");
+								}		
+								else
+								{
+									echo "erro not insert payment";
+								}
+								// }
+							// else
+							// {
+							// 	echo "membership is expired";
+							// }
+						}
+						if(isset($_POST['package3']))
+						{
+					  	    $qry="select * from payment where p_customerid='$cid'";
+							// echo $qry;
+							$res=mysqli_query($con,$qry);
+							while($row=mysqli_fetch_row($res))
+							{
+								$price=$row[3];
+								$startdate=$row[4];								
+								if($price==39)
+								{
+									$day=30;
+								}
+								else if($price==69)
+								{
+									$day=90;
+								}
+								else if($price==99)
+								{
+									$day=360;			
+								}
+							}
+
+							// echo 'day ='.$day;
+							$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
+							// echo $enddate;
+							// echo $startdate;
+							// if(date("Y-m-d")<$enddate)
+							// {
+							// 	echo "membership is not expired";
+
+						  	    $customerid=$cid;
+							    $method='online'; 
+								$totalpayment='99';	      
+
+		                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
+		                        // echo $qry;
+								$res=mysqli_query($con,$qry);
+								if($res>0)
+								{
+									// echo "insert record into payment table";
+								    // header("location:index.php");
+								}		
+								else
+								{
+									echo "erro not insert payment";
+								}
+								// }
+							// else
+							// {
+							// 	echo "membership is expired";
+							// }
+						}
+					}
+					else
+					{
+						// header("location:index.php");
+					}
+					?> 
 
 <!-- login page -->
 <div class="container">
@@ -234,33 +407,18 @@ if(isset($_POST['logout']))
 
 
 			<!-- start banner Area -->
-			<form method="post" action="search.php" enctype="multipart/form-data">
 			<section class="banner-area relative" id="home">	
 				<div class="overlay overlay-bg"></div>
 				<div class="container">
 					<div class="row fullscreen d-flex align-items-center justify-content-center">
 						<div class="banner-content col-lg-12">
 							<h1 class="text-white">
-								<span>1500+</span> Jobs posted last week	
-<!-- 								<?php 
-echo $startdate;
-$p=30;
-$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$p day"));
-echo $enddate;
-if(date("Y-m-d")<$enddate)
-{
-	echo "membership is not expired";
-}
-else
-{
-	echo "membership has expired";
-}
-?> -->			
+								<span>1500+</span> Jobs posted last week	 			
 							</h1>	
-							<!-- <form action="search.php" class="serach-form-area"> -->
+							<form  method="post" action="search.php" enctype="multipart/form-data">
 								<div class="row justify-content-center form-wrap">
 									<div class="col-lg-4 form-cols">
-										<input type="text" class="form-control" name="search" placeholder="what are you looging for?">
+										<input type="text" class="form-control" name="searchname" placeholder="what are you looging for?">
 									</div>
 									<div class="col-lg-3 form-cols">
 										<div class="default-select" id="default-selects">
@@ -300,41 +458,18 @@ else
 											</select>
 										</div>										
 									</div>
-									<?php 
-									
-										if(!empty($_POST['city']))
-										{
-											if(!empty($_POST['category']))
-											{
-									
-										      $city=$_POST['city'];
-										      $category=$_POST['category'];
-										      $_SESSION['city']=$city;
-										      $_SESSION['category']=$category;	
-										      
-											}
-										}	
-									?>
-									<div class="col-lg-2 form-cols" style="margin-top:11px;">
-
-<!-- 
-									    <button type="submit" class="btn btn-info" name="search">									    --> 	
-									      <!-- <a href="search.php?ciid=<?php echo $city; ?>&caid=<?php echo $category; ?>" class="ticker-btn"> -->
-									      <a href="search.php" class="ticker-btn">
-									      <span class="lnr lnr-magnifier"></span> &nbsp Search
-									      </a>
-									    <!-- </button> -->
-									</a>
-										
-									</div>								
+									<div class="col-lg-2 form-cols">
+									    <button type="submit" class="btn btn-info" name="search">
+									      <span class="lnr lnr-magnifier"></span>Search
+									    </button>
+									</div>			
 								</div>
-							<!-- </form>	 -->
+							</form>	
 							<p class="text-white"> <span>Search by tags:</span> Tecnology, Business, Consulting, IT Company, Design, Development</p>
 						</div>											
 					</div>
 				</div>
 			</section>
-			</form>
 			<!-- End banner Area -->	
 
 
@@ -344,7 +479,7 @@ else
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-3 col-md-6">
-							<div class="single-feature">
+							<div class="single-feature">	
 								<h4>Searching</h4>
 								<p>
 									Lorem ipsum dolor sit amet, consectetur adipisicing.
@@ -381,7 +516,7 @@ else
 			<!-- End features Area -->
 			
 			<!-- Start popular-post Area -->
-			<section class="popular-post-area pt-100">
+			<!-- <section class="popular-post-area pt-100">
 				<div class="container">
 					<div class="row align-items-center">
 						<div class="active-popular-post-carusel">
@@ -466,7 +601,7 @@ else
 						</div>
 					</div>
 				</div>	
-			</section>
+			</section> -->
 			<!-- End popular-post Area -->
 			
 			<!-- Start feature-cat Area -->

@@ -126,21 +126,21 @@ $('#state').on('change',function(){
 </script>
 <script type="text/javascript">
 
-function myFunction() {
-$.ajax({
+// function myFunction() {
+// $.ajax({
 
-type:'POST',
+// type:'POST',
 
-url:'index.php',
+// url:'index.php',
 
-});
-alert("cxvxc");
-}
+// });
+// alert("cxvxc");
+// }
 
 </script>
 		</head>
 		<body>
-            <form method="post" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data" action="profile.php">
 			  <header id="header" id="home">
 			    <div class="container">
 			    	<div class="row align-items-center justify-content-between d-flex">
@@ -153,7 +153,7 @@ alert("cxvxc");
 				          <li><a href="about-us.php">About Us</a></li>
 				          <li><a href="category.php">Category</a></li>
 				          <li><a href="price.php">Price</a></li>
-				          <li><a href="blog-home.html">Blog</a></li>
+				          <!-- <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="contact.php">Contact</a></li>
 				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
@@ -389,115 +389,26 @@ alert("cxvxc");
  -->
 							<div class="single-post job-experience">
 								<h4 class="single-title">Personal Information</h4>
-<?php
-    $qry6="select * from customer where c_id='$cid'";
-    $res6=mysqli_query($con,$qry6);
-    while($row=mysqli_fetch_row($res6))
-    {
-        $firstname=$row[1];
-		$lastname=$row[2];
-        $phone=$row[4];
-        $address=$row[5];
-	    $location=$row[6];
-	    $country=$row[7];
-		$state=$row[8];
-		$city=$row[9];
-        $pincode=$row[10];
-	    $password=$row[11];
-        $about=$row[12];
-        $fimage=$row[13];
-    }
-
-
-	if(isset($_POST['submit']))
-    {
-
-      $firstname=$_POST['firstname'];
-      $lastname=$_POST['lastname'];
-      // $email=$_POST['email'];
-      $phone=$_POST['phone'];
-      $address=$_POST['address'];
-      $location=$_POST['location'];
-      $country=$_POST['country'];
-      $state=$_POST['state'];
-      $city=$_POST['city'];
-      $pincode=$_POST['pincode'];
-      $password=$_POST['password'];
-      $about=$_POST['about'];
-      $flag='';
-      
-      	if($_FILES["fimage"]["name"]!=null)
-      	{
-      	  $path="Labor/customer_img/"; 
-
-	      $oldimage=$path.$fimage;
-	      unlink($oldimage);
-
-	      $target_file = $path.basename($_FILES["fimage"]["name"]);
-	      // Select file type
-	      $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-	      // Valid file extensions
-	      $extensions_arr = array("jpg","jpeg","png","gif");
-	      // Check extension  
-	      $imgSize = $_FILES['fimage']['size'];
-	      	if(in_array($imageFileType,$extensions_arr) )
-	      	{
-
-		        if($imgSize < 5000000)   
-		        {
-		        $myimg=$firstname.time().$_FILES['fimage']['name'];
-
-
-			        if(move_uploaded_file($_FILES['fimage']['tmp_name'],$path.$myimg))
-			        {
-			          // echo "insert image";
-
-			        }
-		        
-		        }
-		        else
-		        {
-		          echo "Sorry, your file is too large.";
-		        }
-	          
-	        }
-	        else
-	        {
-	          echo "please Select front image file";
-	        }
-        }
-        else
-        { 
-            $flag=1;
-        }
-
-	    if($flag==1)
+	<?php
+	    $qry6="select * from customer where c_id='$cid'";
+	    $res6=mysqli_query($con,$qry6);
+	    while($row=mysqli_fetch_row($res6))
 	    {
-	      $qry="update customer set c_firstname='$firstname',c_lastname='$lastname',c_phone='$phone',c_address='$address',c_location='$location',c_country='$country',c_state='$state',c_city='$city',c_pincode='$pincode',c_password='$password',c_about='$about' where c_id='$cid'";
-	      $flag=0;
-	    }
-	    else
-	    {
-
-	      $qry="update customer set c_firstname='$firstname',c_lastname='$lastname',c_phone='$phone',c_address='$address',c_location='$location',c_country='$country',c_state='$state',c_city='$city',c_pincode='$pincode',c_password='$password',c_about='$about',c_image='$myimg' where c_id='$cid'";
+	        $firstname=$row[1];
+			$lastname=$row[2];
+	        $phone=$row[4];
+	        $address=$row[5];
+		    $location=$row[6];
+		    $country=$row[7];
+			$state=$row[8];
+			$city=$row[9];
+	        $pincode=$row[10];
+		    $password=$row[11];
+	        $about=$row[12];
+	        $fimage=$row[13];
 	    }
 
-      	$res=mysqli_query($con,$qry);
-        
-        if($res>0)
-        {
-          echo "update record into customer table";
-
-         // header("location:index.php");
-        }   
-        else
-        {
-          echo "erro not update customer";
-        }
-    }
-    
-  
-  ?>
+	?>
 
 
 								
@@ -658,7 +569,7 @@ alert("cxvxc");
 									</li>
 
 									<li>
-										<input type="submit" class="ticker-btn" name="submit" id="customerupdate" value="Update profile">
+										<input type="submit" class="ticker-btn" name="updateprofile" id="customerupdate" value="Update profile">
 									</li>
 
 

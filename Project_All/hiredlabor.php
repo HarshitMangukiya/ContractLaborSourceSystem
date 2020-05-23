@@ -61,7 +61,7 @@ if(isset($_POST['logout']))
 				          <li><a href="about-us.php">About Us</a></li>
 				          <li><a href="category.php">Category</a></li>
 				          <li><a href="price.php">Price</a></li>
-				          <li><a href="blog-home.html">Blog</a></li>
+				          <!-- <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="contact.php">Contact</a></li>
 				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
@@ -149,10 +149,10 @@ if(isset($_POST['logout']))
 
 		// echo 'day ='.$day;
 		$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
-		echo $enddate;
+		// echo $enddate;
 		if(date("Y-m-d")<$enddate)
 		{
-			echo "membership is not expired";
+			// echo "membership is not expired";
 
 			if(isset($_REQUEST['lid']))
 			{
@@ -789,23 +789,7 @@ if(isset($_POST['logout']))
 			</section>
 			<!-- End post Area -->
 
-			<!-- Start callto-action Area -->
-			<section class="callto-action-area section-gap">
-				<div class="container">
-					<div class="row d-flex justify-content-center">
-						<div class="menu-content col-lg-9">
-							<div class="title text-center">
-								<h1 class="mb-10 text-white">Join us today without any hesitation</h1>
-								<p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-								<a class="primary-btn" href="register.php">I am a Customer</a>
-								<a class="primary-btn" href="#">i am a Labor</a>
-							</div>
-						</div>
-					</div>	
-				</div>	
-			</section>
-			<!-- End calto-action Area -->			
-		
+	
 			<!-- start footer Area -->		
 			<footer class="footer-area section-gap">
 				<div class="container">

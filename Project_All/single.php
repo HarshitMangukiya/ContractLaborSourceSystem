@@ -85,7 +85,7 @@ if(isset($_POST['logout']))
 				          <li><a href="about-us.php">About Us</a></li>
 				          <li><a href="category.php">Category</a></li>
 				          <li><a href="price.php">Price</a></li>
-				          <li><a href="blog-home.html">Blog</a></li>
+				          <!-- <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="contact.php">Contact</a></li>
 				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
@@ -292,7 +292,7 @@ if(isset($_POST['logout']))
 						<div class="col-lg-8 post-list">
 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
-									<img src="<?php echo $imagename1; ?>" width="100px" height=100 alt="">
+									<img src="<?php echo $imagename1; ?>" width="110px" height="110px" style="border-radius:5px;position:relative;z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2);">
 
 									<ul class="tags">
 										<?php
