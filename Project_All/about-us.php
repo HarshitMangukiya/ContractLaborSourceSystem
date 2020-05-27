@@ -7,7 +7,7 @@
 }
 else
 {
-	//header("location:index.php");	
+	// header("location:index.php");	
 }
 
 if(isset($_POST['logout']))
@@ -45,6 +45,8 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/animate.min.css">
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
+			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 		</head>
 		<body>
 			<form method="post" enctype="multipart/form-data">
@@ -152,7 +154,7 @@ if(isset($_POST['logout']))
 			    $email=$_POST['email'];
 			    $password=$_POST['password'];
 
-			    $qry="select * from customer where c_email='$email' and c_password='$password'";    
+			    $qry="select * from customer where c_email='$email' and c_password='$password' and c_dflag<>'1'";    
 			   // echo $qry;
 			       if($res=mysqli_query($con,$qry))
 			      {
@@ -259,7 +261,7 @@ if(isset($_POST['logout']))
 							<div class="single-service">
 								<h4><span class="lnr lnr-user"></span>Expert Technicians</h4>
 								<p>
-									Usage of the Internet is becoming more common due to rapid advancement of technology and power.
+									We provide expert labor for any job.  
 								</p>
 							</div>
 						</div>
@@ -267,7 +269,7 @@ if(isset($_POST['logout']))
 							<div class="single-service">
 								<h4><span class="lnr lnr-license"></span>Professional Service</h4>
 								<p>
-									Usage of the Internet is becoming more common due to rapid advancement of technology and power.
+									We give sufficient service for any work. Due to, Customers get satisfaction by labor.
 								</p>								
 							</div>
 						</div>
@@ -275,41 +277,41 @@ if(isset($_POST['logout']))
 							<div class="single-service">
 								<h4><span class="lnr lnr-phone"></span>Great Support</h4>
 								<p>
-									Usage of the Internet is becoming more common due to rapid advancement of technology and power.
+                                    We solve queries by telephone.
 								</p>								
 							</div>
 						</div>
-						<div class="col-lg-4 col-md-6">
+<!-- 						<div class="col-lg-4 col-md-6">
 							<div class="single-service">
 								<h4><span class="lnr lnr-rocket"></span>Technical Skills</h4>
 								<p>
-									Usage of the Internet is becoming more common due to rapid advancement of technology and power.
+									We provide expart 
 								</p>				
 							</div>
-						</div>
-						<div class="col-lg-4 col-md-6">
+						</div> -->
+						<div class="col-lg-4 col-md-6" style="margin-left:380px">
 							<div class="single-service">
-								<h4><span class="lnr lnr-diamond"></span>Highly Recomended</h4>
+								<h4><span class="lnr lnr-diamond"></span>Our mission</h4>
 								<p>
-									Usage of the Internet is becoming more common due to rapid advancement of technology and power.
+									We will provide labor power for any customer and We will provide a lot of job opportunities for labor.
 								</p>								
 							</div>
-						</div>
+						</div><!-- 
 						<div class="col-lg-4 col-md-6">
 							<div class="single-service">
 								<h4><span class="lnr lnr-bubble"></span>Positive Reviews</h4>
 								<p>
-									Usage of the Internet is becoming more common due to rapid advancement of technology and power.
+								 	
 								</p>									
 							</div>
-						</div>						
+						</div>	 -->					
 					</div>
 				</div>	
 			</section>
 			<!-- End service Area -->						
 
 			<!-- Start feature Area -->
-			<section class="feature-area">
+			<!-- <section class="feature-area">
 				<div class="container-fluid">
 					<div class="row justify-content-center align-items-center">
 						<div class="col-lg-3 feat-img no-padding">
@@ -334,22 +336,22 @@ if(isset($_POST['logout']))
 						</div>
 					</div>
 				</div>	
-			</section>
+			</section> -->
 			<!-- End feature Area -->
 
 			<!-- Start team Area -->
-			<section class="team-area section-gap" id="team">
+			<section class="team-area" id="team">
 				<div class="container">
 					<div class="row d-flex justify-content-center">
-						<div class="menu-content pb-70 col-lg-8">
+						<div class="menu-content pb-40 col-lg-8">
 							<div class="title text-center">
-								<h1 class="mb-10">Experienced Mentor Team</h1>
+								<h1 class="mb-10">About Us</h1>
 								<p>Who are in extremely love with eco friendly system.</p>
 							</div>
 						</div>
 					</div>						
 					<div class="row justify-content-center d-flex align-items-center">
-						<div class="col-md-3 single-team">
+						<!-- <div class="col-md-3 single-team">
 						    <div class="thumb">
 						        <img class="img-fluid" src="img/pages/t1.jpg" alt="">
 						        <div class="align-items-center justify-content-center d-flex">
@@ -362,8 +364,8 @@ if(isset($_POST['logout']))
 							    <h4>Ethel Davis</h4>
 							    <p>Managing Director (Sales)</p>									    	
 						    </div>
-						</div>
-						<div class="col-md-3 single-team">
+						</div> -->
+					<!-- 	<div class="col-md-3 single-team">
 						    <div class="thumb">
 						        <img class="img-fluid" src="img/pages/t2.jpg" alt="">
 						        <div class="align-items-center justify-content-center d-flex">
@@ -390,21 +392,38 @@ if(isset($_POST['logout']))
 							    <h4>Dora Walker</h4>
 							    <p>Senior Core Developer</p>			    	
 						    </div>
-						</div>	
-						<div class="col-md-3 single-team">
+						</div> -->
+						<div class="col-md-8 single-team">
+						<h4 class="mb-10" style="margin-top:10px;">About Us</h4>
+This website is a basic but effective solution to labor work like plumbing, painting, carpentering and many more. it will provide all types of labor services at market-cost. Using portal customers can search and filter the list of labors to find a suitable person for the job. This will create job opportunities for labor and 24x7 service for users. Users also can rate and write reviews of the labor along with write complaints against them. There is also an online payment option for ease of transaction.</div>
+					    	 <div class="col-md-4 single-team">
+					    	 </div>
+					    	 <br>
+						<div class="col-md-8 single-team">
+						<h4 class="mb-10" style="margin-top:25px;">Service Quality</h4>
+
+						We at Optima Consultancy believe in ensuring valuable service quality. Through our affirmative approach and practices, we have been able to add value propositions in our services. We aim towards improvising our service quality through comprehensive research to reach innovative answers. Our strong R&D supports us in connecting the right talent to ensure positive results. Our focused methodologies towards workforce solutions foster a competent recruiting process and improvising on talent quality delivery. 
+					    </div>
+					    	 <div class="col-md-4 single-team">
+					    	 </div>
+					    <div class="col-md-8 single-team" style="margin-bottom:150px;">
+						<h4 class="mb-10">Our Commitment</h4>
+						We committed to establishing leading business solutions that assist in increasing the capabilities of our clients. We strongly believe in building a value of trust, honesty, and transparency with our clients to develop long-term relationships and to adopt a flexible approach as per their needs.
+					    </div>
+						 <div class="col-md-4 single-team">
 						    <div class="thumb">
-						        <img class="img-fluid" src="img/pages/t4.jpg" alt="">
-						        <div class="align-items-center justify-content-center d-flex">
+						        <img class="img-fluid" src="img/Labor_relation.jpg" alt="" style="height:300px;width:400px;">
+						        <!-- <div class="align-items-center justify-content-center d-flex">
 									<a href="#"><i class="fa fa-facebook"></i></a>
 									<a href="#"><i class="fa fa-twitter"></i></a>
 									<a href="#"><i class="fa fa-linkedin"></i></a>
-						        </div>
+						        </div> -->
 						    </div>
 						    <div class="meta-text mt-30 text-center">
-							    <h4>Lena Keller</h4>
-							    <p>Creative Content Developer</p>			    	
+							    <!-- <h4>Lena Keller</h4> -->
+							    <!-- <p>Creative Content Developer</p>			    	 -->
 						    </div>
-						</div>																									
+						</div>							 																		
 				
 					</div>
 				</div>	
@@ -430,7 +449,7 @@ if(isset($_POST['logout']))
 			<!-- End calto-action Area -->
 
 			<!-- Start testimonial Area -->
-			<section class="testimonial-area section-gap" id="review">
+	<!-- 		<section class="testimonial-area section-gap" id="review">
 				<div class="container">
 					<div class="row d-flex justify-content-center">
 						<div class="menu-content pb-60 col-lg-8">
@@ -509,7 +528,7 @@ if(isset($_POST['logout']))
 						</div>
 					</div>
 				</div>	
-			</section>
+			</section> -->
 			<!-- End testimonial Area -->
 			
 		
@@ -518,15 +537,15 @@ if(isset($_POST['logout']))
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-3  col-md-12">
-							<div class="single-footer-widget">
-								<h6>Top Products</h6>
+							<h6>QUICK LINKS</h6>
 								<ul class="footer-nav">
-									<li><a href="#">Managed Website</a></li>
-									<li><a href="#">Manage Reputation</a></li>
-									<li><a href="#">Power Tools</a></li>
-									<li><a href="#">Marketing Service</a></li>
+									<li><a href="index.php">Home</a></li>
+									<li><a href="about-us.php">About Us</a></li>
+									<li><a href="register.php">Sign Up</a></li>
+									<li><a href="category.php">Category</a></li>
+									<li><a href="price.php">Price</a></li>
+									<li><a href="contact.php">Contact</a></li>
 								</ul>
-							</div>
 						</div>
 						<div class="col-lg-6  col-md-12">
 							<div class="single-footer-widget newsletter">

@@ -8,6 +8,8 @@
 else
 {
 	//header("location:index.php");	
+    echo "<script> window.location.href='index.php';</script>";
+	
 }
 if(isset($_POST['logout']))
 {
@@ -45,6 +47,8 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/animate.min.css">
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
+			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 			<style type="text/css">
 			li.x{
                pointer-events: none;
@@ -174,7 +178,7 @@ if(isset($_POST['logout']))
 			    $email=$_POST['email'];
 			    $password=$_POST['password'];
 
-			    $qry="select * from customer where c_email='$email' and c_password='$password'";    
+			    $qry="select * from customer where c_email='$email' and c_password='$password' and c_dflag<>'1'";    
 			   // echo $qry;
 			       if($res=mysqli_query($con,$qry))
 			      {
@@ -272,7 +276,7 @@ if(isset($_POST['logout']))
                     <?php
                     if(isset($_REQUEST['lid']))
                     {
-					$qry="select * from labor where l_id=".$_REQUEST['lid'];
+					$qry="select * from labor where l_dflag<>'1' and l_id=".$_REQUEST['lid'];
 					$res=mysqli_query($con,$qry);
 					while($row=mysqli_fetch_row($res))
 						{
@@ -358,9 +362,10 @@ if(isset($_POST['logout']))
 								</div>
 							</div>	
                             <div class="row" style="margin-right:1px;margin-left:1px;">
-							<div class="single-post job-details">
+							<div class="single-post job-details col-sm-12">
+								<div>
 								<h4 class="single-title">Work Image</h4>
-								<p>
+								
 									<?php
 									$count=0;
 									$qry4="select * from image where i_laborid='$row[0]' and i_flag='1'"; 
@@ -380,25 +385,34 @@ if(isset($_POST['logout']))
 									$count++;
 								    }
 								    ?>
-								</p>
+								
+								</div>
 							</div>
 							</div>
-							<div class="single-post job-details">							
-								<p>
+							<div class="single-post job-details">			
 									<h4 class="single-title">Work Video Link</h4>
 									<?php
+									$count1=0;
 									$qry4="select * from image where i_laborid='$row[0]' and i_flag='2'"; 
+									// echo $qry4;
 								    $res4=mysqli_query($con,$qry4);
-									while($row4=mysqli_fetch_row($res4))
+								    
+									while($row4=mysqli_fetch_row($res4))	
 							        {
-							        ?>
-							        <a href="#"><?php echo $row4[1]; ?></a>	
-									<?php
+								        if($count1==3)
+								        {
+								           $count1=0;
+								        ?>
+								        <br>
+								        <?php
+								        }	   
+							       
+									$go_to_address="https://www.youtube.com/embed/".$row4[1];
+							        	echo "<iframe SRC=\"".$go_to_address."\" width=\"180\" height=\"150\" framespacing=0 frameborder=no border=0 scrolling=auto style=\"border-radius:5px;margin-right:10px;\"></iframe>";
+
+									$count1++;
 								    }
 								    ?>
-
-							        <!-- <iframe width="200" height="200" src="https://www.youtube.com/embed/beqprrnaKFc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
-								</p>
 							</div>
 
 							<div class="single-post job-details">
@@ -570,7 +584,7 @@ if(isset($_POST['logout']))
 	 					            <li><a class="justify-content-between d-flex" href="category.html">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
-									$qry2="select count(*) as sta from labor where l_state='$stateid' group by l_state";
+									$qry2="select count(*) as sta from labor where l_dflag<>'1' and l_state='$stateid' group by l_state";
 									$res2=mysqli_query($con,$qry2);
 									while($row2=mysqli_fetch_array($res2))
 									{
@@ -698,7 +712,7 @@ if(isset($_POST['logout']))
 	 					            <li><a class="justify-content-between d-flex" href="category.html">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
-									$qry2="select count(*) as cat from labor where l_categoryid='$catid' group by l_categoryid";
+									$qry2="select count(*) as cat from labor where l_dflag<>'1' and l_categoryid='$catid' group by l_categoryid";
 									$res2=mysqli_query($con,$qry2);
 									while($row2=mysqli_fetch_array($res2))
 									{
@@ -799,12 +813,14 @@ if(isset($_POST['logout']))
 					<div class="row">
 						<div class="col-lg-3  col-md-12">
 							<div class="single-footer-widget">
-								<h6>Top Products</h6>
+								<h6>QUICK LINKS</h6>
 								<ul class="footer-nav">
-									<li><a href="#">Managed Website</a></li>
-									<li><a href="#">Manage Reputation</a></li>
-									<li><a href="#">Power Tools</a></li>
-									<li><a href="#">Marketing Service</a></li>
+									<li><a href="index.php">Home</a></li>
+									<li><a href="about-us.php">About Us</a></li>
+									<li><a href="register.php">Sign Up</a></li>
+									<li><a href="category.php">Category</a></li>
+									<li><a href="price.php">Price</a></li>
+									<li><a href="contact.php">Contact</a></li>
 								</ul>
 							</div>
 						</div>

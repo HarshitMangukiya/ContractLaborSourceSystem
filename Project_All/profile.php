@@ -8,6 +8,8 @@
 else
 {
 	// header("location:index.php");	
+    echo "<script> window.location.href='index.php';</script>";
+	
 }
 if(isset($_POST['logout']))
 {
@@ -45,6 +47,8 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/animate.min.css">
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
+			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 			<style type="text/css">
 			li.x{
                pointer-events: none;
@@ -130,8 +134,8 @@ if(isset($_POST['logout']))
 	    if(isset($_POST['updateprofile']))
 		{
 
-		      $firstname=$_POST['firstname'];
-		      $lastname=$_POST['lastname'];
+		      $firstname=ucfirst($_POST['firstname']);
+		      $lastname=ucfirst($_POST['lastname']);
 		      // $email=$_POST['email'];
 		      $phone=$_POST['phone'];
 		      $address=$_POST['address'];
@@ -246,7 +250,8 @@ if(isset($_POST['logout']))
 				<div class="container">
 					<div class="row justify-content-center d-flex">
     <?php
-                   
+                  $enddate='';
+                  $startdate=''; 
 	$qry="select * from Customer where c_id='$cid'";
 	$res=mysqli_query($con,$qry);
 	while($row=mysqli_fetch_row($res))
@@ -264,26 +269,13 @@ if(isset($_POST['logout']))
 			$register1 = date("d-m-Y", strtotime($row[14]));  
 
 
-			 $qry6="select * from payment where p_customerid='$cid' order by p_date desc limit 1";
+			 $qry6="select * from payment where p_customerid='$cid' order by p_id desc limit 1";
 							// echo $qry;
 							$res6=mysqli_query($con,$qry6);
 							while($row6=mysqli_fetch_row($res6))
 							{
-								$price=$row6[3];
 								$startdate=$row6[4];
-								if($price==39)
-								{
-									$day=30;
-								}
-								else if($price==69)
-								{
-									$day=90;
-								}
-								else if($price==99)
-								{
-									$day=360;			
-								}
-
+								$enddate=$row6[5];
 							}
 
 							function dateDiffInDays($date1, $date2)  
@@ -296,12 +288,10 @@ if(isset($_POST['logout']))
 							    return abs(round($diff / 86400)); 
 							} 
 
-							// echo 'day ='.$day;
-							$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
 							$startdate1 = date("d-m-Y", strtotime($startdate));  
 							$enddate1 = date("d-m-Y", strtotime($enddate));  
 						
-
+						
 							$dateDiff =dateDiffInDays($startdate1, $enddate1); 
 
 							if(date("Y-m-d")<$enddate)
@@ -583,7 +573,7 @@ if(isset($_POST['logout']))
 	 					            <li><a class="justify-content-between d-flex" href="category.php">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
-									$qry2="select count(*) as sta from labor where l_state='$stateid' group by l_state";
+									$qry2="select count(*) as sta from labor where l_dflag<>'1' and l_state='$stateid' group by l_state";
 									$res2=mysqli_query($con,$qry2);
 									while($row2=mysqli_fetch_array($res2))
 									{
@@ -704,7 +694,7 @@ if(isset($_POST['logout']))
 	 					            <li><a class="justify-content-between d-flex" href="category.php">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
-									$qry2="select count(*) as cat from labor where l_categoryid='$catid' group by l_categoryid";
+									$qry2="select count(*) as cat from labor where l_dflag<>'1' and l_categoryid='$catid' group by l_categoryid";
 									$res2=mysqli_query($con,$qry2);
 									while($row2=mysqli_fetch_array($res2))
 									{
@@ -804,12 +794,14 @@ if(isset($_POST['logout']))
 					<div class="row">
 						<div class="col-lg-3  col-md-12">
 							<div class="single-footer-widget">
-								<h6>Top Products</h6>
+								<h6>QUICK LINKS</h6>
 								<ul class="footer-nav">
-									<li><a href="#">Managed Website</a></li>
-									<li><a href="#">Manage Reputation</a></li>
-									<li><a href="#">Power Tools</a></li>
-									<li><a href="#">Marketing Service</a></li>
+									<li><a href="index.php">Home</a></li>
+									<li><a href="about-us.php">About Us</a></li>
+									<li><a href="register.php">Sign Up</a></li>
+									<li><a href="category.php">Category</a></li>
+									<li><a href="price.php">Price</a></li>
+									<li><a href="contact.php">Contact</a></li>
 								</ul>
 							</div>
 						</div>

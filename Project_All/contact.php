@@ -45,6 +45,8 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/animate.min.css">
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
+			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 		</head>
 		<body>
               <form method="post" enctype="multipart/form-data">
@@ -148,7 +150,7 @@ if(isset($_POST['logout']))
 			    $email=$_POST['email4'];
 			    $password=$_POST['password4'];
 
-			    $qry="select * from customer where c_email='$email' and c_password='$password'";    
+			    $qry="select * from customer where c_email='$email' and c_password='$password' and c_dflag<>'1'";    
 			   // echo $qry;
 			       if($res=mysqli_query($con,$qry))
 			      {
@@ -245,9 +247,20 @@ if(isset($_POST['logout']))
 					<div class="row">
 						<div class="map-wrap" style="width:100%; height: 445px;" id="map"></div>
 						<div class="col-lg-4 d-flex flex-column">
-							<a class="contact-btns" href="#">Submit Your CV</a>
+							<!-- <a class="contact-btns" href="#">Submit Your CV</a>
 							<a class="contact-btns" href="#">Post New Job</a>
-							<a class="contact-btns" href="#">Create New Account</a>
+							<a class="contact-btns" href="#">Create New Account</a> -->
+							<h3>Contact Us</h3>
+							<p>Help us to make JobListing.com better, provide us with your suggestions and comments. Your comments will be forwarded to the appropriate editors.</p>
+							<h5 style="margin-bottom:3px;">Address</h5>
+							Katargam,Surat-395004,india.
+							<br>
+							<h5 style="margin-bottom:3px;">Email</h5>
+							jobListing@gmail.com.
+							<br>
+							<h5 style="margin-bottom:3px;">Phone no.</h5>
+							8160119895
+							
 						</div>
 						<div class="col-lg-8">
 							<form class="form-area " id="myForm" action="mail.php" method="post" class="contact-form text-right">
@@ -258,8 +271,8 @@ if(isset($_POST['logout']))
 										<input name="email" placeholder="Enter email address" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" class="common-input mb-20 form-control" type="email">
 
 										<input name="subject" placeholder="Enter your subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your subject'" class="common-input mb-20 form-control" type="text">
-										<textarea class="common-textarea mt-10 form-control" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" ></textarea>
-										<button class="primary-btn mt-20 text-white" style="float: right;">Send Message</button>
+										<textarea class="common-textarea mt-10 form-control" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" ></textarea><br>
+										<button class="ticker-btn" style="float:center;border-width:0px;">Send Message</button>
 										<div class="mt-20 alert-msg" style="text-align: left;"></div>
 									</div>
 								</div>
@@ -277,12 +290,14 @@ if(isset($_POST['logout']))
 					<div class="row">
 						<div class="col-lg-3  col-md-12">
 							<div class="single-footer-widget">
-								<h6>Top Products</h6>
+								<h6>QUICK LINKS</h6>
 								<ul class="footer-nav">
-									<li><a href="#">Managed Website</a></li>
-									<li><a href="#">Manage Reputation</a></li>
-									<li><a href="#">Power Tools</a></li>
-									<li><a href="#">Marketing Service</a></li>
+									<li><a href="index.php">Home</a></li>
+									<li><a href="about-us.php">About Us</a></li>
+									<li><a href="register.php">Sign Up</a></li>
+									<li><a href="category.php">Category</a></li>
+									<li><a href="price.php">Price</a></li>
+									<li><a href="contact.php">Contact</a></li>
 								</ul>
 							</div>
 						</div>

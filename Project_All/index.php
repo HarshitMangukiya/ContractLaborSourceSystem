@@ -4,10 +4,13 @@
 	session_start();
 	if(isset($_SESSION['emailname'])){
 		echo "welcome".$_SESSION['emailname'];
+
 }
 else
 {
-	//header("location:index.php");	
+	// header("location:index.php");
+    // echo "<script> window.location.href='index.php';</script>";
+
 }
 if(isset($_POST['logout']))
 {
@@ -45,6 +48,8 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/animate.min.css">
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
+			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 			<style type="text/css">
 			li.x{
                pointer-events: none;                   
@@ -133,173 +138,326 @@ if(isset($_POST['logout']))
 					// $day='';
 					// $enddate='';
 					// $startdate='';
+					$flag='';
 					if(!empty($_SESSION['emailname']))
 					{
 						if(isset($_POST['package1']))
-						{
-					  	    $qry="select * from payment where p_customerid='$cid'";
+						{	
+							$currentdate=date('Y/m/d');
+					  	    $qry="select * from payment where p_customerid='$cid' and p_date<>'$currentdate' and p_enddate<>'$currentdate' order by p_id desc limit 1";
+
 							// echo $qry;
 							$res=mysqli_query($con,$qry);
+							// print_r($res);
 							while($row=mysqli_fetch_row($res))
-							{
-								$price=$row[3];
+							{			
+								
 								$startdate=$row[4];
-								if($price==39)
-								{
-									$day=30;
+								$enddate=$row[5];
+								if($cid==$row[1]){		
+									$flag=1;
+									// break;
 								}
-								else if($price==69)
-								{
-									$day=90;
-								}
-								else if($price==99)
-								{
-									$day=360;			
-								}
-
+			
 							}
 
-							// echo 'day ='.$day;
-							$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
+							 $sql = $con->query("SELECT * FROM payment where p_customerid='$cid'");
+    						$numR = $sql->num_rows;
+    						if($numR==0)
+    						{
+    							// echo $numR;
+    							$flag=2;
+    						}
 
+											
+							if($flag==1)
+							{
+								$currentdate=date('Y/m/d');
+								// echo $currentdate;
+								// echo $startdate;
+								
+								if($currentdate>$enddate)
+								{
+									$customerid=$cid;
+								    $method='online'; 
+									$totalpayment='100';
+									$start=date('Y/m/d');
+									$end=date("Y-m-d",strtotime(date("Y-m-d",strtotime($start))."+30 day"));
+									// $startdate = date("d-m-Y", strtotime($start));	    		
+									// $enddate = date("d-m-Y", strtotime($end));	      
 
-							// if(date("Y-m-d")<$enddate)
-							// {
-							// 	echo "membership is not expired";
+			                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment','$start','$end')";
+			                        echo $qry;
+			                        
+			                        
+									$res=mysqli_query($con,$qry);
+									if($res>0)
+									{
+			                        	$flag=0;
+										// echo "insert record into payment table condition one";
+									    // header("location:index.php");
+										echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
 
-						  	    $customerid=$cid;
+									}		
+									else
+									{
+										echo "erro not insert payment";
+									}
+							  	  
+							  	}
+							  	else 
+								{
+									  	// echo "membership not expired";
+										echo "<script>swal('Good job!', 'membership not expired.', 'success');</script>";
+
+							  	    $flag=0;
+								}
+
+							 
+							}
+							else  if($flag==2)
+							{
+								 $customerid=$cid;
 							    $method='online'; 
-								$totalpayment='39';	      
+								$totalpayment='100';
+								$start=date('Y/m/d');
+								$end=date("Y-m-d",strtotime(date("Y-m-d",strtotime($start))."+30 day"));
+								// $startdate = date("d-m-Y", strtotime($start));	    		
+								// $enddate = date("d-m-Y", strtotime($end));	      
 
-		                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
+		                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment','$start','$end')";
 		                        // echo $qry;
+		                        
 								$res=mysqli_query($con,$qry);
 								if($res>0)
 								{
-									// echo "insert record into payment table";
+									$flag=0;
+									// echo "insert record into payment table conditon two";
+									echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
+
 								    // header("location:index.php");
 								}		
 								else
 								{
-									echo "erro not insert payment";
+									echo "<script>swal('Good job!', 'Some Error Payment.', 'success');</script>";
+
+									// echo "erro not insert payment";
 								}
-								// }
-							// else
-							// {
-							// 	echo "membership is expired";
-							// }
+							}
 						}
+							
 						if(isset($_POST['package2']))
 						{
-					  	   $qry="select * from payment where p_customerid='$cid'";
+					  	  $currentdate=date('Y/m/d');
+					  	    $qry="select * from payment where p_customerid='$cid' and p_date<>'$currentdate' and p_enddate<>'$currentdate' order by p_id desc limit 1";
+
 							// echo $qry;
 							$res=mysqli_query($con,$qry);
+							// print_r($res);
 							while($row=mysqli_fetch_row($res))
-							{
-								$price=$row[3];
-								$startdate=$row[4];								
-								if($price==39)
-								{
-									$day=30;
+							{			
+								
+								$startdate=$row[4];
+								$enddate=$row[5];
+								if($cid==$row[1]){		
+									$flag=1;
+									// break;
 								}
-								else if($price==69)
-								{
-									$day=90;
-								}
-								else if($price==99)
-								{
-									$day=360;			
-								}
+			
 							}
 
-							// echo 'day ='.$day;
-							$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
-							// echo $enddate;
-							// echo $startdate;
-							// if(date("Y-m-d")<$enddate)
-							// {
-							// 	echo "membership is not expired";
+							 $sql = $con->query("SELECT * FROM payment where p_customerid='$cid'");
+    						$numR = $sql->num_rows;
+    						if($numR==0)
+    						{
+    							// echo $numR;
+    							$flag=2;
+    						}
 
-						  	    $customerid=$cid;
+											
+							if($flag==1)
+							{
+								$currentdate=date('Y/m/d');
+								// echo $currentdate;
+								// echo $startdate;
+								
+								if($currentdate>$enddate)
+								{
+									$customerid=$cid;
+								    $method='online'; 
+									$totalpayment='150';
+									$start=date('Y/m/d');
+									$end=date("Y-m-d",strtotime(date("Y-m-d",strtotime($start))."+90 day"));
+									// $startdate = date("d-m-Y", strtotime($start));	    		
+									// $enddate = date("d-m-Y", strtotime($end));	      
+
+			                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment','$start','$end')";
+			                        echo $qry;
+			                        
+			                        
+									$res=mysqli_query($con,$qry);
+									if($res>0)
+									{
+			                        	$flag=0;
+										// echo "insert record into payment table condition one";
+									    // header("location:index.php");
+										echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
+
+									}		
+									else
+									{
+										echo "erro not insert payment";
+									}
+							  	  
+							  	}
+							  	else 
+								{
+									  	// echo "membership not expired";
+										echo "<script>swal('Good job!', 'membership not expired.', 'success');</script>";
+
+							  	    $flag=0;
+								}
+
+							 
+							}
+							else  if($flag==2)
+							{
+								 $customerid=$cid;
 							    $method='online'; 
-								$totalpayment='69';	      
+								$totalpayment='150';
+								$start=date('Y/m/d');
+								$end=date("Y-m-d",strtotime(date("Y-m-d",strtotime($start))."+90 day"));
+								// $startdate = date("d-m-Y", strtotime($start));	    		
+								// $enddate = date("d-m-Y", strtotime($end));	      
 
-		                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
+		                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment','$start','$end')";
 		                        // echo $qry;
+		                        
 								$res=mysqli_query($con,$qry);
 								if($res>0)
 								{
-									// echo "insert record into payment table";
+									$flag=0;
+									// echo "insert record into payment table conditon two";
+									echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
+
 								    // header("location:index.php");
 								}		
 								else
 								{
-									echo "erro not insert payment";
+									echo "<script>swal('Good job!', 'Some Error Payment.', 'success');</script>";
+
+									// echo "erro not insert payment";
 								}
-								// }
-							// else
-							// {
-							// 	echo "membership is expired";
-							// }
+							}
+
 						}
 						if(isset($_POST['package3']))
 						{
-					  	    $qry="select * from payment where p_customerid='$cid'";
+					  	   $currentdate=date('Y/m/d');
+					  	    $qry="select * from payment where p_customerid='$cid' and p_date<>'$currentdate' and p_enddate<>'$currentdate' order by p_id desc limit 1";
+
 							// echo $qry;
 							$res=mysqli_query($con,$qry);
+							// print_r($res);
 							while($row=mysqli_fetch_row($res))
-							{
-								$price=$row[3];
-								$startdate=$row[4];								
-								if($price==39)
-								{
-									$day=30;
+							{			
+								
+								$startdate=$row[4];
+								$enddate=$row[5];
+								if($cid==$row[1]){		
+									$flag=1;
+									// break;
 								}
-								else if($price==69)
-								{
-									$day=90;
-								}
-								else if($price==99)
-								{
-									$day=360;			
-								}
+			
 							}
 
-							// echo 'day ='.$day;
-							$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
-							// echo $enddate;
-							// echo $startdate;
-							// if(date("Y-m-d")<$enddate)
-							// {
-							// 	echo "membership is not expired";
+							 $sql = $con->query("SELECT * FROM payment where p_customerid='$cid'");
+    						$numR = $sql->num_rows;
+    						if($numR==0)
+    						{
+    							// echo $numR;
+    							$flag=2;
+    						}
 
-						  	    $customerid=$cid;
+											
+							if($flag==1)
+							{
+								$currentdate=date('Y/m/d');
+								// echo $currentdate;
+								// echo $startdate;
+								
+								if($currentdate>$enddate)
+								{
+									$customerid=$cid;
+								    $method='online'; 
+									$totalpayment='200';
+									$start=date('Y/m/d');
+									$end=date("Y-m-d",strtotime(date("Y-m-d",strtotime($start))."+365 day"));
+									// $startdate = date("d-m-Y", strtotime($start));	    		
+									// $enddate = date("d-m-Y", strtotime($end));	      
+
+			                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment','$start','$end')";
+			                        echo $qry;
+			                        
+			                        
+									$res=mysqli_query($con,$qry);
+									if($res>0)
+									{
+			                        	$flag=0;
+										// echo "insert record into payment table condition one";
+									    // header("location:index.php");
+										echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
+
+									}		
+									else
+									{
+										echo "erro not insert payment";
+									}
+							  	  
+							  	}
+							  	else 
+								{
+									  	// echo "membership not expired";
+										echo "<script>swal('Good job!', 'membership not expired.', 'success');</script>";
+
+							  	    $flag=0;
+								}
+
+							 
+							}
+							else  if($flag==2)
+							{
+								 $customerid=$cid;
 							    $method='online'; 
-								$totalpayment='99';	      
+								$totalpayment='200';
+								$start=date('Y/m/d');
+								$end=date("Y-m-d",strtotime(date("Y-m-d",strtotime($start))."+365 day"));
+								// $startdate = date("d-m-Y", strtotime($start));	    		
+								// $enddate = date("d-m-Y", strtotime($end));	      
 
-		                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
+		                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment','$start','$end')";
 		                        // echo $qry;
+		                        
 								$res=mysqli_query($con,$qry);
 								if($res>0)
 								{
-									// echo "insert record into payment table";
+									$flag=0;
+									// echo "insert record into payment table conditon two";
+									echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
+
 								    // header("location:index.php");
 								}		
 								else
 								{
-									echo "erro not insert payment";
+									echo "<script>swal('Good job!', 'Some Error Payment.', 'success');</script>";
+
+									// echo "erro not insert payment";
 								}
-								// }
-							// else
-							// {
-							// 	echo "membership is expired";
-							// }
+							}
+
 						}
 					}
-					else
-					{
-						// header("location:index.php");
-					}
+				
 					?> 
 
 <!-- login page -->
@@ -330,7 +488,7 @@ if(isset($_POST['logout']))
 			    $email=$_POST['email'];
 			    $password=$_POST['password'];
 
-			    $qry="select * from customer where c_email='$email' and c_password='$password'";    
+			    $qry="select * from customer where c_email='$email' and c_password='$password' and c_dflag<>'1'";    
 			   // echo $qry;
 			       if($res=mysqli_query($con,$qry))
 			      {
@@ -341,13 +499,18 @@ if(isset($_POST['logout']))
 			            $_SESSION['emailname']=$row[0];
 			            //echo $email;
 			           header("location:index.php"); 
+					  	// echo "<script>swal('Good job!', 'Login Successful.', 'success');</script>";
+
 
 			          }
 			        }
 			        else
 			        {
 			          header("location:index.php"); 
-			          echo "Invalid Uasename or Password..."; 
+					// echo "<script>swal('Invalid Uasename or Password...');</script>";
+
+
+			          // echo "Invalid Uasename or Password..."; 
 			        }
 			      }else
 			      {
@@ -413,7 +576,7 @@ if(isset($_POST['logout']))
 					<div class="row fullscreen d-flex align-items-center justify-content-center">
 						<div class="banner-content col-lg-12">
 							<h1 class="text-white">
-								<span>1500+</span> Jobs posted last week	 			
+								<span>1500+</span> Labors Get Job by Customer	 			
 							</h1>	
 							<form  method="post" action="search.php" enctype="multipart/form-data">
 								<div class="row justify-content-center form-wrap">
@@ -482,7 +645,7 @@ if(isset($_POST['logout']))
 							<div class="single-feature">	
 								<h4>Searching</h4>
 								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing.
+									You can search anything in this website.
 								</p>
 							</div>
 						</div>
@@ -490,7 +653,7 @@ if(isset($_POST['logout']))
 							<div class="single-feature">
 								<h4>Applying</h4>
 								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing.
+									You can apply for labor work and get more money.
 								</p>
 							</div>
 						</div>
@@ -498,7 +661,7 @@ if(isset($_POST['logout']))
 							<div class="single-feature">
 								<h4>Security</h4>
 								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing.
+									We will protect your information and we will make secure data.
 								</p>
 							</div>
 						</div>
@@ -506,7 +669,7 @@ if(isset($_POST['logout']))
 							<div class="single-feature">
 								<h4>Notifications</h4>
 								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing.
+									 We will notify the new offer and celebration related to our work.
 								</p>
 							</div>
 						</div>																		
@@ -618,7 +781,7 @@ if(isset($_POST['logout']))
 					<div class="row">
 						<div class="col-lg-2 col-md-4 col-sm-6">
 							<div class="single-fcat">
-								<a href="category.php?caid=<?php echo "1"; ?>">
+								<a href="category.php?caid=<?php echo "7"; ?>">
 									<img src="img/wall-work.png" alt="">
 								</a>
 								<p>Wall Work</p>
@@ -626,15 +789,15 @@ if(isset($_POST['logout']))
 						</div>
 						<div class="col-lg-2 col-md-4 col-sm-6">
 							<div class="single-fcat">
-								<a href="category.php?caid=<?php echo "2"; ?>">
+								<a href="category.php?caid=<?php echo "4"; ?>">
 									<img src="img/construction-building.png" alt="">
 								</a>
-								<p>construction-building</p>
+								<p>Color Work</p>
 							</div>
 						</div>
 						<div class="col-lg-2 col-md-4 col-sm-6">
 							<div class="single-fcat">
-								<a href="category.php?caid=<?php echo "3"; ?>">
+								<a href="category.php?caid=<?php echo "8"; ?>">
 									<img src="img/labor-work.png" alt="">
 								</a>
 								<p>Labor Work</p>
@@ -642,15 +805,15 @@ if(isset($_POST['logout']))
 						</div>
 						<div class="col-lg-2 col-md-4 col-sm-6">
 							<div class="single-fcat">
-								<a href="category.php?caid=<?php echo "4"; ?>">
+								<a href="category.php?caid=<?php echo "11"; ?>">
 									<img src="img/industrial-worker.png" alt="">
 								</a>
-								<p>industrial-worker</p>
+								<p>General work</p>
 							</div>
 						</div>
 						<div class="col-lg-2 col-md-4 col-sm-6">
 							<div class="single-fcat">
-								<a href="category.php?caid=<?php echo "5"; ?>">
+								<a href="category.php?caid=<?php echo "9"; ?>">
 									<img src="img/manual-handling-64.png" alt="">
 								</a>
 								<p>Manual Labor Work</p>
@@ -658,7 +821,7 @@ if(isset($_POST['logout']))
 						</div>
 						<div class="col-lg-2 col-md-4 col-sm-6">
 							<div class="single-fcat">
-								<a href="category.php?caid=<?php echo "6"; ?>">
+								<a href="category.php?caid=<?php echo "10"; ?>">
 									<img src="img/construction-64.png" alt="">
 								</a>
 								<p>Construction</p>
@@ -682,7 +845,7 @@ if(isset($_POST['logout']))
 							</ul> -->
 
 						<?php
-							$qry="select * from labor";					    
+							$qry="select * from labor where l_dflag<>'1'";					    
 							$res=mysqli_query($con,$qry);
 							while($row=mysqli_fetch_row($res))
 							{
@@ -985,7 +1148,7 @@ if(isset($_POST['logout']))
 	 					            <li><a class="justify-content-between d-flex" href="category.php">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
-									$qry2="select count(*) as sta from labor where l_state='$stateid' group by l_state";
+									$qry2="select count(*) as sta from labor where l_state='$stateid' and l_dflag<>'1' group by l_state";
 									$res2=mysqli_query($con,$qry2);
 									while($row2=mysqli_fetch_array($res2))
 									{
@@ -1031,7 +1194,6 @@ if(isset($_POST['logout']))
 									
 									<div class="single-rated">
 										<a href="single.php?lid=<?php echo $row[0]; ?>">
-										<!-- <img class="img-fluid"src="labor/labor_img/<?php echo $row[0];?>/<?php echo $row[16]; ?>" width="100" height="100" alt=""></a> -->
 										<img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " src="<?php echo $imagename2; ?>" alt=""></a>
 
 										<a href="single.php?lid=<?php echo $row[0]; ?>" class="text-uppercase"><h3>
@@ -1080,6 +1242,7 @@ if(isset($_POST['logout']))
 										<p class="address"><span class="lnr lnr-map"></span> 56/8, Panthapath Dhanmondi Dhaka</p>
 										<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
 										<a href="#" class="btns text-uppercase">Apply job</a>
+
 									</div>
 									<div class="single-rated">
 										<img class="img-fluid" src="img/r1.jpg" alt="">
@@ -1092,7 +1255,20 @@ if(isset($_POST['logout']))
 										<p class="address"><span class="lnr lnr-map"></span> 56/8, Panthapath Dhanmondi Dhaka</p>
 										<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
 										<a href="#" class="btns text-uppercase">Apply job</a>
-									</div> -->																		
+										
+									</div> -->
+									<!-- <div class="single-rated">
+										<img class="img-fluid" src="img/r1.jpg" alt="">
+										<a href="single.html"><h4>Creative Art Designer</h4></a>
+										<h6>Premium Labels Limited</h6>
+										<p>
+											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
+										</p>
+										<h5>Job Nature: Full time</h5>
+										<p class="address"><span class="lnr lnr-map"></span> 56/8, Panthapath Dhanmondi Dhaka</p>
+										<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
+										<a href="#" class="btns text-uppercase">Apply job</a>
+									</div>				 -->														
 								</div>
 							</div>							
 
@@ -1110,7 +1286,7 @@ if(isset($_POST['logout']))
 	 					      <li><a class="justify-content-between d-flex" href="category.php">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
-									$qry2="select count(*) as cat from labor where l_categoryid='$catid' group by l_categoryid";
+									$qry2="select count(*) as cat from labor where l_dflag<>'1' and l_categoryid='$catid' group by l_categoryid";
 									$res2=mysqli_query($con,$qry2);
 									while($row2=mysqli_fetch_array($res2))
 									{
@@ -1253,12 +1429,14 @@ if(isset($_POST['logout']))
 					<div class="row">
 						<div class="col-lg-3  col-md-12">
 							<div class="single-footer-widget">
-								<h6>Top Products</h6>
+								<h6>QUICK LINKS</h6>
 								<ul class="footer-nav">
-									<li><a href="#">Managed Website</a></li>
-									<li><a href="#">Manage Reputation</a></li>
-									<li><a href="#">Power Tools</a></li>
-									<li><a href="#">Marketing Service</a></li>
+									<li><a href="index.php">Home</a></li>
+									<li><a href="about-us.php">About Us</a></li>
+									<li><a href="register.php">Sign Up</a></li>
+									<li><a href="category.php">Category</a></li>
+									<li><a href="price.php">Price</a></li>
+									<li><a href="contact.php">Contact</a></li>
 								</ul>
 							</div>
 						</div>

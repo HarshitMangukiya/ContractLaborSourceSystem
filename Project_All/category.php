@@ -45,6 +45,8 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/animate.min.css">
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
+			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+			
 			<style type="text/css">
 			li.x{
                pointer-events: none;
@@ -155,7 +157,7 @@ if(isset($_POST['logout']))
 			    $email=$_POST['email'];
 			    $password=$_POST['password'];
 
-			    $qry="select * from customer where c_email='$email' and c_password='$password'";    
+			    $qry="select * from customer where c_email='$email' and c_password='$password' and c_dflag<>'1'";    
 			   // echo $qry;
 			       if($res=mysqli_query($con,$qry))
 			      {
@@ -254,11 +256,11 @@ if(isset($_POST['logout']))
 							<?php
 							if(isset($_REQUEST['caid']))
 							{
-							$qry="select * from labor where l_categoryid=".$_REQUEST['caid'];
+							$qry="select * from labor where l_dflag<>'1' and l_categoryid=".$_REQUEST['caid'];
 							}
 							else
 							{
-							$qry="select * from labor";
+							$qry="select * from labor where l_dflag<>'1'";
 							}
 							$res=mysqli_query($con,$qry);
 							while($row=mysqli_fetch_row($res))
@@ -559,7 +561,7 @@ if(isset($_POST['logout']))
 	 					            <li><a class="justify-content-between d-flex" href="#">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
-									$qry2="select count(*) as sta from labor where l_state='$stateid' group by l_state";
+									$qry2="select count(*) as sta from labor where l_dflag<>'1' and l_state='$stateid' group by l_state";
 									$res2=mysqli_query($con,$qry2);
 									while($row2=mysqli_fetch_array($res2))
 									{
@@ -689,7 +691,7 @@ if(isset($_POST['logout']))
 	 					      <li><a class="justify-content-between d-flex" href="#">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
-									$qry2="select count(*) as cat from labor where l_categoryid='$catid' group by l_categoryid";
+									$qry2="select count(*) as cat from labor where l_dflag<>'1' and l_categoryid='$catid' group by l_categoryid";
 									$res2=mysqli_query($con,$qry2);
 									while($row2=mysqli_fetch_array($res2))
 									{
@@ -789,12 +791,14 @@ if(isset($_POST['logout']))
 					<div class="row">
 						<div class="col-lg-3  col-md-12">
 							<div class="single-footer-widget">
-								<h6>Top Products</h6>
+								<h6>QUICK LINKS</h6>
 								<ul class="footer-nav">
-									<li><a href="#">Managed Website</a></li>
-									<li><a href="#">Manage Reputation</a></li>
-									<li><a href="#">Power Tools</a></li>
-									<li><a href="#">Marketing Service</a></li>
+									<li><a href="index.php">Home</a></li>
+									<li><a href="about-us.php">About Us</a></li>
+									<li><a href="register.php">Sign Up</a></li>
+									<li><a href="category.php">Category</a></li>
+									<li><a href="price.php">Price</a></li>
+									<li><a href="contact.php">Contact</a></li>
 								</ul>
 							</div>
 						</div>

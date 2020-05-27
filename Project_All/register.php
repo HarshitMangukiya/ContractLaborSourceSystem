@@ -41,6 +41,8 @@
       <link rel="stylesheet" href="css/animate.min.css">
       <link rel="stylesheet" href="css/owl.carousel.css">
       <link rel="stylesheet" href="css/main.css">
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
       <style type="text/css">
         div.gallery{
         /*border: 1px solid #777;*/
@@ -174,7 +176,8 @@ $('#state').on('change',function(){
                 }
                 else
                 {
-                  header("location:index.php"); 
+                  echo "<script> window.location.href='index.php';</script>";
+                  
                   echo "Invalid Uasename or Password..."; 
                 }
               }else
@@ -308,13 +311,20 @@ $('#state').on('change',function(){
                 {
                   $_SESSION['emailname']=$row[0];
                   // echo $email;
-                 header("location:index.php"); 
+                 // header("location:index.php"); 
+                    echo "<script> window.location.href='index.php';</script>";
+              // echo "<script>swal('Good job!', 'Login Successful.', 'success');</script>";
+
 
                 }
               }
               else
               {
-                header("location:index.php"); 
+                // header("location:index.php"); 
+                    echo "<script> window.location.href='index.php';</script>";
+          // echo "<script>swal('Invalid Uasename or Password...');</script>";
+                    
+
                 echo "Invalid Uasename or Password..."; 
               }
             }else
@@ -401,7 +411,6 @@ $('#state').on('change',function(){
     <p align="left">First Name *
     <input type="text" class="form-control mb-4" placeholder="Enter First name" id="firstname" name="firstname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter First name '" ></p>
     <span id="error_firstname" class="text-danger"></span>
-
 
     <p align="left">Last Name *
     <input type="text" class="form-control mb-4" placeholder="Enter Last name" id="lastname" name="lastname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Last name '" ></p>

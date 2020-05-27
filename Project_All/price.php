@@ -44,6 +44,14 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/animate.min.css">
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
+			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+			<style type="text/css">
+			li.x{
+               pointer-events: none;                   
+	           }
+
+			</style>
 			
 		</head>
 		<body>
@@ -72,6 +80,7 @@ if(isset($_POST['logout']))
 
 				          &nbsp &nbsp	
 				          <?php
+				          $cid='';
 				          if(isset($_SESSION['emailname']))
 				          {
 				          	$cid=$_SESSION['emailname'];
@@ -149,7 +158,7 @@ if(isset($_POST['logout']))
 			    $email=$_POST['email'];
 			    $password=$_POST['password'];
 
-			    $qry="select * from customer where c_email='$email' and c_password='$password'";    
+			    $qry="select * from customer where c_email='$email' and c_password='$password' and c_dflag<>'1'";    
 			   // echo $qry;
 			       if($res=mysqli_query($con,$qry))
 			      {
@@ -255,196 +264,48 @@ if(isset($_POST['logout']))
 						</div>
 					</div>						
 					<div class="row">
-			<!-- 		<?php
-					// $day='';
-					// $enddate='';
-					// $startdate='';
-					if(!empty($_SESSION['emailname']))
-					{
-						if(isset($_POST['submit']))
-						{
-					  	    $qry="select * from payment where p_customerid='$cid'";
+			<?php
+			$enddate='';
+			 $qry6="select * from payment where p_customerid='$cid' order by p_id desc limit 1";
 							// echo $qry;
-							$res=mysqli_query($con,$qry);
-							while($row=mysqli_fetch_row($res))
+							$res6=mysqli_query($con,$qry6);
+							while($row6=mysqli_fetch_row($res6))
 							{
-								$price=$row[3];
-								$startdate=$row[4];
-								if($price==39)
-								{
-									$day=30;
-								}
-								else if($price==69)
-								{
-									$day=90;
-								}
-								else if($price==99)
-								{
-									$day=360;			
-								}
-
+								$enddate=$row6[5];
 							}
-
-							// echo 'day ='.$day;
-							$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
-
-
-							// if(date("Y-m-d")<$enddate)
-							// {
-							// 	echo "membership is not expired";
-
-						  	    $customerid=$cid;
-							    $method='online'; 
-								$totalpayment='39';	      
-
-		                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
-		                        // echo $qry;
-								$res=mysqli_query($con,$qry);
-								if($res>0)
-								{
-									// echo "insert record into payment table";
-								    // header("location:index.php");
-								}		
-								else
-								{
-									echo "erro not insert payment";
-								}
-								// }
-							// else
-							// {
-							// 	echo "membership is expired";
-							// }
-						}
-						if(isset($_POST['submit1']))
-						{
-					  	   $qry="select * from payment where p_customerid='$cid'";
-							// echo $qry;
-							$res=mysqli_query($con,$qry);
-							while($row=mysqli_fetch_row($res))
-							{
-								$price=$row[3];
-								$startdate=$row[4];								
-								if($price==39)
-								{
-									$day=30;
-								}
-								else if($price==69)
-								{
-									$day=90;
-								}
-								else if($price==99)
-								{
-									$day=360;			
-								}
-							}
-
-							// echo 'day ='.$day;
-							$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
-							// echo $enddate;
-							// echo $startdate;
-							// if(date("Y-m-d")<$enddate)
-							// {
-							// 	echo "membership is not expired";
-
-						  	    $customerid=$cid;
-							    $method='online'; 
-								$totalpayment='69';	      
-
-		                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
-		                        // echo $qry;
-								$res=mysqli_query($con,$qry);
-								if($res>0)
-								{
-									// echo "insert record into payment table";
-								    // header("location:index.php");
-								}		
-								else
-								{
-									echo "erro not insert payment";
-								}
-								// }
-							// else
-							// {
-							// 	echo "membership is expired";
-							// }
-						}
-						if(isset($_POST['submit2']))
-						{
-					  	    $qry="select * from payment where p_customerid='$cid'";
-							// echo $qry;
-							$res=mysqli_query($con,$qry);
-							while($row=mysqli_fetch_row($res))
-							{
-								$price=$row[3];
-								$startdate=$row[4];								
-								if($price==39)
-								{
-									$day=30;
-								}
-								else if($price==69)
-								{
-									$day=90;
-								}
-								else if($price==99)
-								{
-									$day=360;			
-								}
-							}
-
-							// echo 'day ='.$day;
-							$enddate=date("Y-m-d",strtotime(date("Y-m-d",strtotime($startdate))."+$day day"));
-							// echo $enddate;
-							// echo $startdate;
-							// if(date("Y-m-d")<$enddate)
-							// {
-							// 	echo "membership is not expired";
-
-						  	    $customerid=$cid;
-							    $method='online'; 
-								$totalpayment='99';	      
-
-		                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment',NOW())";
-		                        // echo $qry;
-								$res=mysqli_query($con,$qry);
-								if($res>0)
-								{
-									// echo "insert record into payment table";
-								    // header("location:index.php");
-								}		
-								else
-								{
-									echo "erro not insert payment";
-								}
-								// }
-							// else
-							// {
-							// 	echo "membership is expired";
-							// }
-						}
-					}
-					else
-					{
-						// header("location:index.php");
-					}
-					?> -->
+			?>
 						<div class="col-lg-4">
 							<div class="single-price no-padding">
 								<div class="price-top">
 									<h4>Real basic</h4>
 								</div>
 								<ul class="lists">
-									<li>2.5 GB Space</li>
-									<li>Secure Online Transfer</li>
-									<li>Unlimited Styles</li>
-									<li>Customer Service</li>
+									<li>You can use only one month.</li>
+									<!-- <li>Secure Online Transfer</li> -->
+									<li>limited area</li>
+									<li>Customer service</li>
 								</ul>
 								<div class="price-bottom">
 									<div class="price-wrap d-flex flex-row justify-content-center">
 										<!-- <p class="address"><span class="lnr lnr-database"></span> &#x20a8; 500</p> -->
-										<span class="price">$</span><h1> 39 </h1><span class="time">Per <br> Month</span>
+										<span class="price">&#x20a8;</span><h1> 100 </h1><span class="time">Per <br> Month</span>
 									</div>
+									<?php
+										if(date("Y-m-d")<$enddate)
+											{
+												// $color='red';
+											    $class='x';
+											}
+											else
+											{
+												// $color='green';
+												$class='';
+											}
+											?>	
+											<ul>
 									<!-- <a href="#" class="primary-btn header-btn">Get Started</a> -->
-									<input type="submit" name="package1" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;" >
+									<li class="<?php echo $class; ?>"><input type="submit" name="package1" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;" ></li>
+								</ul>
 								</div>
 								
 							</div>
@@ -455,17 +316,32 @@ if(isset($_POST['logout']))
 									<h4>Real Standred</h4>
 								</div>
 								<ul class="lists">
-									<li>10 GB Space</li>
-									<li>Secure Online Transfer</li>
-									<li>Unlimited Styles</li>
-									<li>Customer Service</li>
+									<li>You can use only three month.</li>
+									<!-- <li>Maximum 5 labor per day</li>
+ -->									<!-- <li>Secure Online Transfer</li> -->
+									<li>Get service in any area</li>
+									<li>Customer service</li>
 								</ul>
 								<div class="price-bottom">
 									<div class="price-wrap d-flex flex-row justify-content-center">
-										<span class="price">$</span><h1> 69 </h1><span class="time">Per Six<br> Month</span>
+										<span class="price">&#x20a8;</span><h1> 150 </h1><span class="time">Per Six<br> Month</span>
 									</div>
 									<!-- <a href="#" class="primary-btn header-btn">Get Started</a> -->
-							        <input type="submit" name="package2" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;">
+										<?php 
+											if(date("Y-m-d")<$enddate)
+											{
+												// $color='red';
+											    $class='x';
+											}
+											else
+											{
+												// $color='green';
+												$class='';
+											}
+											?>	
+											<ul>				
+							        <li class="<?php echo $class; ?>"><input type="submit" name="package2" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;"></li>
+							    </ul>
 								</div>
 							</div>
 						</div>
@@ -475,17 +351,30 @@ if(isset($_POST['logout']))
 									<h4>Real Ultimate</h4>
 								</div>
 								<ul class="lists">
-									<li>Unlimited Space</li>
-									<li>Secure Online Transfer</li>
-									<li>Unlimited Styles</li>
-									<li>Customer Service</li>
+									<li>You can use only one year.</li>
+							<!-- 		<li>You can Get urgent labor.</li> -->
+									<li>Get service in any area</li>
+									<li>Customer service</li>
 								</ul>
 								<div class="price-bottom">
 									<div class="price-wrap d-flex flex-row justify-content-center">
-										<span class="price">$</span><h1> 99 </h1><span class="time">Per <br>Year</span>
+										<span class="price">&#x20a8;</span><h1> 200 </h1><span class="time">Per <br>Year</span>
 									</div>
+									<?php
+										if(date("Y-m-d")<$enddate)
+											{
+												// $color='red';
+											    $class='x';
+											}
+											else
+											{
+												// $color='green';
+												$class='';
+											}
+											?>	
+											<ul>
 									<!-- <a href="#" class="primary-btn header-btn">Get Started</a> -->
-								    <input type="submit" name="package3" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;">
+								    <li class="<?php echo $class; ?>"><input type="submit" name="package3" value="Get started" class="primary-btn header-btn" onclick="return confirm('Are you sure you want to buy this package ?')?true:false;"></li>
 								</div>
 							</div>				
 						</div>								
@@ -574,12 +463,14 @@ if(isset($_POST['logout']))
 					<div class="row">
 						<div class="col-lg-3  col-md-12">
 							<div class="single-footer-widget">
-								<h6>Top Products</h6>
+								<h6>QUICK LINKS</h6>
 								<ul class="footer-nav">
-									<li><a href="#">Managed Website</a></li>
-									<li><a href="#">Manage Reputation</a></li>
-									<li><a href="#">Power Tools</a></li>
-									<li><a href="#">Marketing Service</a></li>
+									<li><a href="index.php">Home</a></li>
+									<li><a href="about-us.php">About Us</a></li>
+									<li><a href="register.php">Sign Up</a></li>
+									<li><a href="category.php">Category</a></li>
+									<li><a href="price.php">Price</a></li>
+									<li><a href="contact.php">Contact</a></li>
 								</ul>
 							</div>
 						</div>

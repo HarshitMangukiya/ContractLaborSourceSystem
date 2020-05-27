@@ -7,7 +7,9 @@
 }
 else
 {
-	//header("location:login.php");	
+	//header("location:login.php");
+    echo "<script> window.location.href='index.php';</script>";
+
 }
 if(isset($_POST['logout']))
 {
@@ -45,6 +47,8 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/animate.min.css">
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
+			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 			<script src="Labor/jquery.js"></script>
 			<style type="text/css">
 			li.x{
@@ -569,7 +573,7 @@ $('#state').on('change',function(){
 									</li>
 
 									<li>
-										<input type="submit" class="ticker-btn" name="updateprofile" id="customerupdate" value="Update profile">
+										<input type="submit" class="ticker-btn" name="updateprofile" id="customerupdate" value="Update profile" style="border-width:0px;">
 									</li>
 
 
@@ -886,12 +890,14 @@ $('#state').on('change',function(){
 					<div class="row">
 						<div class="col-lg-3  col-md-12">
 							<div class="single-footer-widget">
-								<h6>Top Products</h6>
+								<h6>QUICK LINKS</h6>
 								<ul class="footer-nav">
-									<li><a href="#">Managed Website</a></li>
-									<li><a href="#">Manage Reputation</a></li>
-									<li><a href="#">Power Tools</a></li>
-									<li><a href="#">Marketing Service</a></li>
+									<li><a href="index.php">Home</a></li>
+									<li><a href="about-us.php">About Us</a></li>
+									<li><a href="register.php">Sign Up</a></li>
+									<li><a href="category.php">Category</a></li>
+									<li><a href="price.php">Price</a></li>
+									<li><a href="contact.php">Contact</a></li>
 								</ul>
 							</div>
 						</div>
