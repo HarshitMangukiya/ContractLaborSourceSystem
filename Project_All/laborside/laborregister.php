@@ -304,7 +304,7 @@ $('#state').on('change',function(){
                    }
 
 
-                  $qry="update labor set l_status='$status1' where l_id='$lid'";
+                  $qry="update labor set l_status='$status1' where l_id='$lid' ";
                   // echo $qry;
                     $res=mysqli_query($con,$qry);
                     if($res>0)
@@ -372,7 +372,7 @@ $('#state').on('change',function(){
           $phone=$_POST['phone4'];
           $password=$_POST['password4'];
 
-          $qry="select * from labor where l_phone='$phone' and l_password='$password'";   
+          $qry="select * from labor where l_phone='$phone' and l_password='$password' and l_dflag<>'1'";   
           
          //echo $qry;
              if($res=mysqli_query($con,$qry))
@@ -382,12 +382,14 @@ $('#state').on('change',function(){
                   while($row=mysqli_fetch_row($res))
                 {
                   $_SESSION['laborname']=$row[0];
-                  header("location:index.php"); 
+                  echo "<script> window.location.href='index.php';</script>";
+                 
                 }
               }
               else
               {
-                header("location:index.php"); 
+                  echo "<script> window.location.href='index.php';</script>";
+                
                 echo "Invalid Uasename or Password..."; 
               }
             }else
@@ -643,12 +645,14 @@ $rowCount = $query->num_rows;
           <div class="row">
             <div class="col-lg-3  col-md-12">
               <div class="single-footer-widget">
-                <h6>Top Products</h6>
+                <h6>QUICK LINKS</h6>
                 <ul class="footer-nav">
-                  <li><a href="#">Managed Website</a></li>
-                  <li><a href="#">Manage Reputation</a></li>
-                  <li><a href="#">Power Tools</a></li>
-                  <li><a href="#">Marketing Service</a></li>
+                  <li><a href="index.php">Home</a></li>
+                  <li><a href="about-us.php">About Us</a></li>
+                  <li><a href="laborregister.php">Sign Up</a></li>
+                  <!-- <li><a href="category.php">Category</a></li> -->
+                  <!-- <li><a href="price.php">Price</a></li> -->
+                  <li><a href="contact.php">Contact</a></li>
                 </ul>
               </div>
             </div>

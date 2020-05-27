@@ -45,6 +45,13 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="../css/animate.min.css">
 			<link rel="stylesheet" href="../css/owl.carousel.css">
 			<link rel="stylesheet" href="../css/main.css">
+			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+					<style type="text/css">
+			li.x{
+               pointer-events: none;                   
+	           }
+
+			</style>
 
 		</head>
 		<body>
@@ -206,7 +213,7 @@ if(isset($_POST['logout']))
 			    $phone=$_POST['phone'];
 			    $password=$_POST['password'];
 
-			    $qry="select * from labor where l_phone='$phone' and l_password='$password'";   
+			    $qry="select * from labor where l_phone='$phone' and l_password='$password' and l_dflag<>'1'";   
 			    
 			   //echo $qry;
 			       if($res=mysqli_query($con,$qry))
@@ -277,19 +284,19 @@ if(isset($_POST['logout']))
 			<!-- start banner Area -->
 			<form method="post" action="search.php" enctype="multipart/form-data">
 			<section class="banner-area relative" id="home">	
-				<div class="overlay overlay-bg"></div>
+				<div class="overlay overlay-bg" ></div>
 				<div class="container">
-					<div class="row fullscreen d-flex align-items-center justify-content-center">
-						<div class="banner-content col-lg-12">
+					<div class="row d-flex align-items-center justify-content-center">
+						<div class="about-content col-lg-12">
 							<h1 class="text-white">
-								<span>1500+</span> Jobs posted last week				
+								<span>1500+</span> Labors Get Job by Customer				
 							</h1>	
 							<!-- <form action="search.php" class="serach-form-area"> -->
-								<div class="row justify-content-center form-wrap">
-									<div class="col-lg-4 form-cols">
+								<!-- <div class="row justify-content-center form-wrap"> -->
+									<!-- <div class="col-lg-4 form-cols">
 										<input type="text" class="form-control" name="search" placeholder="what are you looging for?">
-									</div>
-									<div class="col-lg-3 form-cols">
+									</div> -->
+								<!-- 	<div class="col-lg-3 form-cols">
 										<div class="default-select" id="default-selects">
 											<select name="city">
                                             <option value disabled selected>Select City
@@ -341,20 +348,20 @@ if(isset($_POST['logout']))
 										      
 											}
 										}	
-									?>
-									<div class="col-lg-2 form-cols" style="margin-top:11px;">
+									?> -->
+									<!-- <div class="col-lg-2 form-cols" style="margin-top:11px;"> -->
 
 <!-- 
 									    <button type="submit" class="btn btn-info" name="search">									    --> 	
 									      <!-- <a href="search.php?ciid=<?php echo $city; ?>&caid=<?php echo $category; ?>" class="ticker-btn"> -->
-									      <a href="search.php" class="ticker-btn">
+									     <!--  <a href="search.php" class="ticker-btn">
 									      <span class="lnr lnr-magnifier"></span> &nbsp Search
-									      </a>
+									      </a> -->
 									    <!-- </button> -->
 									<!-- </a> -->
 										
-									</div>								
-								</div>
+									<!-- </div>								 -->
+								<!-- </div> -->
 							<!-- </form>	 -->
 							<!-- <p class="text-white"> <span>Search by tags:</span> Tecnology, Business, Consulting, IT Company, Design, Development</p> -->
 						</div>											
@@ -564,12 +571,34 @@ if(isset($_POST['logout']))
 			<?php
 			if(isset($_REQUEST['upid']))
 			{
-				$qry6="update hiredlabor set h_flag='3' where h_id=".$_REQUEST['upid'];
+
+				$qry11="select * from hiredlabor where h_id=".$_REQUEST['upid'];
+				$res11=mysqli_query($con,$qry11);
+				while($row11=mysqli_fetch_row($res11))
+				{
+				 $lid=$row11[2];
+				}
+
+				$qry12="update labor set l_status='unavailable' where l_id='$lid'";
+				$res12=mysqli_query($con,$qry12);
+				if($res12>0)
+				{
+					// echo "update record into user table";
+				   // header("location:hiredlaboradmin.php");
+				}		
+				else
+				{
+					echo "error not update ";
+				}
+
+				$qry6="update hiredlabor set h_flag='4' where h_id=".$_REQUEST['upid'];
 				$res6=mysqli_query($con,$qry6);
 				if($res6>0)
 				{
 					// echo "update record into user table";
 				   // header("location:hiredlaboradmin.php");
+					// echo "<script>swal('Good job!', 'Confirm your job.', 'success');</script>";
+
 				}		
 				else
 				{
@@ -582,16 +611,16 @@ if(isset($_POST['logout']))
 			if(isset($_REQUEST['hid']))
 			{
 
-				$qry="select * from hiredlabor where h_id=".$_REQUEST['hid'];
-				$res=mysqli_query($con,$qry);
-				while($row=mysqli_fetch_row($res))
+				$qry9="select * from hiredlabor where h_id=".$_REQUEST['hid'];
+				$res9=mysqli_query($con,$qry9);
+				while($row9=mysqli_fetch_row($res9))
 				{
-				 $lid=$row[2];
+				 $lid3=$row9[2];
 				}
 
-				$qry="update labor set l_status='available' where l_id='$lid'";
-				$res=mysqli_query($con,$qry);
-				if($res>0)
+				$qry10="update labor set l_status='available' where l_id='$lid3'";
+				$res10=mysqli_query($con,$qry10);
+				if($res10>0)
 				{
 					// echo "update record into user table";
 				   // header("location:hiredlaboradmin.php");
@@ -601,16 +630,19 @@ if(isset($_POST['logout']))
 					echo "error not update ";
 				}
 
-				$qry5="update hiredlabor set h_flag='2' where h_id=".$_REQUEST['hid'];
-				$res5=mysqli_query($con,$qry5);
-				if($res5>0)
+				$qry8="update hiredlabor set h_flag='3' where h_id=".$_REQUEST['hid'];
+				$res8=mysqli_query($con,$qry8);
+				if($res8>0)
 				{
 					// echo "update record into user table";
 				   // header("location:hiredlaboradmin.php");
+					// echo "<script>swal('Good job!', 'Cancel your job.', 'success');</script>";
+
 				}		
 				else
 				{
 					echo "error not update ";
+					
 				}
 
 			 //    $qry3="delete from hiredlabor where h_id=".$_REQUEST['hid'];
@@ -661,12 +693,12 @@ if(isset($_POST['logout']))
 							// echo $qry;
 
 							$res=mysqli_query($con,$qry);
+
 							while($row=mysqli_fetch_row($res))
 							{
 								if(empty($row[20]))
 											{
 												$imagename1="../img/avatar-13.jpg";
-
 											}
 											else
 											{
@@ -699,12 +731,25 @@ if(isset($_POST['logout']))
 									</div>
 									<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[12];?> </p>
 									<ul class="btns">
-										<li><a href="index.php?upid=<?php echo $row[0]; ?>" style="color:green;" onclick="return confirm('Are you sure to delete job request ?')?true:false;">Confirm Job</a></li>
-										<li><a href="index.php?hid=<?php echo $row[0]; ?>" style="color:red;" onclick="return confirm('Are you sure to delete job request ?')?true:false;">Cancel Job</a></li>								
+										<?php 
+											if($row[6]=='2' or $row[6]=='3' or $row[6]=='4')
+											{
+											    $class='x';
+											}
+											else
+											{
+												$class='';
+											}
+											?>			
+										<li class="<?php echo $class; ?>"><a href="index.php?upid=<?php echo $row[0]; ?>" style="color:green;" onclick="return confirm('Are you sure to delete job request ?')?true:false;">Confirm Job</a></li>
+										<li class="<?php echo $class; ?>"><a href="index.php?hid=<?php echo $row[0]; ?>" style="color:red;" onclick="return confirm('Are you sure to delete job request ?')?true:false;">Cancel Job</a></li>								
 									</ul>
 									<?php
-								 	if($row[6]==1)
-									{?>
+									// echo $row[6];
+								 	if($row[6]==2)
+									{
+										
+										?>
 									<h4 style="color:red;">Customer canceled your job.</h4>
 									<?php
 									}
@@ -940,7 +985,7 @@ if(isset($_POST['logout']))
 	 					            <li><a class="justify-content-between d-flex" href="#">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
-									$qry2="select count(*) as sta from labor where l_state='$stateid' group by l_state";
+									$qry2="select count(*) as sta from labor where l_dflag<>'1' and l_state='$stateid' group by l_state";
 									$res2=mysqli_query($con,$qry2);
 									while($row2=mysqli_fetch_array($res2))
 									{
@@ -1031,13 +1076,13 @@ if(isset($_POST['logout']))
 									$qry1="select * from category";
 									$res1=mysqli_query($con,$qry1);
 									while($row1=mysqli_fetch_row($res1))
-									{
+									{	
 									$catid=$row1[0];
 										?>
 	 					            <li><a class="justify-content-between d-flex" href="#">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
-									$qry2="select count(*) as cat from labor where l_categoryid='$catid' group by l_categoryid";
+									$qry2="select count(*) as cat from labor where l_dflag<>'1' and l_categoryid='$catid' group by l_categoryid";
 									$res2=mysqli_query($con,$qry2);
 									while($row2=mysqli_fetch_array($res2))
 									{
@@ -1180,12 +1225,14 @@ if(isset($_POST['logout']))
 					<div class="row">
 						<div class="col-lg-3  col-md-12">
 							<div class="single-footer-widget">
-								<h6>Top Products</h6>
+								<h6>QUICK LINKS</h6>
 								<ul class="footer-nav">
-									<li><a href="#">Managed Website</a></li>
-									<li><a href="#">Manage Reputation</a></li>
-									<li><a href="#">Power Tools</a></li>
-									<li><a href="#">Marketing Service</a></li>
+									<li><a href="index.php">Home</a></li>
+									<li><a href="about-us.php">About Us</a></li>
+									<li><a href="laborregister.php">Sign Up</a></li>
+									<!-- <li><a href="category.php">Category</a></li> -->
+									<!-- <li><a href="price.php">Price</a></li> -->
+									<li><a href="contact.php">Contact</a></li>
 								</ul>
 							</div>
 						</div>

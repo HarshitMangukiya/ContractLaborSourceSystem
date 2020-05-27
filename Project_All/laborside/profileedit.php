@@ -7,7 +7,9 @@
 }
 else
 {
-	//header("location:index.php");	
+	//header("location:index.php");
+    echo "<script> window.location.href='index.php';</script>";
+
 }
 if(isset($_POST['logout']))
 {
@@ -142,7 +144,7 @@ $('#state').on('change',function(){
 				        <ul class="nav-menu">
 				          <li class="menu-active"><a href="index.php">Home</a></li>
 				          <li><a href="about-us.php">About Us</a></li>
-				          <li><a href="category.php">Category</a></li>
+				          <!-- <li><a href="category.php">Category</a></li> -->
 				          <!-- <li><a href="price.html">Price</a></li>
 				          <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="contact.php">Contact</a></li>
@@ -651,7 +653,7 @@ $('#state').on('change',function(){
 									</li>
 
 									<li>
-										<input type="submit" class="ticker-btn" id="laborupdate" name="xx" value="Update profile" >
+										<input type="submit" class="ticker-btn" id="laborupdate" name="xx" value="Update profile" style="border-width:0px;">
 									</li>
 
 <!-- 
@@ -950,12 +952,14 @@ $('#state').on('change',function(){
 					<div class="row">
 						<div class="col-lg-3  col-md-12">
 							<div class="single-footer-widget">
-								<h6>Top Products</h6>
+								<h6>QUICK LINKS</h6>
 								<ul class="footer-nav">
-									<li><a href="#">Managed Website</a></li>
-									<li><a href="#">Manage Reputation</a></li>
-									<li><a href="#">Power Tools</a></li>
-									<li><a href="#">Marketing Service</a></li>
+									<li><a href="index.php">Home</a></li>
+									<li><a href="about-us.php">About Us</a></li>
+									<li><a href="laborregister.php">Sign Up</a></li>
+									<!-- <li><a href="category.php">Category</a></li> -->
+									<!-- <li><a href="price.php">Price</a></li> -->
+									<li><a href="contact.php">Contact</a></li>
 								</ul>
 							</div>
 						</div>

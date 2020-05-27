@@ -8,6 +8,8 @@
 else
 {
 	//header("location:index.php");	
+    echo "<script> window.location.href='index.php';</script>";
+
 }
 if(isset($_POST['logout']))
 {
@@ -90,7 +92,7 @@ if(isset($_POST['logout']))
 				        <ul class="nav-menu">
 				          <li class="menu-active"><a href="index.php">Home</a></li>
 				          <li><a href="about-us.php">About Us</a></li>
-				          <li><a href="category.php">Category</a></li>
+				          <!-- <li><a href="category.php">Category</a></li> -->
 	<!-- 			          <li><a href="price.html">Price</a></li>
 				          <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="contact.php">Contact</a></li>
@@ -206,8 +208,8 @@ if(isset($_POST['logout']))
 	if(isset($_POST['xx']))
     {
      
-		  $firstname=$_POST['firstname'];
-	      $lastname=$_POST['lastname'];
+		  $firstname=ucfirst($_POST['firstname']);
+	      $lastname=ucfirst($_POST['lastname']);
 	      $gender=$_POST['gender'];
 	      $age=$_POST['age'];
 	      $email=$_POST['email'];
@@ -354,24 +356,33 @@ if(isset($_POST['logout']))
 					<div class="row justify-content-center d-flex">
                     <?php
 
-	$qry1="select * from labor where l_id='$lid'";
-	// echo $qry1;
-	$res1=mysqli_query($con,$qry1);
-	while($row=mysqli_fetch_row($res1))
-		{
-			if(empty($row[16]))
-			{
-				$imagename1="../img/avatar-13.jpg";
-			}
-			else
-			{
-				$imagename1="../Labor/labor_img/".$row[0].'/'.$row[16];
-			}
-			
-			$register4 = date("d-m-Y", strtotime($row[19]));  
+					$qry1="select * from labor where l_id='$lid'";
+					// echo $qry1;
+					$res1=mysqli_query($con,$qry1);
+					while($row=mysqli_fetch_row($res1))
+						{
+						if(empty($row[16]))
+						{
+							$imagename1="../img/avatar-13.jpg";
+						}
+						else
+						{
+							$imagename1="../Labor/labor_img/".$row[0].'/'.$row[16];
+						}
+						
+						if(!empty($row[20]))
+						{
+							$qry1="select * from category where ca_id=".$row[20];
+							$res1=mysqli_query($con,$qry1);
+							while($row1=mysqli_fetch_row($res1))
+								{
+									$category=$row1[1];
+								}
+						}
+						$register4 = date("d-m-Y", strtotime($row[19]));  
 
 
-			?>
+					?>
 						<div class="col-lg-8 post-list">
 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
@@ -433,76 +444,101 @@ if(isset($_POST['logout']))
 							</div>	
 <!-- insert image start -->
 <?php
+	$filetype=0;
 	if(isset($_POST['insertimg']))
 	{
 
 	      $filetype=$_POST['filetype'];
 	      $laborid=$lid;
-	      
-	        if(isset($_FILES["workimage"]))
+	        
+	        if($filetype==1)
 	        {
-	          	$path="../Labor/labor_img/";
-	         	$foldername=$lid;
-	          
-	           	$myFile = $_FILES['workimage'];
-	            $fileCount = count($myFile["name"]);
+		        if(isset($_FILES["workimage"]))
+		        {
+		          	$path="../Labor/labor_img/";
+		         	$foldername=$lid;
+		          
+		           	$myFile = $_FILES['workimage'];
+		            $fileCount = count($myFile["name"]);
 
-	                for ($i = 0; $i < $fileCount; $i++) {
+		                for ($i = 0; $i < $fileCount; $i++) {
 
-	                  $target_file = $path.basename($_FILES["workimage"]["name"][$i]);
-	                  //Select file type
-	                  $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-	                  //Valid file extensions
-	                  $extensions_arr = array("jpg","jpeg","png","gif");
-	                  //Check extension
-	                  $imgSize = $_FILES['workimage']['size'][$i];
+		                  $target_file = $path.basename($_FILES["workimage"]["name"][$i]);
+		                  //Select file type
+		                  $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+		                  //Valid file extensions
+		                  $extensions_arr = array("jpg","jpeg","png","gif");
+		                  //Check extension
+		                  $imgSize = $_FILES['workimage']['size'][$i];
 
-	 
-	                  if(in_array($imageFileType,$extensions_arr) )
-	                  {
-	                  
-	                    if($imgSize < 5000000)   
-	                    {
-	                      $myimg=time().$_FILES['workimage']["name"][$i];
-	                      //echo $myimg;
-	                      
-	                      $qry="insert into image values(0,'$myimg','$filetype','$laborid')";
-	                      // echo $qry;
-	                      $res=mysqli_query($con,$qry);
-	                      if($res>0)
-	                      {
-	                        // echo "insert record into image table";
-	                        // header("location:multiimageadmin.php");
-	                      }   
-	                      else
-	                      {
-	                        echo "erro not insert image";
-	                      }
+		 
+		                  if(in_array($imageFileType,$extensions_arr) )
+		                  {
+		                  
+		                    if($imgSize < 5000000)   
+		                    {
+		                      $myimg=time().$_FILES['workimage']["name"][$i];
+		                      //echo $myimg;
+		                      
+		                      $qry="insert into image values(0,'$myimg','$filetype','$laborid')";
+		                      // echo $qry;
+		                      $res=mysqli_query($con,$qry);
+		                      if($res>0)
+		                      {
+		                        // echo "insert record into image table";
+		                        // header("location:profile.php");
+		                        echo "<script> window.location.href='profile.php';</script>";
+		                      }   
+		                      else
+		                      {
+		                        echo "erro not insert image";
+		                      }
 
 
-	                      $targetpath=$path.$foldername."/".$myimg;
-	                      if(move_uploaded_file($_FILES['workimage']['tmp_name'][$i],$targetpath))
-	                      {
-	                        // echo "insert multi image";
-	                      }
+		                      $targetpath=$path.$foldername."/".$myimg;
+		                      if(move_uploaded_file($_FILES['workimage']['tmp_name'][$i],$targetpath))
+		                      {
+		                        // echo "insert multi image";
+		                      }
 
-	                    }
-	                    else
-	                    {
-	                      echo "file size too large";
-	                    }
-	                  }
-	                  else
-	                  {
-	                    echo "please Select valid extention front image file";
-	                  }
+		                    }
+		                    else
+		                    {
+		                      echo "file size too large";
+		                    }
+		                  }
+		                  else
+		                  {
+		                    echo "please Select valid extention front image file";
+		                  }
 
-	                }
-	        }
-	        else
-	        {
-	          echo "please Select image file";
-	        }
+		                }
+		        }
+		        else
+		        {
+		          echo "please Select image file";
+		        }
+		    }
+		    
+		    if($filetype==2)
+		    {
+		    	
+		    	$video=str_replace('https://youtu.be/', '',$_POST['video']);
+		    	// echo $video;
+		    	
+		      	$qry="insert into image values(0,'$video','$filetype','$laborid')";
+		      	$res=mysqli_query($con,$qry);
+		        if($res>0)
+		        {
+		        	// echo "insert record into video table";
+		          // header("location:categoryadmin.php");
+		        }		
+		        else
+		        {
+		        	echo "erro not insert video";
+		        }
+		    }
+
 	}
 
 
@@ -516,12 +552,15 @@ if(isset($_POST['logout']))
 			$res1=mysqli_query($con,$qry1);
 			while($row1=mysqli_fetch_row($res1))
 			{
+				if($row1[2]==1)
+				{
 				//$dirpath=$path.$row[0];
 				$oldimage1=$path1.$row1[3].'/'.$row1[1];
 				// echo $oldimage1;
 				unlink($oldimage1);
 				//echo $dirpath;
 				//rmdir($dirpath);
+				}
 			}
 
 
@@ -530,7 +569,7 @@ if(isset($_POST['logout']))
 			if($res2==1)
 			{
 				// echo "delete record from image table";
-				// header("location:multiimageadmin.php");
+				// header("location:profile.php");
 			}
 			else
 			{
@@ -547,20 +586,34 @@ if(isset($_POST['logout']))
 				
 								 <h5>
 								<img src="../img/pages/list.jpg" alt=""> File Type: 
-								<input type="radio" name="filetype" value="1" style="margin-left:33px;"> image   
-								<input type="radio" name="filetype" value="2"> Video</h5>
+								<select name="filetype" id="filetype" style="border-radius:4px;">
+									<option value disabled selected>Select FileType</option>
+									<option value="1">image</option>
+									<option value="2">Video</option>
+								</select>
+								<span id="error_filetype" class="text-danger"></span></h5>
 								
-							    <h5><img src="../img/pages/list.jpg" alt="">							
-								Work Image: <input type="file" name="workimage[]" multiple></h5>
+								<h5> 
+								<img src="../img/pages/list.jpg"> Video Link:  
+								<input type="text" name="video" id="video" >
+								<span id="error_video" class="text-danger"></span></h5>
+
+
+								<h5>Ex: You have to insert only red text in video link https://youtu.be/<strong style="color:red;text-decoration: underline;">Mc3Vt37d04M</strong> and You can insert share link Ex: https://youtu.be/ZVG5u3_o93U</h5>
+
+							    <h5><img src="../img/pages/list.jpg">							
+								Work Image: <input type="file" id="workimage" name="workimage[]" multiple>
+								<span id="error_workimage" class="text-danger"></span></h5>
+
 								
-								<input type="submit" name="insertimg" class="ticker-btn">
+								<input type="submit" name="insertimg" id="insertimg" class="ticker-btn" style="border-width:0px;">
 
 							</div>
 
 
 							<!-- work image start -->
                             <div class="row" style="margin-left:1px;margin-right:1px;">
-								<div class="single-post job-experience">
+								<div class="single-post job-experience col-sm-12" >
 
 									<h4 class="single-title job-details">Work Image</h4>
 								    
@@ -593,26 +646,46 @@ if(isset($_POST['logout']))
 							</div>
 							<!-- work image End -->
 
+                            <div class="row" style="margin-left:1px;margin-right:1px;">
 
-								<div class="single-post job-details">
+								<div class="single-post job-details col-sm-12">
 									
-									<p>
+									
 									<h4 class="single-title">Work Video Link</h4>
 									<?php
-									$qry4="select * from image where i_laborid='$lid' and i_flag='2'"; 
+									$count1=0;
+									$qry4="select * from image where i_laborid='$row[0]' and i_flag='2'"; 
+									// echo $qry4;
 								    $res4=mysqli_query($con,$qry4);
+								    
 									while($row4=mysqli_fetch_row($res4))
 							        {
+							        
+							        if($count1==3)
+							        {
 							        ?>
-							        <a href="#"><?php echo $row4[1]; ?></a>	
-									<?php
+							        <br>
+							        <?php
+							           $count1=0;
+							        
+							        }
+							        ?>
+							        	<div class="gallery">	   
+							       		<?php
+										$go_to_address="https://www.youtube.com/embed/".$row4[1];
+							        	echo "<iframe SRC=\"".$go_to_address."\" width=\"180\" height=\"150\" framespacing=0 frameborder=no border=0 scrolling=auto style=\"border-radius:5px\"></iframe>";
+							        	?>
+							        	<div class="desc"><a href="profile.php?did=<?php echo $row4[0]; ?>" class="ticker-btn" onclick="return confirm('Are you sure to delete image ?')?true:false;">Delete</a></div>
+										
+										</div>
+							        	<?php
+									$count1++;
 								    }
 								    ?>
-
-							        <!-- <iframe width="200" height="200" src="https://www.youtube.com/embed/beqprrnaKFc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
-								    </p>
-								</div>
-
+								   
+								</div>	
+							</div>
+							
 							<div class="single-post job-details">
 								<h4 class="single-title">About Me</h4>
 								<p>
@@ -633,6 +706,12 @@ if(isset($_POST['logout']))
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Phone: <?php echo $row[6]; ?></span>
+									</li>
+
+									<li>
+										<img src="../img/pages/list.jpg" alt="">
+										<span>Category: <?php echo $category; ?></span>
+										<br>
 									</li>
 
 									<li>
@@ -997,12 +1076,14 @@ if(isset($_POST['logout']))
 					<div class="row">
 						<div class="col-lg-3  col-md-12">
 							<div class="single-footer-widget">
-								<h6>Top Products</h6>
+								<h6>QUICK LINKS</h6>
 								<ul class="footer-nav">
-									<li><a href="#">Managed Website</a></li>
-									<li><a href="#">Manage Reputation</a></li>
-									<li><a href="#">Power Tools</a></li>
-									<li><a href="#">Marketing Service</a></li>
+									<li><a href="index.php">Home</a></li>
+									<li><a href="about-us.php">About Us</a></li>
+									<li><a href="laborregister.php">Sign Up</a></li>
+									<!-- <li><a href="category.php">Category</a></li> -->
+									<!-- <li><a href="price.php">Price</a></li> -->
+									<li><a href="contact.php">Contact</a></li>
 								</ul>
 							</div>
 						</div>
@@ -1079,6 +1160,8 @@ if(isset($_POST['logout']))
 			<script src="../js/parallax.min.js"></script>		
 			<script src="../js/mail-script.js"></script>	
 			<script src="../js/main.js"></script>	
+			<script src="../js/image.js"></script>	
+
 		</form>
 		</body>
 	</html>
