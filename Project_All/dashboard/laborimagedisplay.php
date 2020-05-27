@@ -36,6 +36,8 @@ else
 </head>
 
 <body>
+    <form method="post" enctype="multipart/form-data">
+
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
@@ -674,8 +676,13 @@ else
 										</div>
 									</li>
 									<li>
-										<a href="#">
-											<span class="sub-item">Level 1</span>
+										<a href="paymentdisplay.php">
+											<span class="sub-item">Payment</span>
+										</a>
+									</li>
+									<li>
+										<a href="hiredlabordisplay.php">
+											<span class="sub-item">Hired Labor</span>
 										</a>
 									</li>
 								</ul>
@@ -1310,5 +1317,6 @@ else
 			});
 		});
 	</script>
+</form>
 </body>
 </html>

@@ -2,12 +2,18 @@
 <html lang="en">
 <?php include('labor/dbConfig.php');
 	session_start();
-	if(isset($_SESSION['emailname'])){
-		// echo "welcome".$_SESSION['emailname'];
+	if(isset($_SESSION['admin'])){
+		// echo "welcome".$_SESSION['admin'];
 }
 else
 {
-	//header("location:index.php");	
+	header("location:login.php");	
+}
+if(isset($_POST['logout']))
+{
+	 //session_destroy
+		unset($_SESSION['admin']);
+        header("Location:login.php");
 }
 ?>
 <head>
@@ -37,13 +43,15 @@ else
 </head>
 
 <body>
+    <form method="post" enctype="multipart/form-data">
+
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
 			<div class="logo-header" data-background-color="blue">
 				
-				<a href="index.html" class="logo">
-					<img src="../assets/img/logo.svg" alt="navbar brand" class="navbar-brand">
+				<a href="index.php" class="logo">
+					<img src="../../../img/logo.png" alt="navbar brand" class="navbar-brand">
 				</a>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
@@ -262,6 +270,15 @@ else
 								</div>
 							</div>
 						</li>
+
+						<?php
+						$qry="select * from customer where c_id=".$_SESSION['admin'];
+
+						$res=mysqli_query($con,$qry);
+						while($row=mysqli_fetch_row($res))
+						{
+							$name=$row[1];
+						?>
 						<li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
 								<div class="avatar-sm">
@@ -274,24 +291,29 @@ else
 										<div class="user-box">
 											<div class="avatar-lg"><img src="../assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
 											<div class="u-text">
-												<h4>Hizrian</h4>
-												<p class="text-muted">hello@example.com</p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+												<h4><?php echo $row[1];?> <?php echo $row[2];?></h4>
+												<p class="text-muted"><?php echo $row[3];?></p>
+												<!-- <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a> -->
 											</div>
 										</div>
 									</li>
 									<li>
 										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#">My Profile</a>
-										<a class="dropdown-item" href="#">My Balance</a>
-										<a class="dropdown-item" href="#">Inbox</a>
-										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#">Account Setting</a>
-										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#">Logout</a>
+										<!-- <a class="dropdown-item" href="#">My Profile</a> -->
+										<!-- <a class="dropdown-item" href="#">My Balance</a> -->
+										<!-- <a class="dropdown-item" href="#">Inbox</a> -->
+										<!-- <div class="dropdown-divider"></div> -->
+										<!-- <a class="dropdown-item" href="#">Account Setting</a> -->
+										<!-- <div class="dropdown-divider"></div> -->
+										<!-- <a class="dropdown-item" href="#">Logout</a> -->
+										<input type="submit" name="logout" value="Logout" class="dropdown-item">
 									</li>
 								</div>
 							</ul>
 						</li>
+						<?php
+					}
+					?>
 					</ul>
 				</div>
 			</nav>
@@ -309,7 +331,7 @@ else
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									Hizrian
+									<?php echo $name ?>
 									<span class="user-level">Administrator</span>
 									<span class="caret"></span>
 								</span>
@@ -318,27 +340,26 @@ else
 
 							<div class="collapse in" id="collapseExample">
 								<ul class="nav">
-									<li>
+									<!-- <li>
 										<a href="#profile">
 											<span class="link-collapse">My Profile</span>
 										</a>
-									</li>
-									<li>
+									</li> -->
+									<!-- <li>
 										<a href="#edit">
 											<span class="link-collapse">Edit Profile</span>
 										</a>
-									</li>
+									</li> -->
 									<li>
-										<a href="#settings">
-											<span class="link-collapse">Settings</span>
-										</a>
+										<input type="submit" name="logout" value="Logout" class="dropdown-item">
+											
 									</li>
 								</ul>
 							</div>
 						</div>
 					</div>
 					<ul class="nav nav-primary">
-						<li class="nav-item active">
+						<!-- <li class="nav-item active">
 							<a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
 								<i class="fas fa-home"></i>
 								<p>Dashboard</p>
@@ -358,8 +379,8 @@ else
 									</li>
 								</ul>
 							</div>
-						</li>
-						<li class="nav-section">
+						</li> -->
+						<!-- <li class="nav-section">
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
 							</span>
@@ -542,14 +563,14 @@ else
 								<p>Widgets</p>
 								<span class="badge badge-success">4</span>
 							</a>
-						</li>
-						<li class="nav-item">
+						</li> -->
+						<li class="nav-item active">
 							<a data-toggle="collapse" href="#submenu">
 								<i class="fas fa-bars"></i>
 								<p>Menu Levels</p>
 								<span class="caret"></span>
 							</a>
-							<div class="collapse" id="submenu">
+							<div class="collapse show" id="submenu">
 								<ul class="nav nav-collapse">
 									<li>
 										<a data-toggle="collapse" href="#subnav1">
@@ -672,8 +693,13 @@ else
 										</div>
 									</li>
 									<li>
-										<a href="#">
-											<span class="sub-item">Level 1</span>
+										<a href="paymentdisplay.php">
+											<span class="sub-item">Payment</span>
+										</a>
+									</li>
+									<li>
+										<a href="hiredlabordisplay.php">
+											<span class="sub-item">Hired Labor</span>
 										</a>
 									</li>
 								</ul>
@@ -1440,5 +1466,6 @@ else
 			fillColor: 'rgba(255, 165, 52, .14)'
 		});
 	</script>
+</form>
 </body>
 </html>

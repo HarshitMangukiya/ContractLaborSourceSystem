@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php include('../labor/dbConfig.php');
+<?php include('labor/dbConfig.php');
 	session_start();
 	if(isset($_SESSION['admin'])){
 		// echo "welcome".$_SESSION['admin'];
 }
 else
 {
-	header("location:../login.php");	
+	header("location:login.php");	
 }
 if(isset($_POST['logout']))
 {
 	 //session_destroy
 		unset($_SESSION['admin']);
-        header("Location:../login.php");
+        header("Location:login.php");
 }
 ?>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>Tables - Atlantis Lite Bootstrap 4 Admin Dashboard</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-	<link rel="icon" href="../../../assets/img/icon.ico" type="image/x-icon"/>
+	<link rel="icon" href="../../assets/img/icon.ico" type="image/x-icon"/>
 	
 	<!-- Fonts and icons -->
 	<script src="../../assets/js/plugin/webfont/webfont.min.js"></script>
@@ -42,7 +42,7 @@ if(isset($_POST['logout']))
 </head>
 
 <body>
-	<form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
 
 	<div class="wrapper">
 		<div class="main-header">
@@ -50,7 +50,7 @@ if(isset($_POST['logout']))
 			<div class="logo-header" data-background-color="blue">
 				
 				<a href="../index.html" class="logo">
-					<img src="../../../../img/logo.png" alt="navbar brand" class="navbar-brand">
+					<img src="../../../img/logo.png" alt="navbar brand" class="navbar-brand">
 				</a>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
@@ -267,7 +267,6 @@ if(isset($_POST['logout']))
 								</div>
 							</div>
 						</li>
-
 						<?php
 						$qry="select * from customer where c_id=".$_SESSION['admin'];
 
@@ -289,29 +288,30 @@ if(isset($_POST['logout']))
 											<div class="avatar-lg"><img src="../../assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
 											<div class="u-text">
 												<h4><?php echo $row[1];?> <?php echo $row[2];?></h4>
-
-												<p class="text-muted"> <?php echo $row[3];?></p>
+												
+												<p class="text-muted"><?php echo $row[3];?></p>
 												<!-- <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a> -->
 											</div>
 										</div>
 									</li>
 									<li>
 										<div class="dropdown-divider"></div>
-								<!-- 		<a class="dropdown-item" href="#">My Profile</a>
-										<a class="dropdown-item" href="#">My Balance</a>
+										<!-- <a class="dropdown-item" href="#">My Profile</a> -->
+										<!-- <a class="dropdown-item" href="#">My Balance</a>
 										<a class="dropdown-item" href="#">Inbox</a>
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#">Account Setting</a>
 										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#">Logout</a> -->
+										<a class="dropdown-item" href="#">Logout</a>
+ -->
 										<input type="submit" name="logout" value="Logout" class="dropdown-item">
 
-
-									</li>
+</li>
 								</div>
 							</ul>
 						</li>
-					<?php } ?>
+					<?php
+					 }?>
 					</ul>
 				</div>
 			</nav>
@@ -329,7 +329,7 @@ if(isset($_POST['logout']))
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									 <?php echo $name;?>
+									<?php echo $name;?>
 									<span class="user-level">Administrator</span>
 									<span class="caret"></span>
 								</span>
@@ -347,8 +347,8 @@ if(isset($_POST['logout']))
 										<a href="#edit">
 											<span class="link-collapse">Edit Profile</span>
 										</a>
-									</li> -->
-									<li>
+									</li>
+ -->									<li>
 										<input type="submit" name="logout" value="Logout" class="dropdown-item">
 
 									</li>
@@ -578,12 +578,12 @@ if(isset($_POST['logout']))
 										<div class="collapse" id="subnav1">
 											<ul class="nav nav-collapse subnav">
 												<li>
-													<a href="../categoryinsert.php">
+													<a href="categoryinsert.php">
 														<span class="sub-item">Add New Category</span>
 													</a>
 												</li>
 												<li>
-													<a href="../categorydisplay.php">
+													<a href="categorydisplay.php">
 														<span class="sub-item">Edit Category</span>
 													</a>
 												</li>
@@ -598,12 +598,12 @@ if(isset($_POST['logout']))
 										<div class="collapse" id="subnav2">
 											<ul class="nav nav-collapse subnav">
 												<li>
-													<a href="../laborinsert.php">
+													<a href="laborinsert.php">
 														<span class="sub-item">Add New Labor</span>
 													</a>
 												</li>
 												<li>
-													<a href="../labordisplay.php">
+													<a href="labordisplay.php">
 														<span class="sub-item">Edit Labor Detail</span>
 													</a>
 												</li>
@@ -615,15 +615,15 @@ if(isset($_POST['logout']))
 											<span class="sub-item">Customer</span>
 											<span class="caret"></span>
 										</a>
-										<div class="collapse show" id="subnav3">
+										<div class="collapse" id="subnav3">
 											<ul class="nav nav-collapse subnav">
 												<li>
-													<a href="customerinsert.php">
+													<a href="customerdb/customerinsert.php">
 														<span class="sub-item">Add New Customer</span>
 													</a>
 												</li>
-												<li class="active">
-													<a href="customerdisplay.php">
+												<li>
+													<a href="customerdb/customerdisplay.php">
 														<span class="sub-item">Edit Customer Detail</span>
 													</a>
 												</li>
@@ -638,12 +638,12 @@ if(isset($_POST['logout']))
 										<div class="collapse" id="subnav4">
 											<ul class="nav nav-collapse subnav">
 												<li>
-													<a href="../countrydb/countryinsert.php">
+													<a href="countrydb/countryinsert.php">
 														<span class="sub-item">Add New Country</span>
 													</a>
 												</li>
 												<li>
-													<a href="../countrydb/countrydisplay.php">
+													<a href="countrydb/countrydisplay.php">
 														<span class="sub-item">Edit Country Detail</span>
 													</a>
 												</li>
@@ -658,12 +658,12 @@ if(isset($_POST['logout']))
 										<div class="collapse" id="subnav5">
 											<ul class="nav nav-collapse subnav">
 												<li>
-													<a href="../statedb/stateinsert.php">
+													<a href="statedb/stateinsert.php">
 														<span class="sub-item">Add New State</span>
 													</a>
 												</li>
 												<li>
-													<a href="../statedb/statedisplay.php">
+													<a href="statedb/statedisplay.php">
 														<span class="sub-item">Edit State Detail</span>
 													</a>
 												</li>
@@ -678,25 +678,25 @@ if(isset($_POST['logout']))
 										<div class="collapse" id="subnav6">
 											<ul class="nav nav-collapse subnav">
 												<li>
-													<a href="../citydb/cityinsert.php">
+													<a href="citydb/cityinsert.php">
 														<span class="sub-item">Add New City</span>
 													</a>
 												</li>
 												<li>
-													<a href="../citydb/citydisplay.php">
+													<a href="citydb/citydisplay.php">
 														<span class="sub-item">Edit City Detail</span>
 													</a>
 												</li>
 											</ul>
 										</div>
 									</li>
-										<li>
-										<a href="../paymentdisplay.php">
+									<li>
+										<a href="paymentdisplay.php">
 											<span class="sub-item">Payment</span>
 										</a>
 									</li>
-									<li>
-										<a href="../hiredlabordisplay.php">
+									<li class="active">
+										<a href="hiredlabordisplay.php">
 											<span class="sub-item">Hired Labor</span>
 										</a>
 									</li>
@@ -722,13 +722,13 @@ if(isset($_POST['logout']))
 								<i class="flaticon-right-arrow"></i>
 							</li>
 							<li class="nav-item">
-								<a href="#">Customer</a>
+								<a href="#">Hired Labor</a>
 							</li>
 							<li class="separator">
 								<i class="flaticon-right-arrow"></i>
 							</li>
 							<li class="nav-item">
-								<a href="#">Edit Customer Detail</a>
+								<a href="#">Edit Hired Labor Detail</a>
 							</li>
 						</ul>
 					</div>
@@ -808,16 +808,15 @@ if(isset($_POST['logout']))
 											</tfoot>
 												<tbody>
 												<tr>
-													<td>Michael Bruce</td>
-													<td>Javascript Developer</td>
-													<td>Singapore</td>
-													<td>29</td>
-													<td>2011/06/27</td>
-													<td>$183,000</td>
+													<td>Tiger Nixon</td>
+													<td>System Architect</td>
+													<td>Edinburgh</td>
+													<td>61</td>
+													<td>2011/04/25</td>
+													<td>$320,800</td>
 												</tr>
 												
 											</tbody>
-
 										</table>
 									</div>
 								</div>
@@ -828,7 +827,7 @@ if(isset($_POST['logout']))
 							<div class="card">
 								<div class="card-header">
 									<!-- <div class="d-flex align-items-center"> -->
-										<h4 class="card-title">Customer Information</h4>
+										<h4 class="card-title">Hired Labor Information</h4>
 										<!-- <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
 											<i class="fa fa-plus"></i>
 											Add Row
@@ -884,164 +883,208 @@ if(isset($_POST['logout']))
 											</div>
 										</div>
 									</div> -->
+								
 
 									<div class="table-responsive">
 										<table id="add-row" class="display table table-striped table-hover" >
 											<thead>
 												<tr>
 													<th style="width:10">Id</th>
-													<th>Firstname</th>
-													<th>Lastname</th>
-													<th>Phone no.</th>
-													<th>Email</th>
+													<th>Customer Id</th>
+													<th>Labor Id</th>
+													<th>Total Labor</th>
+													<th>Total Charge</th>
+													<th>Hired Date</th>
+													<th>Job flag</th>
+													<!-- <th>Phone no.</th>
+													<th>Aadhar no.</th>
 													<th>Address</th>
 													<th>Location</th>
 													<th>Country</th>
 													<th>State</th>
 													<th>City</th>
 													<th>Pincode</th>
-													<th>Profile</th>
-													<th>About Customer</th>
+													<th>About Labor</th>
+													<th>Profile Picture</th>		
+													<th>Category</th>
+													<th>Status</th>
+													<th>Charge</th>
 													<th>Password</th>
-													<th>Reg.date</th>
-													<th style="width: 10%">Action</th>
-													<th style="width: 10%">Action</th>
+													<th>Leader Id</th>
+													<th>Reg.date</th>	 -->	
+													<!-- <th style="width: 10%">Images</th> -->
+												<!-- 	<th style="width: 10%">Action</th>
+													<th style="width: 10%">Action</th> -->
 													<th style="width: 10%">Action</th>
 												</tr>
 											</thead>
 											<tfoot>
 												<tr>
 													<th>Id</th>
-													<th>Firstname</th>
-													<th>Lastname</th>
-													<th>Phone no.</th>
-													<th>Email</th>
+													<th>Customer Id</th>
+													<th>Labor Id</th>
+													<th>Total Labor</th>
+													<th>Total Charge</th>
+													<th>Hired Date</th>
+													<th>Job flag</th>
+													<!-- <th>Aadhar no.</th>
 													<th>Address</th>
 													<th>Location</th>
 													<th>Country</th>
 													<th>State</th>
 													<th>City</th>
 													<th>Pincode</th>
-													<th>Profile</th>
-													<th>About Customer</th>
+													<th>About Labor</th>
+													<th>Profile Picture</th>		
+													<th>Category</th>
+													<th>Status</th>
+													<th>Charge</th>
 													<th>Password</th>
-													<th>Reg.date</th>
-													<th>Action</th>
-													<th>Action</th>
+													<th>Leader Id</th>
+													<th>Reg.date</th> -->
+													<!-- <th>images</th> -->
+<!-- 													<th>Action</th>
+													<th>Action</th> -->
 													<th>Action</th>
 											</tr>
 											</tfoot>
 											<tbody>
 											
-											<?php	
-												if(isset($_REQUEST['cuid']))
-												{
-													// $path="../../../../Labor/customer_img/";
+											<?php
 
-													// $qry="select * from customer where c_id=".$_REQUEST['cuid'];
+												if(isset($_REQUEST['haid']))
+												{
+													// $path="../../../Labor/labor_img/";
+
+													// $con=mysqli_connect("localhost","root","","labor");
+													// $qry="select * from labor where l_id=".$_REQUEST['laid'];
 													// $res=mysqli_query($con,$qry);
 													// while($row=mysqli_fetch_row($res))
 													// {
-													// 	$oldimage=$path.$row[13];
-													// 	// echo $oldimage;
-													// 	unlink($oldimage);	
+													// 	$dirpath=$path.$row[0];
+													// 	$oldimage=$path.$row[0].'/'.$row[16];
+													// 	//echo $oldimage;
+													// 	unlink($oldimage);
+													// 	//echo $dirpath;
+													// 	rmdir($dirpath);
 													// }
 
-													// $qry="delete from customer where c_id=".$_REQUEST['cuid'];
-													// $res=mysqli_query($con,$qry);
-													// if($res==1)
-													// {
-													// 	// echo "delete record from customer table";
-													// 	header("location:customerdisplay.php");
-													// }
-													// else
-													// {
-													// 	echo "not delete";
-													// }
-
-													$qry="update customer set c_dflag='1' where c_id=".$_REQUEST['cuid'];
-													$res=mysqli_query($con,$qry);
-													if($res==1)
+													//$con=mysqli_connect("localhost","root","","labor");
+													$qry3="delete from hiredlabor where h_id=".$_REQUEST['haid'];
+													// echo $qry3;
+													// die();
+													$res3=mysqli_query($con,$qry3);
+													if($res3==1)
 													{
 														// echo "delete record from labor table";
-														header("location:customerdisplay.php");
+														header("location:hiredlabordisplay.php");
 													}
 													else
 													{
 														echo "not delete";
 													}
 
+													// $qry="update labor set l_dflag='1' where l_id=".$_REQUEST['laid'];
+													// $res=mysqli_query($con,$qry);
+													// if($res==1)
+													// {
+													// 	// echo "delete record from labor table";
+													// 	header("location:labordisplay.php");
+													// }
+													// else
+													// {
+													// 	echo "not delete";
+													// }
+
+
 												}
 
-												$qry="select * from customer where c_dflag<>'1'";
+												$qry="select * from hiredlabor";
 												$res=mysqli_query($con,$qry);
 												while($row=mysqli_fetch_row($res))
 													{
-														if(empty($row[13]))
-														{
-															$imagename="../../../../img/avatar-13.jpg";
-														}
-														else
-														{
-															$imagename="../../../../Labor/customer_img/".$row[13];
-															// echo $imagename;
-														}
-														
-														if(!empty($row[7]))
-														{
-														$qry1="select * from country where id=".$row[7];
-														$res1=mysqli_query($con,$qry1);
-														while($row1=mysqli_fetch_row($res1))
-															{
-																$country=$row1[1];
-															}
-														}
-														if(!empty($row[8]))
-														{
-														$qry1="select * from state where s_id=".$row[8];
-														$res1=mysqli_query($con,$qry1);
-														while($row1=mysqli_fetch_row($res1))
-															{
-																$state=$row1[1];
-															}
-														}
-														if(!empty($row[9]))
-														{
-														$qry1="select * from city where ci_id=".$row[9];
-														$res1=mysqli_query($con,$qry1);
-														while($row1=mysqli_fetch_row($res1))
-															{
-																$city=$row1[1];
-															}
-														}
+														// if(empty($row[16]))
+														// {
+														// 	$imagename="../../../img/avatar-13.jpg";
+														// }
+														// else
+														// {
+														// 	$imagename="../../../Labor/labor_img/".$row
+														// 	[0].'/'.$row[16];
+														// 	// echo $imagename;
+														// }
+														// if(!empty($row[20]))
+														// {
+														// $qry1="select * from category where ca_id=".$row[20];
+														// $res1=mysqli_query($con,$qry1);
+														// while($row1=mysqli_fetch_row($res1))
+														// 	{
+														// 		$category=$row1[1];
+														// 	}
+														// }
+														// if(!empty($row[10]))
+														// {
+														// $qry1="select * from country where id=".$row[10];
+														// $res1=mysqli_query($con,$qry1);
+														// while($row1=mysqli_fetch_row($res1))
+														// 	{
+														// 		$country=$row1[1];
+														// 	}
+														// }
+														// if(!empty($row[11]))
+														// {
+														// $qry1="select * from state where s_id=".$row[11];
+														// $res1=mysqli_query($con,$qry1);
+														// while($row1=mysqli_fetch_row($res1))
+														// 	{
+														// 		$state=$row1[1];
+														// 	}
+														// }
+														// if(!empty($row[12]))
+														// {
+														// $qry1="select * from city where ci_id=".$row[12];
+														// $res1=mysqli_query($con,$qry1);
+														// while($row1=mysqli_fetch_row($res1))
+														// 	{
+														// 		$city=$row1[1];
+														// 	}
+														// }
 													?>
 													<tr>
 													<td><?php echo $row[0];?></td>
-													<td><a href="customersingle.php?cuid=<?php echo $row[0]; ?>"><?php echo $row[1];?></a></td>
-													<td><?php echo $row[2];?></td>
-													<td><?php echo $row[4];?></td>
+													<td><a href="./customerdb/customersingle.php?cuid=<?php echo $row[1]; ?>"><?php echo $row[1];?></a></td>
+													<td><a href="laborsingle.php?laid=<?php echo $row[2]; ?>"><?php echo $row[2];?></a></td>
 													<td><?php echo $row[3];?></td>
+													<td><?php echo $row[4];?></td>
 													<td><?php echo $row[5];?></td>
 													<td><?php echo $row[6];?></td>
+													<!-- <td><?php echo $row[6];?></td>
+													<td><?php echo $row[7];?></td>
+													<td><?php echo $row[8];?></td>
+													<td><?php echo $row[9];?></td>
 													<td><?php echo $country;?></td>
 													<td><?php echo $state;?></td>
 													<td><?php echo $city;?></td>
-													<td><?php echo $row[10];?></td>
+													<td><?php echo $row[13];?></td>
+													<td><?php echo $row[15];?></td>
 													<td><img src="<?php echo $imagename; ?>" width="100px" height=100></td>
-													<td><?php echo $row[12];?></td>
-													<td><?php echo $row[11];?></td>
-													<td><?php echo $row[14];?></td>
-													<td><a href="customersingle.php?cuid=<?php echo $row[0]; ?>" ><span class="icon-eye" ></span></a></td>
-
+													<td><?php echo $category;?></td>
+													<td><?php echo $row[17];?></td>
+													<td><?php echo $row[18];?></td>
+													<td><?php echo $row[14];?></td>	
+													<td><?php echo $row[21];?></td>
+													<td><?php echo $row[19];?></td> -->
+													<!-- <td><a href="laborimagedisplay.php?laid=<?php echo $row[0]; ?>" >Labor Images</a></td>													 -->
+<!-- 													<td ><a href="laborsingle.php?laid=<?php echo $row[0]; ?>" ><span class="icon-eye" ></span></a></td>
 													<td>
 														<div class="form-button-action">
-															<a href="customeredit.php?cuid=<?php echo $row[0]; ?>" class="btn btn-link btn-primary btn-lg">		
+															<a href="laboredit.php?laid=<?php echo $row[0]; ?>" class="btn btn-link btn-primary btn-lg">		
 																<i class="fa fa-edit"></i>
 															</a>
-														</div></td>						
+														</div></td> -->						
 													<td>
 														<div class="form-button-action">
-														<a href="customerdisplay.php?cuid=<?php echo $row[0]; ?>" class="btn btn-link btn-danger">	
+														<a href="hiredlabordisplay.php?haid=<?php echo $row[0]; ?>" class="btn btn-link btn-danger">	
 														<i class="fa fa-times"></i>
 														</a>
 														</div>

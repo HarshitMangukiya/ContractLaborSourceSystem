@@ -2,12 +2,18 @@
 <html lang="en">
 <?php include('../labor/dbConfig.php');
 	session_start();
-	if(isset($_SESSION['emailname'])){
-		// echo "welcome".$_SESSION['emailname'];
+	if(isset($_SESSION['admin'])){
+		// echo "welcome".$_SESSION['admin'];
 }
 else
 {
-	//header("location:index.php");	
+	header("location:../login.php");	
+}
+if(isset($_POST['logout']))
+{
+	 //session_destroy
+		unset($_SESSION['admin']);
+        header("Location:../login.php");
 }
 ?>
 <head>
@@ -116,7 +122,7 @@ $('#state').on('change',function(){
 			<div class="logo-header" data-background-color="blue">
 				
 				<a href="../index.html" class="logo">
-					<img src="../../assets/img/logo.svg" alt="navbar brand" class="navbar-brand">
+					<img src="../../../../img/logo.png" alt="navbar brand" class="navbar-brand">
 				</a>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
@@ -332,6 +338,14 @@ $('#state').on('change',function(){
 								</div>
 							</div>
 						</li>
+						<?php
+						$qry="select * from customer where c_id=".$_SESSION['admin'];
+
+						$res=mysqli_query($con,$qry);
+						while($row=mysqli_fetch_row($res))
+						{
+							$name=$row[1];
+						?>
 						<li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
 								<div class="avatar-sm">
@@ -344,24 +358,28 @@ $('#state').on('change',function(){
 										<div class="user-box">
 											<div class="avatar-lg"><img src="../../assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
 											<div class="u-text">
-												<h4>Hizrian</h4>
-												<p class="text-muted">hello@example.com</p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+												<h4><?php echo $row[1];?> <?php echo $row[2];?></h4>
+												<p class="text-muted"><?php echo $row[3];?></p>
+												<!-- <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a> -->
 											</div>
 										</div>
 									</li>
 									<li>
 										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#">My Profile</a>
+								<!-- 		<a class="dropdown-item" href="#">My Profile</a>
 										<a class="dropdown-item" href="#">My Balance</a>
 										<a class="dropdown-item" href="#">Inbox</a>
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#">Account Setting</a>
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#">Logout</a>
+								 -->		<input type="submit" name="logout" value="Logout" class="dropdown-item">
+									
 									</li>
 								</div>
 							</ul>
 						</li>
+					<?php } ?>
 					</ul>
 				</div>
 			</nav>
@@ -378,7 +396,7 @@ $('#state').on('change',function(){
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									Hizrian
+									<?php echo $name; ?>
 									<span class="user-level">Administrator</span>
 									<span class="caret"></span>
 								</span>
@@ -387,7 +405,7 @@ $('#state').on('change',function(){
 
 							<div class="collapse in" id="collapseExample">
 								<ul class="nav">
-									<li>
+<!-- 									<li>
 										<a href="#profile">
 											<span class="link-collapse">My Profile</span>
 										</a>
@@ -397,17 +415,17 @@ $('#state').on('change',function(){
 											<span class="link-collapse">Edit Profile</span>
 										</a>
 									</li>
-									<li>
-										<a href="#settings">
-											<span class="link-collapse">Settings</span>
-										</a>
+ -->									<li>
+
+										<input type="submit" name="logout" value="Logout" class="dropdown-item">
+
 									</li>
 								</ul>
 							</div>
 						</div>
 					</div>
 					<ul class="nav nav-primary">
-						<li class="nav-item">
+				<!-- 		<li class="nav-item">
 							<a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
 								<i class="fas fa-home"></i>
 								<p>Dashboard</p>
@@ -611,7 +629,7 @@ $('#state').on('change',function(){
 								<p>Widgets</p>
 								<span class="badge badge-success">4</span>
 							</a>
-						</li>
+						</li> -->
 
 						<li class="nav-item active">
 							<a data-toggle="collapse" href="#submenu">
@@ -629,12 +647,12 @@ $('#state').on('change',function(){
 										<div class="collapse" id="subnav1">
 											<ul class="nav nav-collapse subnav">
 												<li>
-													<a href="categoryinsert.php">
+													<a href="../categoryinsert.php">
 														<span class="sub-item">Add New Category</span>
 													</a>
 												</li>
 												<li>
-													<a href="categorydisplay.php">
+													<a href="../categorydisplay.php">
 														<span class="sub-item">Edit Category</span>
 													</a>
 												</li>
@@ -649,12 +667,12 @@ $('#state').on('change',function(){
 										<div class="collapse" id="subnav2">
 											<ul class="nav nav-collapse subnav">
 												<li>
-													<a href="laborinsert.php">
+													<a href="../laborinsert.php">
 														<span class="sub-item">Add New Labor</span>
 													</a>
 												</li>
 												<li>
-													<a href="labordisplay.php">
+													<a href="../labordisplay.php">
 														<span class="sub-item">Edit Labor Detail</span>
 													</a>
 												</li>
@@ -669,12 +687,12 @@ $('#state').on('change',function(){
 										<div class="collapse" id="subnav3">
 											<ul class="nav nav-collapse subnav">
 												<li>
-													<a href="customerinsert.php">
+													<a href="../customerdb/customerinsert.php">
 														<span class="sub-item">Add New Customer</span>
 													</a>
 												</li>
 												<li>
-													<a href="customerdisplay.php">
+													<a href="../customerdb/customerdisplay.php">
 														<span class="sub-item">Edit Customer Detail</span>
 													</a>
 												</li>
@@ -709,12 +727,12 @@ $('#state').on('change',function(){
 										<div class="collapse show" id="subnav5">
 											<ul class="nav nav-collapse subnav">
 												<li class="active">
-													<a href="../statedb/stateinsert.php">
+													<a href="stateinsert.php">
 														<span class="sub-item">Add New State</span>
 													</a>
 												</li>
 												<li>
-													<a href="../statedb/statedisplay.php">
+													<a href="statedisplay.php">
 														<span class="sub-item">Edit State Detail</span>
 													</a>
 												</li>
@@ -741,9 +759,14 @@ $('#state').on('change',function(){
 											</ul>
 										</div>
 									</li>
+										<li>
+										<a href="../paymentdisplay.php">
+											<span class="sub-item">Payment</span>
+										</a>
+									</li>
 									<li>
-										<a href="#">
-											<span class="sub-item">Level 1</span>
+										<a href="../hiredlabordisplay.php">
+											<span class="sub-item">Hired Labor</span>
 										</a>
 									</li>
 								</ul>
