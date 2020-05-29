@@ -3,13 +3,14 @@
 	<?php include('labor/dbConfig.php');
 	session_start();
 	if(isset($_SESSION['emailname'])){
-		echo "welcome".$_SESSION['emailname'];
+		// echo "welcome".$_SESSION['emailname'];
 
 }
 else
 {
 	// header("location:index.php");
     // echo "<script> window.location.href='index.php';</script>";
+    // exit;
 
 }
 if(isset($_POST['logout']))
@@ -196,7 +197,9 @@ if(isset($_POST['logout']))
 			                        	$flag=0;
 										// echo "insert record into payment table condition one";
 									    // header("location:index.php");
-										echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
+									     	echo "<script> window.location.href='index.php';</script>";
+				   							exit;
+										// echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
 
 									}		
 									else
@@ -233,7 +236,9 @@ if(isset($_POST['logout']))
 								{
 									$flag=0;
 									// echo "insert record into payment table conditon two";
-									echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
+									echo "<script> window.location.href='index.php';</script>";
+				   							exit;
+									// echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
 
 								    // header("location:index.php");
 								}		
@@ -301,7 +306,9 @@ if(isset($_POST['logout']))
 			                        	$flag=0;
 										// echo "insert record into payment table condition one";
 									    // header("location:index.php");
-										echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
+										// echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
+										echo "<script> window.location.href='index.php';</script>";
+				   							exit;
 
 									}		
 									else
@@ -338,7 +345,9 @@ if(isset($_POST['logout']))
 								{
 									$flag=0;
 									// echo "insert record into payment table conditon two";
-									echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
+									// echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
+									echo "<script> window.location.href='index.php';</script>";
+				   							exit;
 
 								    // header("location:index.php");
 								}		
@@ -406,7 +415,9 @@ if(isset($_POST['logout']))
 			                        	$flag=0;
 										// echo "insert record into payment table condition one";
 									    // header("location:index.php");
-										echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
+										// echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
+										echo "<script> window.location.href='index.php';</script>";
+				   							exit;
 
 									}		
 									else
@@ -443,9 +454,10 @@ if(isset($_POST['logout']))
 								{
 									$flag=0;
 									// echo "insert record into payment table conditon two";
-									echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
-
+									// echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
 								    // header("location:index.php");
+								    echo "<script> window.location.href='index.php';</script>";
+				   							exit;
 								}		
 								else
 								{
@@ -457,6 +469,7 @@ if(isset($_POST['logout']))
 
 						}
 					}
+					
 				
 					?> 
 
@@ -500,13 +513,14 @@ if(isset($_POST['logout']))
 			            //echo $email;
 			           header("location:index.php"); 
 					  	// echo "<script>swal('Good job!', 'Login Successful.', 'success');</script>";
-
-
+			           
 			          }
 			        }
 			        else
 			        {
-			          header("location:index.php"); 
+			          // header("location:index.php"); 
+          echo "<script>alert('Invalid Uasename or Password...')</script>";
+
 					// echo "<script>swal('Invalid Uasename or Password...');</script>";
 
 
@@ -532,7 +546,7 @@ if(isset($_POST['logout']))
     <span id="error_password" class="text-danger"></span>
 
 
-      <div class="d-flex justify-content-around">
+      <!-- <div class="d-flex justify-content-around"> -->
         <!-- <div>
            Remember me 
           <div class="form-check">
@@ -540,11 +554,11 @@ if(isset($_POST['logout']))
             <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
           </div>
         </div> -->
-        <div>
+        <!-- <div> -->
           <!-- Forgot password -->
-          <a href="#">Forgot password?</a>
+         <!--  <a href="#">Forgot password?</a>
         </div>
-      </div>
+      </div> -->
 
         <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login">Log In</button>
 
@@ -628,7 +642,7 @@ if(isset($_POST['logout']))
 									</div>			
 								</div>
 							</form>	
-							<p class="text-white"> <span>Search by tags:</span> Tecnology, Business, Consulting, IT Company, Design, Development</p>
+							<!-- <p class="text-white"> <span>Search by tags:</span> Tecnology, Business, Consulting, IT Company, Design, Development</p> -->
 						</div>											
 					</div>
 				</div>
@@ -871,7 +885,8 @@ if(isset($_POST['logout']))
 												{
 										?>
 										<li>
-											<a href="category.php">
+											<a href="category.php?caid=<?php echo $row1[0]; ?>">
+											
 									    	<?php echo $row1[1];?>
 											</a>
 										</li>
@@ -913,9 +928,34 @@ if(isset($_POST['logout']))
 											}
 											?>											
 											<li class="<?php echo $class; ?>"><a href="hiredlabor.php?lid=<?php echo $row[0]; ?>" onclick="return confirm('Are you sure you want to hire labor ?')?true:false;">hire me</a></li>
+
+											<!-- <?php
+											if(isset($_POST['hireme']))
+											{
+												if(empty($_SESSION['emailname']))
+												{
+													$datatoggle='modal';
+													$datatarget='#myModal';
+
+												}
+												else
+												{
+												}
+											}
+
+											?> -->
+<!-- 											<style type="text/css">
+											#btnTrigger
+											{
+											display:none;
+											}
+											</style> -->
+
+				          					<!-- <li><input type="submit" name="hireme" class="ticker-btn" tyle="border-width:0px;" id="myText" data-toggle="modal" data-target="#myModal">Login</li> -->
+
 										</ul>
 									</div>
-									<p><h6><?php echo $row[15];?></h6></p>
+									<!-- <p><h6><?php echo $row[15];?></h6></p> -->
 									<h5>Job Nature: Full Day</h5>
 									<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[8];?> </p>
 									<p class="address"><span class="lnr lnr-database"></span> &#x20a8; <?php echo $row[18];?> &nbsp &nbsp &nbsp Status:<strong style="color:<?php echo $color;?>;text-transform:capitalize;"> <?php echo $row[17];?></strong></p>
@@ -1145,7 +1185,7 @@ if(isset($_POST['logout']))
 									{
 									$stateid=$row1[0];
 										?>
-	 					            <li><a class="justify-content-between d-flex" href="category.php">
+	 					            <li><a class="justify-content-between d-flex" href="search.php?stateid=<?php echo $row1[0]?>">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
 									$qry2="select count(*) as sta from labor where l_state='$stateid' and l_dflag<>'1' group by l_state";
@@ -1168,7 +1208,7 @@ if(isset($_POST['logout']))
 									<li><a class="justify-content-between d-flex" href="category.php"><p>Chicago</p><span>17</span></a></li> -->
 								</ul>
 							</div>
-
+<!-- 
 							<div class="single-slidebar">
 								<h4>Top rated labor</h4>
 								<div class="active-relatedjob-carusel">
@@ -1229,7 +1269,7 @@ if(isset($_POST['logout']))
 									</div>
 									 <?php
 										}
-							        ?>
+							        ?> -->
 
 									<!-- <div class="single-rated">
 										<img class="img-fluid" src="img/r1.jpg" alt="">
@@ -1268,10 +1308,10 @@ if(isset($_POST['logout']))
 										<p class="address"><span class="lnr lnr-map"></span> 56/8, Panthapath Dhanmondi Dhaka</p>
 										<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
 										<a href="#" class="btns text-uppercase">Apply job</a>
-									</div>				 -->														
-								</div>
-							</div>							
-
+									</div>				 -->																
+								<!-- </div>
+							</div>					
+ -->
 							<div class="single-slidebar">
 								<h4>Labor by Category</h4>
 								<ul class="cat-list">
@@ -1283,7 +1323,7 @@ if(isset($_POST['logout']))
 									{
 									$catid=$row1[0];
 										?>
-	 					      <li><a class="justify-content-between d-flex" href="category.php">
+	 					      <li><a class="justify-content-between d-flex" href="category.php?caid=<?php echo $row1[0]; ?>">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
 									$qry2="select count(*) as cat from labor where l_dflag<>'1' and l_categoryid='$catid' group by l_categoryid";
@@ -1303,6 +1343,41 @@ if(isset($_POST['logout']))
 									<li><a class="justify-content-between d-flex" href="category.php"><p>Developer</p><span>27</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.php"><p>Accounting</p><span>17</span></a></li> -->
  								</ul>
+							</div>
+
+							<div class="single-slidebar">
+								<h4>Total labor under leader</h4>
+								<ul class="cat-list">
+
+									<?php
+									$qry6="select * from labor where l_leaderid<>'' and l_dflag<>'1' group by l_leaderid";
+									$res6=mysqli_query($con,$qry6);
+									while($row6=mysqli_fetch_row($res6))
+									{
+										$ladid=$row6[21];
+
+										$qry8="select * from labor where l_id='$row6[21]'";
+										$res8=mysqli_query($con,$qry8);
+										while($row8=mysqli_fetch_row($res8))
+										{
+											$leadername=$row8[1].' '.$row8[2];
+										}
+									
+										?>
+	 					      		<li><a class="justify-content-between d-flex" href="single.php?lid=<?php echo $row6[21]; ?>">
+	 								<?php echo $leadername;?>
+									<?php
+									$qry7="select count(*) as led from labor where l_dflag<>'1' and l_leaderid='$ladid' group by l_leaderid";
+									// echo $qry
+									$res7=mysqli_query($con,$qry7);
+									while($row7=mysqli_fetch_array($res7))
+									{
+									?>
+            						<span><?php echo $row7['led']; ?></span></a></li>
+						            <?php
+	          							}
+	          						}?>
+	          					</ul>
 							</div>
 <!-- 
 							<div class="single-slidebar">

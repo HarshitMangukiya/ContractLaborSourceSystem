@@ -3,7 +3,7 @@
 	<?php include('labor/dbConfig.php');
 	session_start();
 	if(isset($_SESSION['emailname'])){
-		echo "welcome".$_SESSION['emailname'];
+		// echo "welcome".$_SESSION['emailname'];
 }
 else
 {
@@ -193,20 +193,20 @@ if(isset($_POST['logout']))
     <span id="error_password" class="text-danger"></span>
 
 
-      <div class="d-flex justify-content-around">
-        <!-- <div>
+      <!-- <div class="d-flex justify-content-around">
+        <div>
            Remember me 
           <div class="form-check">
             <input type="checkbox" class="form-check-input" id="materialLoginFormRemember">
             <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
           </div>
-        </div> -->
-        <div>
-          <!-- Forgot password -->
+        </div>
+        <div> -->
+          <!-- Forgot password
           <a href="#">Forgot password?</a>
         </div>
       </div>
-
+ -->
         <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login">Log In</button>
 
         <p align="center">Don't Have An Account ?

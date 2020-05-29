@@ -3,7 +3,7 @@
 <?php include('labor/dbConfig.php');
 	session_start();
 	if(isset($_SESSION['emailname'])){
-		echo "welcome".$_SESSION['emailname'];
+		// echo "welcome".$_SESSION['emailname'];
 }
 else
 {
@@ -217,7 +217,7 @@ if(isset($_POST['logout']))
     <span id="error_password" class="text-danger"></span>
 
 
-      <div class="d-flex justify-content-around">
+      <!-- <div class="d-flex justify-content-around"> -->
         <!-- <div>
            Remember me 
           <div class="form-check">
@@ -225,11 +225,11 @@ if(isset($_POST['logout']))
             <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
           </div>
         </div> -->
-        <div>
+        <!-- <div> -->
           <!-- Forgot password -->
-          <a href="#">Forgot password?</a>
+       <!--    <a href="#">Forgot password?</a>
         </div>
-      </div>
+      </div> -->
 
         <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login">Log In</button>
 
@@ -260,9 +260,9 @@ if(isset($_POST['logout']))
 					<div class="row d-flex align-items-center justify-content-center">
 						<div class="about-content col-lg-12">
 							<h1 class="text-white">
-								Job Details				
+								Labor Details				
 							</h1>	
-							<p class="text-white link-nav"><a href="index.php">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="#"> Job Details</a></p>
+							<p class="text-white link-nav"><a href="index.php">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="#"> Labor Details</a></p>
 						</div>											
 					</div>
 				</div>
@@ -306,7 +306,8 @@ if(isset($_POST['logout']))
 												{
 										?>
 										<li>
-											<a href="#">
+											<a href="category.php?caid=<?php echo $row1[0]; ?>">
+											
 									    	<?php echo $row1[1];?>
 											</a>
 										</li>
@@ -581,7 +582,7 @@ if(isset($_POST['logout']))
 									{
 									$stateid=$row1[0];
 										?>
-	 					            <li><a class="justify-content-between d-flex" href="category.html">
+	 					            <li><a class="justify-content-between d-flex" href="search.php?stateid=<?php echo $row1[0]?>">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
 									$qry2="select count(*) as sta from labor where l_dflag<>'1' and l_state='$stateid' group by l_state";
@@ -605,7 +606,7 @@ if(isset($_POST['logout']))
 								</ul>
 							</div>
 
-							<div class="single-slidebar">
+							<!-- <div class="single-slidebar">
 								<h4>Top rated labor</h4>
 								<div class="active-relatedjob-carusel">
 								
@@ -656,7 +657,7 @@ if(isset($_POST['logout']))
 									</div>
 									 <?php
 										}
-							        ?>
+							        ?> -->
 
 
 								<!-- 	<div class="single-rated">
@@ -695,8 +696,8 @@ if(isset($_POST['logout']))
 										<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
 										<a href="#" class="btns text-uppercase">Apply job</a>
 									</div> -->																		
-								</div>
-							</div>							
+							<!-- 	</div>
+							</div>		 -->					
 
 							<div class="single-slidebar">
 								<h4>Labor by Category</h4>
@@ -709,7 +710,7 @@ if(isset($_POST['logout']))
 									{
 									$catid=$row1[0];
 										?>
-	 					            <li><a class="justify-content-between d-flex" href="category.html">
+	 					            <li><a class="justify-content-between d-flex"  href="category.php?caid=<?php echo $row1[0]; ?>">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
 									$qry2="select count(*) as cat from labor where l_dflag<>'1' and l_categoryid='$catid' group by l_categoryid";
@@ -730,6 +731,41 @@ if(isset($_POST['logout']))
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Developer</p><span>27</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Accounting</p><span>17</span></a></li> -->
 								</ul>
+							</div>
+
+							<div class="single-slidebar">
+								<h4>Total labor under leader</h4>
+								<ul class="cat-list">
+
+									<?php
+									$qry6="select * from labor where l_leaderid<>'' and l_dflag<>'1' group by l_leaderid";
+									$res6=mysqli_query($con,$qry6);
+									while($row6=mysqli_fetch_row($res6))
+									{
+										$ladid=$row6[21];
+
+										$qry8="select * from labor where l_id='$row6[21]'";
+										$res8=mysqli_query($con,$qry8);
+										while($row8=mysqli_fetch_row($res8))
+										{
+											$leadername=$row8[1].' '.$row8[2];
+										}
+									
+										?>
+	 					      		<li><a class="justify-content-between d-flex" href="single.php?lid=<?php echo $row6[21]; ?>">
+	 								<?php echo $leadername;?>
+									<?php
+									$qry7="select count(*) as led from labor where l_dflag<>'1' and l_leaderid='$ladid' group by l_leaderid";
+									// echo $qry
+									$res7=mysqli_query($con,$qry7);
+									while($row7=mysqli_fetch_array($res7))
+									{
+									?>
+            						<span><?php echo $row7['led']; ?></span></a></li>
+						            <?php
+	          							}
+	          						}?>
+	          					</ul>
 							</div>
 
 <!-- 							<div class="single-slidebar">

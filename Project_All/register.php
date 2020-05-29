@@ -133,6 +133,7 @@ $('#state').on('change',function(){
 
 </head>
  <?php
+ $flag='';
  if(isset($_POST['register']))
  {
 
@@ -148,6 +149,19 @@ $('#state').on('change',function(){
 //     echo $password;
 //     echo $phone;
      // $qry="insert into customer(c_firstname,c_lastname,c_email,c_phone,c_password,c_date) values(0,'$firstname','$lastname','$email','$phone','$password',NOW())";
+ $sql = $con->query("SELECT * FROM customer where c_email='$email'");
+                $numR = $sql->num_rows;
+                if($numR>=1)
+                {                 
+                  $flag=2;
+                }
+                else
+                {
+                  $flag=1;
+                }
+
+     if($flag==1)
+      {
 
    $qry="insert into customer(c_id,c_firstname,c_lastname,c_email,c_phone,c_country,c_state,c_city,c_password,c_date) values(0,'$firstname','$lastname','$email','$phone','$country','$state','$city','$password',NOW());";
   // echo $qry;
@@ -172,6 +186,7 @@ $('#state').on('change',function(){
                     $_SESSION['emailname']=$row[0];
                     //echo $email;
                     header("location:price.php");
+                    exit;
                   }
                 }
                 else
@@ -192,6 +207,12 @@ $('#state').on('change',function(){
         {
           echo "erro not insert customer";
         }
+
+      }
+      else if($flag==2)
+      {
+          echo "<script>alert('Enter another email number. this email id already exists')</script>";
+      }
 
 }
     ?>
@@ -347,7 +368,7 @@ $('#state').on('change',function(){
     <span id="error_password" class="text-danger"></span>
 
 
-      <div class="d-flex justify-content-around">
+      <!-- <div class="d-flex justify-content-around"> -->
         <!-- <div>
            Remember me 
           <div class="form-check">
@@ -355,11 +376,11 @@ $('#state').on('change',function(){
             <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
           </div>
         </div> -->
-        <div>
+        <!-- <div> -->
           <!-- Forgot password -->
-          <a href="#">Forgot password?</a>
+       <!--    <a href="#">Forgot password?</a>
         </div>
-      </div>
+      </div> -->
 
         <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login">Log In</button>
 

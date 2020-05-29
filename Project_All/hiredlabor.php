@@ -3,7 +3,7 @@
 	<?php include('labor/dbConfig.php');
 	session_start();
 	if(isset($_SESSION['emailname'])){
-		echo "welcome".$_SESSION['emailname'];
+		// echo "welcome".$_SESSION['emailname'];
 }
 else
 {
@@ -137,7 +137,7 @@ if(isset($_POST['logout']))
 
         <!-- hiredlabor insert start -->
         <?php
-		
+		$enddate='';
 		$qry="select * from payment where p_customerid='$cid'";
 		// echo $qry;
 		$res=mysqli_query($con,$qry);
@@ -164,24 +164,25 @@ if(isset($_POST['logout']))
 				 $status=$row[17];
 				 $totalcharge=$row[18];
 				}
-                if($status=='available')
-                {
+             
 					$customerid=$cid;
 				    $laborid=$_REQUEST['lid'];
 				    // $totallabor=$_POST['totallabor']; 
 
-					$qry8="insert into hiredlabor values(0,'$customerid','$laborid','1','$totalcharge',NOW(),'1')";
+					$qry8="insert into hiredlabor values(0,'$customerid','$laborid','$totalcharge',NOW(),'1')";
 					// $qry;
 					$res8=mysqli_query($con,$qry8);
 					if($res8>0)
 					{
-							$qry7="update labor set l_status='unavailable' where l_id=".$_REQUEST['lid'];
+							$qry7="update labor set l_status='unavailable' where l_id='$laborid'";
+							echo $qry7;
 						$res7=mysqli_query($con,$qry7);
 						if($res7>0)
 						{
 
 							// echo "insert record into hiredlabor table";
 						   header("location:hiredlabor.php");
+						   exit;
 						 
 						}		
 						else
@@ -199,7 +200,7 @@ if(isset($_POST['logout']))
 						// echo "update record into user table";
 					   // header("location:hiredlaboradmin.php");
 					
-			    }
+			    
 			}
 		}
 		else
@@ -260,6 +261,8 @@ if(isset($_POST['logout']))
 				{
 					// echo "update record into user table";
 				   // header("location:hiredlaboradmin.php");
+    				echo "<script> window.location.href='hiredlabor.php';</script>";
+				   exit;
 				// echo "<script>swal('Good job!', 'Cancel Labor Job.', 'success');</script>";
 
 				}		
@@ -324,7 +327,7 @@ if(isset($_POST['logout']))
 
 										?>
 										<li>
-											<a href="#">
+											<a href="category.php?caid=<?php echo $row1[0]; ?>">
 									    	<?php echo $row1[1];?>
 											</a>
 										</li>
@@ -351,7 +354,7 @@ if(isset($_POST['logout']))
 											<a href="single.php?lid=<?php echo $row[0]; ?>" class="text-uppercase">
 											<div class="row" style="width:400px;">
 												<div  class="col-sm-6"><h5>Hired Id: <?php echo $row[23];?></h5></div>
-												<div style="text-align: right;" class="col-sm-6"><h5><?php echo $row[28];?></h5></div>	
+												<div style="text-align: right;" class="col-sm-6"><h5><?php echo $row[27];?></h5></div>	
 											</div>		
 											<h3>
 												<?php echo $row[1].' '.$row[2];?> 
@@ -365,7 +368,7 @@ if(isset($_POST['logout']))
 											<!-- <li><a href="#" style="color:green;">Confirm Job</a></li><br><br> -->
 
 											<?php 
-											if($row[29]=='2' or $row[29]=='3')
+											if($row[28]=='2' or $row[28]=='3')
 											{
 											    $class='x';
 											}
@@ -381,30 +384,94 @@ if(isset($_POST['logout']))
 									<!-- <p><h6><?php echo $row[15];?></h6></p> -->
 
 									<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[8];?></p>
-									<p class="address"><span class="lnr lnr-database"></span> &#x20a8; <?php echo $row[18];?> <!-- &nbsp &nbsp &nbsp Status: <?php echo $row[17];?> --></p>			
+									<p class="address">Total Payment: &#x20a8; <?php echo $row[18];?> <!-- &nbsp &nbsp &nbsp Status: <?php echo $row[17];?> --></p>			
 
 									<?php
-								 	if($row[29]==1)
-									{?>
-									<h4 style="color:red;">Wait for labor confirmation.</h4>
-									<?php
+								 	if($row[28]==1)
+									{
+										$color2='blue';
+									$jobstatus="Wait for labor confirmation.";
 									}
-									else if($row[29]==2)
-									{?>
-									<h4 style="color:red;">Labor job cancelled by you.</h4>
-									<?php
+									else if($row[28]==2)
+									{
+										$color2='red';
+									$jobstatus="Labor job cancelled by you.";							
 									}
-									else if($row[29]==3)
-									{?>
-									<h4 style="color:red;">Labor will not do your job thay rejected your job request.</h4>
-									<?php
+									else if($row[28]==3)
+									{
+										$color2='red';
+									$jobstatus="Labor will not do your job thay rejected your job request.";
+									
 									}
-									else if($row[29]==4)
-									{?>
-									<h4 style="color:green;">Labor will do your job.</h4>
-									<?php
+									else if($row[28]==4)
+									{
+										$color2='green';
+									$jobstatus="Labor will do your job.";
 									}
 									?>
+								<h5 style="color:<?php echo $color2; ?>; font-style: italic;"><strong style="color:#777777;font-style:normal;">Job Status:</strong> <?php echo $jobstatus;?></h5>
+								
+								<?php
+
+							$qry10="select * from labor l,hiredlabor h where h.h_laborid=l.l_id and h.h_customerid='$cid' group by h.h_id order by h_id desc limit 1";
+							// echo $qry;
+							$res10=mysqli_query($con,$qry10);
+
+							while($row10=mysqli_fetch_row($res10))
+							{
+								
+								if($row10[23]==$row[23])
+								{
+
+									if($row10[28]==4)
+									{
+										
+										if(isset($_POST['review2']))
+											{
+							
+												   $customerid=$row[24];
+												    $laborid=$row10[0];
+												    $rating=$_POST['rating'];
+												    $review=$_POST['review'];
+												   
+
+												$qry9="insert into review values(0,'$customerid','$laborid','$rating','$review',NOW())";
+												// echo $qry9;
+												$res9=mysqli_query($con,$qry9);
+												if($res9>0)
+												{
+													// echo "insert record into review table";
+												   // header("location:hiredlabor.php");
+													
+    										echo "<script> window.location.href='hiredlabor.php';</script>";
+												   exit;
+												}		
+												else
+												{
+													echo "erro not insert review";
+												}
+											}
+										
+																	
+										?>
+										
+										<form method="post">
+											Rating: <input type="text" name="rating">
+	<!-- 										 <img src="img/pages/list.jpg" alt=""> -->
+											<br>
+											<span>Review: 
+											<input type="text" class="form-control" placeholder="Write Your review. " id="review" name="review" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Write Your review.'"></span>
+	    									<span id="error_review" class="text-danger"></span>
+	    									<br>
+										
+											<input type="submit" name="review2" value="Submit" class="ticker-btn" style="border-width:0px;">
+										</form>
+
+									<?php
+									}
+								}
+							}
+								?>
 								</div>
 							</div>
 							<?php
@@ -628,7 +695,7 @@ if(isset($_POST['logout']))
 									{
 									$stateid=$row1[0];
 										?>
-	 					            <li><a class="justify-content-between d-flex" href="#">
+	 					            <li><a class="justify-content-between d-flex" href="search.php?stateid=<?php echo $row1[0]?>">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
 									$qry2="select count(*) as sta from labor where l_dflag<>'1' and l_state='$stateid' group by l_state";
@@ -733,7 +800,7 @@ if(isset($_POST['logout']))
 									{
 									$catid=$row1[0];
 										?>
-	 					      		<li><a class="justify-content-between d-flex" href="category.php">
+	 					      		<li><a class="justify-content-between d-flex"  href="category.php?caid=<?php echo $row1[0]; ?>">
 	 								<?php echo $row1[1];?>
 									<?php
 									$qry2="select count(*) as cat from labor where l_dflag<>'1' and l_categoryid='$catid' group by l_categoryid";
@@ -756,6 +823,44 @@ if(isset($_POST['logout']))
 									<li><a class="justify-content-between d-flex" href="category.php"><p>Accounting</p><span>17</span></a></li> -->
 								</ul>
 							</div>
+
+							<div class="single-slidebar">
+								<h4>Total labor under leader</h4>
+								<ul class="cat-list">
+
+									<?php
+									$qry6="select * from labor where l_leaderid<>'' and l_dflag<>'1' group by l_leaderid";
+									$res6=mysqli_query($con,$qry6);
+									while($row6=mysqli_fetch_row($res6))
+									{
+										$ladid=$row6[21];
+
+										$qry8="select * from labor where l_id='$row6[21]'";
+										$res8=mysqli_query($con,$qry8);
+										while($row8=mysqli_fetch_row($res8))
+										{
+											$leadername=$row8[1].' '.$row8[2];
+										}
+									
+										?>
+	 					      		<li><a class="justify-content-between d-flex" href="single.php?lid=<?php echo $row6[21]; ?>">
+	 								<?php echo $leadername;?>
+									<?php
+									$qry7="select count(*) as led from labor where l_dflag<>'1' and l_leaderid='$ladid' group by l_leaderid";
+									// echo $qry
+									$res7=mysqli_query($con,$qry7);
+									while($row7=mysqli_fetch_array($res7))
+									{
+									?>
+            						<span><?php echo $row7['led']; ?></span></a></li>
+						            <?php
+	          							}
+	          						}?>
+	          					</ul>
+							</div>
+
+
+							
 
 <!-- 							<div class="single-slidebar">
 								<h4>Carrer Advice Blog</h4>
