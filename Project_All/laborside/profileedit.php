@@ -3,7 +3,7 @@
 <?php include('../labor/dbConfig.php');
 	session_start();
 	if(isset($_SESSION['laborname'])){
-		echo "welcome".$_SESSION['laborname'];
+		// echo "welcome".$_SESSION['laborname'];
 }
 else
 {
@@ -195,7 +195,7 @@ $('#state').on('change',function(){
 								<li><a href="profile.php"><?php echo $name;?></a></li>
 								<div class="dropdown-divider"></div>
 								<li><a href="profile.php">Your Profile</a></li>
-								<li><a href="#">Your Order</a></li>
+								<!-- <li><a href="#">Your Order</a></li> -->
 								<div class="dropdown-divider"></div>
 								<li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li>
 				            </ul>
@@ -219,11 +219,11 @@ $('#state').on('change',function(){
 
 
 					    	$qry="update labor set l_status='$status1' where l_id='$lid'";
-					    	// echo $qry;
+					    	echo $qry;
 					        $res=mysqli_query($con,$qry);
 					        if($res>0)
 					        {
-					          //echo "update record into customer table";
+					          echo "update record into customer table";
 					        }   
 					        else
 					        {
@@ -374,6 +374,7 @@ $('#state').on('change',function(){
 							<div class="single-post job-experience">
 								<h4 class="single-title">Personal Information</h4>
 <?php
+
     $qry="select * from labor where l_id='$lid'";
     $res=mysqli_query($con,$qry);
     while($row=mysqli_fetch_row($res))
@@ -410,7 +411,7 @@ $('#state').on('change',function(){
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>First name:
-									    <input type="text" class="form-control mb-4" placeholder="Enter First name" id="firstname3" name="firstname" value="<?php echo $firstname; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter First name'" required="">
+									    <input type="text" class="form-control mb-4" placeholder="Enter First name" id="firstname3" name="firstname" value="<?php echo $firstname; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter First name'" >
 										</span>
     									<span id="error_firstname3" class="text-danger"></span>
 									</li>
@@ -419,7 +420,7 @@ $('#state').on('change',function(){
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Last name: 
-                                        <input type="text" class="form-control mb-4" placeholder="Enter Last name" id="lastname3" name="lastname" value="<?php echo $lastname; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Last name'" required="">
+                                        <input type="text" class="form-control mb-4" placeholder="Enter Last name" id="lastname3" name="lastname" value="<?php echo $lastname; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Last name'" >
 										</span>
     									<span id="error_lastname3" class="text-danger"></span>
 
@@ -441,7 +442,7 @@ $('#state').on('change',function(){
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Age: 
-                                        <input type="text" class="form-control mb-4" placeholder="Enter age" id="age3" name="age" value="<?php echo $age; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Age'" required="">
+                                        <input type="text" class="form-control mb-4" placeholder="Enter age" id="age3" name="age" value="<?php echo $age; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Age'">
 										</span>
     									<span id="error_age3" class="text-danger"></span>
 
@@ -450,7 +451,7 @@ $('#state').on('change',function(){
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>About Me:
-										<input type="text" class="form-control mb-4" placeholder="Enter About Me" id="about3" name="about" value="<?php echo $about; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter About Me'" required="">
+										<input type="text" class="form-control mb-4" placeholder="Enter About Me" id="about3" name="about" value="<?php echo $about; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter About Me'" >
 										</span>
     									<span id="error_about3" class="text-danger"></span>
 
@@ -459,7 +460,7 @@ $('#state').on('change',function(){
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Email:
-										<input type="email" class="form-control mb-4" placeholder="Enter E-mail" id="email3" name="email" value="<?php echo $email; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter E-mail'" required=""></span>
+										<input type="email" class="form-control mb-4" placeholder="Enter E-mail" id="email3" name="email" value="<?php echo $email; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter E-mail'" ></span>
     									<span id="error_email3" class="text-danger"></span>
 
 									</li>
@@ -467,7 +468,7 @@ $('#state').on('change',function(){
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Aadhar No.:
-										<input type="text" class="form-control mb-4" placeholder="Enter Aadhar Number" id="aadharno3" name="aadharno" value="<?php echo $aadharno; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Aadhar Number'" required=""></span>
+										<input type="text" class="form-control mb-4" placeholder="Enter Aadhar Number" id="aadharno3" name="aadharno" value="<?php echo $aadharno; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Aadhar Number'" ></span>
     									<span id="error_aadharno3" class="text-danger"></span>
 
 									</li>
@@ -475,7 +476,7 @@ $('#state').on('change',function(){
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Address:
-										<input type="text" class="form-control mb-4" placeholder="Enter Address" id="address3" name="address" value="<?php echo $address; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Address'" required=""></span>
+										<input type="text" class="form-control mb-4" placeholder="Enter Address" id="address3" name="address" value="<?php echo $address; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Address'" ></span>
     									<span id="error_address3" class="text-danger"></span>
 
 									</li>
@@ -483,7 +484,7 @@ $('#state').on('change',function(){
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Location:
-										<input type="text" class="form-control mb-4" placeholder="Enter Location" id="location3" name="location" value="<?php echo $location; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Location'" required=""></span>
+										<input type="text" class="form-control mb-4" placeholder="Enter Location" id="location3" name="location" value="<?php echo $location; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Location'"></span>
     									<span id="error_location3" class="text-danger"></span>
 
 									</li>
@@ -572,7 +573,7 @@ $('#state').on('change',function(){
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Pincode: 
-										<input type="text" class="form-control mb-4" placeholder="Enter Pincode" id="pincode3" name="pincode" value="<?php echo $pincode; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Pincode'" required=""></span>
+										<input type="text" class="form-control mb-4" placeholder="Enter Pincode" id="pincode3" name="pincode" value="<?php echo $pincode; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Pincode'" ></span>
     									<span id="error_pincode3" class="text-danger"></span>
 
 									</li>
@@ -580,7 +581,7 @@ $('#state').on('change',function(){
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Password: 
-										<input type="text" class="form-control mb-4" placeholder="Enter Password" id="password3" name="password" value="<?php echo $password; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" required=""></span>
+										<input type="text" class="form-control mb-4" placeholder="Enter Password" id="password3" name="password" value="<?php echo $password; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></span>
     									<span id="error_password3" class="text-danger"></span>
 
 									</li>
@@ -608,7 +609,7 @@ $('#state').on('change',function(){
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Charge: 
-										<input type="text" class="form-control mb-4" placeholder="Enter  Your Per day Charge" id="charge3" name="charge" value="<?php echo $charge; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Your Per day Charge'" required=""></span>
+										<input type="text" class="form-control mb-4" placeholder="Enter  Your Per day Charge" id="charge3" name="charge" value="<?php echo $charge; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Your Per day Charge'" ></span>
     									<span id="error_charge3" class="text-danger"></span>
 
 									</li>
@@ -734,7 +735,7 @@ $('#state').on('change',function(){
 						</div> 
        						<div class="col-lg-4 sidebar">
 							<div class="single-slidebar">
-								<h4>Labor by Location</h4>
+								<h4>Total labor in every state</h4>
 								<ul class="cat-list">
                                <?php
 									$qry1="select * from state";
@@ -767,7 +768,7 @@ $('#state').on('change',function(){
 								</ul>
 							</div>
 
-							<div class="single-slidebar">
+							<!-- <div class="single-slidebar">
 								<h4>Top rated labor</h4>
 								<div class="active-relatedjob-carusel">
 								
@@ -777,11 +778,11 @@ $('#state').on('change',function(){
 								while($row5=mysqli_fetch_row($res5))
 							        {
 									?>
-									<div class="single-rated">
+									<div class="single-rated"> -->
 										<!-- <a href="single.php?lid=<?php echo $row5[0]; ?>"> -->
-										<img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " class="img-fluid" src="../labor/labor_img/<?php echo $row5[0];?>/<?php echo $row5[16]; ?>" alt="">
-									<!-- </a>											 -->
-										<a href="#" class="text-uppercase"><h3>
+										<!-- <img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " class="img-fluid" src="../labor/labor_img/<?php echo $row5[0];?>/<?php echo $row5[16]; ?>" alt="">
+									 --><!-- </a>											 -->
+									<!-- 	<a href="#" class="text-uppercase"><h3>
 									    <?php echo $row5[1].' '.$row5[2];?>
 										</h3></a>
 	                                    <h5> Age: <?php echo $row5[4];?> &nbsp &nbsp &nbsp 
@@ -791,13 +792,13 @@ $('#state').on('change',function(){
 										<p class="address"><span class="lnr lnr-map"></span> <?php echo $row5[8];?> </p>
 										<p class="address"><span class="lnr lnr-database"></span> &#x20a8;
 										  <?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row5[17];?></p>
-										<!-- <a href="#" class="btns text-uppercase">Hire Me</a> -->
-									</div>
+								 -->		<!-- <a href="#" class="btns text-uppercase">Hire Me</a> -->
+								<!-- 	</div>
 									 <?php
 										}
 							        ?>
 
-
+ -->
 								<!-- 	<div class="single-rated">
 										<img class="img-fluid" src="img/r1.jpg" alt="">
 										<a href="single.php"><h4>Creative Art Designer</h4></a>
@@ -834,8 +835,8 @@ $('#state').on('change',function(){
 										<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
 										<a href="#" class="btns text-uppercase">Apply job</a>
 									</div> -->																		
-								</div>
-							</div>							
+								<!-- </div>
+							</div>	 -->						
 
 							<div class="single-slidebar">
 								<h4>Labor by Category</h4>

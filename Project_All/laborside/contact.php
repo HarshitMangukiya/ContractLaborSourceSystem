@@ -3,7 +3,7 @@
 	<?php include('../Labor/dbConfig.php');
 	session_start();
 	if(isset($_SESSION['laborname'])){
-		echo "welcome".$_SESSION['laborname'];
+		// echo "welcome".$_SESSION['laborname'];
 }
 else
 {
@@ -113,7 +113,7 @@ if(isset($_POST['logout']))
 								<li><a href="profile.php"><?php echo $name;?></a></li>
 								<div class="dropdown-divider"></div>
 								<li><a href="profile.php">Your Profile</a></li>
-								<li><a href="#">Your Order</a></li>
+								<!-- <li><a href="#">Your Order</a></li> -->
 								<div class="dropdown-divider"></div>
 								<li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li>
 				            </ul>
@@ -145,6 +145,8 @@ if(isset($_POST['logout']))
 						        if($res>0)
 						        {
 						          //echo "update record into customer table";
+						        	header("location:contact.php");
+						   			exit;
 						        }   
 						        else
 						        {
@@ -246,7 +248,7 @@ if(isset($_POST['logout']))
     <input type="password" id="password1" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
     <span id="error_password1" class="text-danger"></span>
 
-      <div class="d-flex justify-content-around">
+      <!-- <div class="d-flex justify-content-around"> -->
         <!-- <div>
            Remember me 
           <div class="form-check">
@@ -254,11 +256,11 @@ if(isset($_POST['logout']))
             <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
           </div>
         </div> -->
-        <div>
+        <!-- <div> -->
           <!-- Forgot password -->
-          <a href="#">Forgot password?</a>
+        <!--   <a href="#">Forgot password?</a>
         </div>
-      </div>
+      </div> -->
 
         <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login1">Log In</button>
 

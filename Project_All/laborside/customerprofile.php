@@ -3,11 +3,13 @@
 <?php include('../labor/dbConfig.php');
 	session_start();
 	if(isset($_SESSION['laborname'])){
-		echo "welcome".$_SESSION['laborname'];
+		// echo "welcome".$_SESSION['laborname'];
 }
 else
 {
-	//header("location:index.php");	
+	//header("location:index.php");
+    echo "<script> window.location.href='index.php';</script>";
+		
 }
 if(isset($_POST['logout']))
 {
@@ -71,8 +73,11 @@ if(isset($_POST['logout']))
 
 				            </ul>
 				          </li>
-                        &nbsp&nbsp
-                         <?php
+                      
+				          &nbsp &nbsp	
+				          <?php
+				          
+				          $lid='';				          
 				          if(isset($_SESSION['laborname']))
 				          {
 				          	$lid=$_SESSION['laborname'];
@@ -90,7 +95,18 @@ if(isset($_POST['logout']))
 								{
 									$imagename="../Labor/labor_img/".$row[0].'/'.$row[16];
 								}
-		
+
+								$status=$row[17];
+							    if($status=='available')
+						        {
+						       		$color='green';
+						   	    	$status1='available';
+						        }
+						   	    else
+						   	    {
+						      		$color='red';
+						   	   		$status1='unavailable';			    	  
+						    	}					
 							}
 				          	?>
 				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
@@ -99,11 +115,54 @@ if(isset($_POST['logout']))
 								<li><a href="profile.php"><?php echo $name;?></a></li>
 								<div class="dropdown-divider"></div>
 								<li><a href="profile.php">Your Profile</a></li>
-								<li><a href="#">Your Order</a></li>
+								<!-- <li><a href="#">Your Order</a></li> -->
 								<div class="dropdown-divider"></div>
 								<li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li>
 				            </ul>
 				          </li>
+
+                            <!-- Job Status logic --> 
+					    	<?php
+			                
+					    	if(isset($_POST['currentstatus']))
+					    	{
+							  $status1=$_POST['currentstatus'];
+
+
+					    	   if($status1=='available')
+					    	   {
+					    	   	$color='red';
+					    	   $status1='unavailable';
+					    	   }
+					    	   else
+					    	   {
+					    	   	$color='green';
+					    	   	 $status1='available';			    	  
+					    	   }
+
+
+						    	$qry="update labor set l_status='$status1' where l_id='$lid'";
+						    	// echo $qry;
+						        $res=mysqli_query($con,$qry);
+						        if($res>0)
+						        {
+						          //echo "update record into customer table";
+						        	header("location:index.php");
+						   			exit;
+						        }   
+						        else
+						        {
+							        echo "erro not update customer";
+						        }
+
+						    }
+					    	?>
+
+				          <li>
+				          	<p style="color:white;margin-left:8px;">Job Status</p>
+				          	<button type="submit" name="currentstatus" value="<?php echo $status1;?>" style="width:90px;height:30px;background-color:<?php echo $color;?>;color:white;border-width:1px;border-radius:5px;border:1px solid;position:relative; box-shadow:0 5px 20px rgba(0,0,0,0.2); ">
+				          	<?php echo $status1;?></button>
+				          </li>	
 				          	<!-- <li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li> -->
 				          <?php
 				          }
@@ -111,16 +170,20 @@ if(isset($_POST['logout']))
 				          {?>
 				          <li><a class="ticker-btn" href="laborregister.php">Signup</a></li>
 				          <li><button type="button" class="ticker-btn" data-toggle="modal" data-target="#myModal" style="border-width:0px;">Login</button></li>
+       					  
 
+				          <!-- <li><a class="ticker-btn" href="laborlogin.php">Login</a></li> -->
 				          <?php	
 				          }
 				          ?>
-
+				          
+				          				          
 				        </ul>
 				      </nav><!-- #nav-menu-container -->		    		
 			    	</div>
 			    </div>
 			  </header><!-- #header -->
+
 
 <!-- login page -->
 <div class="container">
@@ -187,7 +250,7 @@ if(isset($_POST['logout']))
     <input type="password" id="password1" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
     <span id="error_password1" class="text-danger"></span>
 
-      <div class="d-flex justify-content-around">
+      <!-- <div class="d-flex justify-content-around"> -->
         <!-- <div>
            Remember me 
           <div class="form-check">
@@ -195,11 +258,11 @@ if(isset($_POST['logout']))
             <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
           </div>
         </div> -->
-        <div>
+        <!-- <div> -->
           <!-- Forgot password -->
-          <a href="#">Forgot password?</a>
+    <!--       <a href="#">Forgot password?</a>
         </div>
-      </div>
+      </div> -->
 
         <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login1">Log In</button>
 
@@ -503,7 +566,7 @@ if(isset($_POST['logout']))
 				    ?>
 						<div class="col-lg-4 sidebar">
 							<div class="single-slidebar">
-								<h4>Labor by Location</h4>
+								<h4>Total labor in every state</h4>
 								<ul class="cat-list">
                                <?php
 									$qry1="select * from state";
@@ -536,7 +599,7 @@ if(isset($_POST['logout']))
 								</ul>
 							</div>
 
-							<div class="single-slidebar">
+							<!-- <div class="single-slidebar">
 								<h4>Top rated labor</h4>
 								<div class="active-relatedjob-carusel">
 								
@@ -557,11 +620,11 @@ if(isset($_POST['logout']))
 										}
 
 									?>
-									<div class="single-rated">
+									<div class="single-rated"> -->
 										<!-- <a href="single.php?lid=<?php echo $row5[0]; ?>"> -->
-										<img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " class="img-fluid" src="<?php echo $imagename2; ?>" alt="">
+										<!-- <img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " class="img-fluid" src="<?php echo $imagename2; ?>" alt=""> -->
 									<!-- </a>											 -->
-										<a href="#" class="text-uppercase">
+								<!-- 		<a href="#" class="text-uppercase">
 											<h3>
 									    <?php echo $row5[1].' '.$row5[2];?>
 										</h3></a>
@@ -572,12 +635,12 @@ if(isset($_POST['logout']))
 										<p class="address"><span class="lnr lnr-map"></span> <?php echo $row5[8];?> </p>
 										<p class="address"><span class="lnr lnr-database"></span> &#x20a8; 
 											<?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row5[17];?></p>
-										<!-- <a href="#" class="btns text-uppercase">Hire Me</a> -->
-									</div>
+								 -->		<!-- <a href="#" class="btns text-uppercase">Hire Me</a> -->
+								<!-- 	</div>
 									 <?php
 										}
 							        ?>
-
+ -->
 
 								<!-- 	<div class="single-rated">
 										<img class="img-fluid" src="img/r1.jpg" alt="">
@@ -615,8 +678,8 @@ if(isset($_POST['logout']))
 										<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
 										<a href="#" class="btns text-uppercase">Apply job</a>
 									</div> -->																		
-								</div>
-							</div>							
+						<!-- 		</div>
+							</div>	 -->						
 
 							<div class="single-slidebar">
 								<h4>Labor by Category</h4>

@@ -3,7 +3,7 @@
 <?php include('../labor/dbConfig.php');
 	session_start();
 	if(isset($_SESSION['laborname'])){
-		echo "welcome".$_SESSION['laborname'];
+		// echo "welcome".$_SESSION['laborname'];
 }
 else
 {
@@ -99,7 +99,7 @@ if(isset($_POST['logout']))
 				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
 								<!-- <li><a href="elements.html">elements</a></li> -->
-								<li><a href="search.php">search</a></li>
+								<!-- <li><a href="search.php">search</a></li> -->
 								<li><a href="customerprofile.php">single</a></li>
 				            </ul>
 				          </li>
@@ -143,7 +143,7 @@ if(isset($_POST['logout']))
 								<li><a href="profile.php"><?php echo $name;?></a></li>
 								<div class="dropdown-divider"></div>
 								<li><a href="profile.php">Your Profile</a></li>
-								<li><a href="#">Your Order</a></li>
+								<!-- <li><a href="#">Your Order</a></li> -->
 								<div class="dropdown-divider"></div>
 								<li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li>
 				            </ul>
@@ -173,6 +173,10 @@ if(isset($_POST['logout']))
 				        if($res>0)
 				        {
 				          //echo "update record into customer table";
+				        	// echo "<script> window.location.href='profile.php';</script>";
+		                        // exit;
+				        	header("location:profile.php");
+				        	exit();
 				        }   
 				        else
 				        {
@@ -205,6 +209,7 @@ if(isset($_POST['logout']))
 
 <!-- labor profile update start -->
 <?php
+	      	$leaderid='';
 	if(isset($_POST['xx']))
     {
      
@@ -236,10 +241,14 @@ if(isset($_POST['logout']))
 				while($row=mysqli_fetch_row($res))
 				{
 					$fimage=$row[16];
+					if(!empty($row[16]))
+					{
+						  $oldimage=$path.$folder.'/'.$fimage;
+		      			// echo $oldimage;
+		      			unlink($oldimage);
+					}
 				}
-		      $oldimage=$path.$folder.'/'.$fimage;
-		      // echo $oldimage;
-		      unlink($oldimage);
+		    
 
 		      $target_file = $path.basename($_FILES["fimage"]["name"]);
 		      // Select file type
@@ -255,7 +264,7 @@ if(isset($_POST['logout']))
 	              {
 
 	                $myimg=time().$_FILES['fimage']['name'];
-	                echo $myimg;
+	                // echo $myimg;
 
 	                $targetpath=$path.$folder."/".$myimg;
 	                if(move_uploaded_file($_FILES['fimage']['tmp_name'],$targetpath))
@@ -293,13 +302,16 @@ if(isset($_POST['logout']))
 				    $res=mysqli_query($con,$qry);
 			        if(mysqli_num_rows($res)==1)
 			        {
-			         $leaderid=$_POST['leaderid'];	
-			         // echo "dsvcccv";
+
+			         		$leaderid=$_POST['leaderid'];	
+			     		
 			        }
 			      	else
 			     	{
-			      		echo "Enter the another Leader Id";
-			            $leaderid=$leaderid1;	
+			      		// echo "Enter the another Leader Id";
+			            // $leaderid=$leaderid1;	
+         			 	echo "<script>alert('Invalid leaderid enter another leader id')</script>";
+
 
 			     	}
 			    }
@@ -325,6 +337,8 @@ if(isset($_POST['logout']))
 	        {
 	          // echo "update record into customer table";
 	           // header("location:index.php");
+	        	echo "<script> window.location.href='profile.php';</script>";
+				   exit;
 	        }   
 	        else
 	        {
@@ -483,23 +497,28 @@ if(isset($_POST['logout']))
 		                      $qry="insert into image values(0,'$myimg','$filetype','$laborid')";
 		                      // echo $qry;
 		                      $res=mysqli_query($con,$qry);
+
+		                      	 $targetpath=$path.$foldername."/".$myimg;
+		                      if(move_uploaded_file($_FILES['workimage']['tmp_name'][$i],$targetpath))
+		                      {
+		                        // echo "insert multi image";
+		                      }
+
 		                      if($res>0)
 		                      {
 		                        // echo "insert record into image table";
 		                        // header("location:profile.php");
+		                   
 		                        echo "<script> window.location.href='profile.php';</script>";
+		                        // exit;
 		                      }   
 		                      else
 		                      {
 		                        echo "erro not insert image";
 		                      }
+        						
 
-
-		                      $targetpath=$path.$foldername."/".$myimg;
-		                      if(move_uploaded_file($_FILES['workimage']['tmp_name'][$i],$targetpath))
-		                      {
-		                        // echo "insert multi image";
-		                      }
+		                  
 
 		                    }
 		                    else
@@ -532,6 +551,8 @@ if(isset($_POST['logout']))
 		        {
 		        	// echo "insert record into video table";
 		          // header("location:categoryadmin.php");
+		        	echo "<script> window.location.href='profile.php';</script>";
+		                        exit;
 		        }		
 		        else
 		        {
@@ -570,6 +591,8 @@ if(isset($_POST['logout']))
 			{
 				// echo "delete record from image table";
 				// header("location:profile.php");
+				echo "<script> window.location.href='profile.php';</script>";
+				   exit;
 			}
 			else
 			{
@@ -849,7 +872,7 @@ if(isset($_POST['logout']))
 				    ?>
 						<div class="col-lg-4 sidebar">
 							<div class="single-slidebar">
-								<h4>Labor by Location</h4>
+								<h4>Total labor in every state</h4>
 								<ul class="cat-list">
                                <?php
 									$qry1="select * from state";
@@ -882,7 +905,7 @@ if(isset($_POST['logout']))
 								</ul>
 							</div>
 
-							<div class="single-slidebar">
+							<!-- <div class="single-slidebar">
 								<h4>Top rated labor</h4>
 								<div class="active-relatedjob-carusel">
 								
@@ -901,11 +924,11 @@ if(isset($_POST['logout']))
 											$imagename2="../Labor/labor_img/".$row5[0].'/'.$row5[16];
 										}
 									?>
-									<div class="single-rated">
+									<div class="single-rated"> -->
 										<!-- <a href="single.php?lid=<?php echo $row5[0]; ?>"> -->
-										<img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " class="img-fluid" src="<?php echo $imagename2; ?>" alt="">
+										<!-- <img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " class="img-fluid" src="<?php echo $imagename2; ?>" alt=""> -->
 									<!-- </a>											 -->
-										<a href="#" class="text-uppercase"><h3>
+										<!-- <a href="#" class="text-uppercase"><h3>
 									    <?php echo $row5[1].' '.$row5[2];?>
 										</h3></a>
 	                                    <h5> Age: <?php echo $row5[4];?> &nbsp &nbsp &nbsp 
@@ -914,12 +937,12 @@ if(isset($_POST['logout']))
 										<h5>Job Nature: Full Day</h5>
 										<p class="address"><span class="lnr lnr-map"></span> <?php echo $row5[8];?> </p>
 										<p class="address"><span class="lnr lnr-database"></span> &#x20a8;
-										 <?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row5[17];?></p>
+										 <?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row5[17];?></p> -->
 										<!-- <a href="#" class="btns text-uppercase">Hire Me</a> -->
-									</div>
+									<!-- </div>
 									 <?php
 										}
-							        ?>
+							        ?> -->
 
 
 								<!-- 	<div class="single-rated">
@@ -958,8 +981,8 @@ if(isset($_POST['logout']))
 										<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
 										<a href="#" class="btns text-uppercase">Apply job</a>
 									</div> -->																		
-								</div>
-							</div>							
+								<!-- </div>
+							</div>		 -->					
 
 							<div class="single-slidebar">
 								<h4>Labor by Category</h4>

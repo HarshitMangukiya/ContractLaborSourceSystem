@@ -3,7 +3,7 @@
 	<?php include('../Labor/dbConfig.php');
 	session_start();
 	if(isset($_SESSION['laborname'])){
-		echo "welcome".$_SESSION['laborname'];
+		// echo "welcome".$_SESSION['laborname'];
 }
 else
 {
@@ -78,10 +78,9 @@ if(isset($_POST['logout']))
 								<li><a href="customerprofile.php">single</a></li>
 				            </ul>
 				          </li>
-				           &nbsp &nbsp	
+				            &nbsp &nbsp	
 				          <?php
-				          
-				          $lid='';				          
+				          $lid='';
 				          if(isset($_SESSION['laborname']))
 				          {
 				          	$lid=$_SESSION['laborname'];
@@ -99,18 +98,18 @@ if(isset($_POST['logout']))
 								{
 									$imagename="../Labor/labor_img/".$row[0].'/'.$row[16];
 								}
-
 								$status=$row[17];
-							    if($status=='available')
-						        {
-						       		$color='green';
-						   	    	$status1='available';
-						        }
-						   	    else
-						   	    {
-						      		$color='red';
-						   	   		$status1='unavailable';			    	  
-						    	}					
+								   if($status=='available')
+						    	   {
+						    	   	$color='green';
+						    	    $status1='available';
+						    	   }
+						    	   else
+						    	   {
+						    	   	$color='red';
+						    	   	$status1='unavailable';			    	  
+						    	   }	
+		
 							}
 				          	?>
 				          	<li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="<?php echo $imagename; ?>" width="40" height="40" alt="" ></a>
@@ -119,47 +118,49 @@ if(isset($_POST['logout']))
 								<li><a href="profile.php"><?php echo $name;?></a></li>
 								<div class="dropdown-divider"></div>
 								<li><a href="profile.php">Your Profile</a></li>
-								<li><a href="#">Your Order</a></li>
+								<!-- <li><a href="#">Your Order</a></li> -->
 								<div class="dropdown-divider"></div>
 								<li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li>
 				            </ul>
 				          </li>
 
                             <!-- Job Status logic --> 
-					    	<?php
-			                
-					    	if(isset($_POST['currentstatus']))
-					    	{
-							  $status1=$_POST['currentstatus'];
+					    
+				<?php
+	                
+			    	if(isset($_POST['currentstatus']))
+			    	{
+     					$status1=$_POST['currentstatus'];
+
+			    	   if($status1=='available')
+			    	   {
+			    	   	$color='red';
+			    	   $status1='unavailable';
+			    	   }
+			    	   else
+			    	   {
+			    	   	$color='green';
+			    	   	 $status1='available';			    	  
+			    	   }
 
 
-					    	   if($status1=='available')
-					    	   {
-					    	   	$color='red';
-					    	   $status1='unavailable';
-					    	   }
-					    	   else
-					    	   {
-					    	   	$color='green';
-					    	   	 $status1='available';			    	  
-					    	   }
+				    	$qry="update labor set l_status='$status1' where l_id='$lid'";
+				    	echo $qry;
+				        $res=mysqli_query($con,$qry);
+				        if($res>0)
+				        {
+				          //echo "update record into customer table";
+				        	header("location:index.php");
+						   exit;
+				        }   
+				        else
+				        {
+					        echo "erro not update customer";
+				        }
 
-
-						    	$qry="update labor set l_status='$status1' where l_id='$lid'";
-						    	// echo $qry;
-						        $res=mysqli_query($con,$qry);
-						        if($res>0)
-						        {
-						          //echo "update record into customer table";
-						        }   
-						        else
-						        {
-							        echo "erro not update customer";
-						        }
-
-						    }
-					    	?>
-
+				    }
+			    ?>
+					
 				          <li>
 				          	<p style="color:white;margin-left:8px;">Job Status</p>
 				          	<button type="submit" name="currentstatus" value="<?php echo $status1;?>" style="width:90px;height:30px;background-color:<?php echo $color;?>;color:white;border-width:1px;border-radius:5px;border:1px solid;position:relative; box-shadow:0 5px 20px rgba(0,0,0,0.2); ">
@@ -228,8 +229,11 @@ if(isset($_POST['logout']))
 			        }
 			        else
 			        {
-			          header("location:index.php"); 
-			          echo "Invalid Uasename or Password..."; 
+         			 echo "<script>alert('Invalid phone number or Password...')</script>";
+			        	
+			          // header("location:index.php"); 
+
+			          // echo "Invalid Uasename or Password..."; 
 			        }
 			      }else
 			      {
@@ -250,7 +254,7 @@ if(isset($_POST['logout']))
     <input type="password" id="password1" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
     <span id="error_password1" class="text-danger"></span>
 
-      <div class="d-flex justify-content-around">
+      <!-- <div class="d-flex justify-content-around"> -->
         <!-- <div>
            Remember me 
           <div class="form-check">
@@ -258,11 +262,11 @@ if(isset($_POST['logout']))
             <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
           </div>
         </div> -->
-        <div>
+        <!-- <div> -->
           <!-- Forgot password -->
-          <a href="#">Forgot password?</a>
+        <!--   <a href="#">Forgot password?</a>
         </div>
-      </div>
+      </div> -->
 
         <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login1">Log In</button>
 
@@ -282,7 +286,7 @@ if(isset($_POST['logout']))
 <!-- login End -->
 
 			<!-- start banner Area -->
-			<form method="post" action="search.php" enctype="multipart/form-data">
+			<form method="post" enctype="multipart/form-data">
 			<section class="banner-area relative" id="home">	
 				<div class="overlay overlay-bg" ></div>
 				<div class="container">
@@ -596,7 +600,9 @@ if(isset($_POST['logout']))
 				if($res6>0)
 				{
 					// echo "update record into user table";
-				   // header("location:hiredlaboradmin.php");
+				   // header("location:index.php");
+    				echo "<script> window.location.href='index.php';</script>";
+				   exit;
 					// echo "<script>swal('Good job!', 'Confirm your job.', 'success');</script>";
 
 				}		
@@ -635,7 +641,8 @@ if(isset($_POST['logout']))
 				if($res8>0)
 				{
 					// echo "update record into user table";
-				   // header("location:hiredlaboradmin.php");
+				   	echo "<script> window.location.href='index.php';</script>";
+				   exit;
 					// echo "<script>swal('Good job!', 'Cancel your job.', 'success');</script>";
 
 				}		
@@ -696,18 +703,18 @@ if(isset($_POST['logout']))
 
 							while($row=mysqli_fetch_row($res))
 							{
-								if(empty($row[20]))
+								if(empty($row[19]))
 											{
 												$imagename1="../img/avatar-13.jpg";
 											}
 											else
 											{
-												$imagename1="../Labor/customer_img/".$row[20];
+												$imagename1="../Labor/customer_img/".$row[19];
 											}			
 							?>
 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
-									<a href="customerprofile.php?cid=<?php echo $row[7]; ?>">
+									<a href="customerprofile.php?cid=<?php echo $row[6]; ?>">
 									<img src="<?php echo $imagename1; ?>" width="100" height="100" >
 								    </a>
 								</div>
@@ -718,21 +725,23 @@ if(isset($_POST['logout']))
 											
 											<div class="row" style="width:600px;">
 												<div  class="col-sm-6"><h5>Hired Id: <?php echo $row[0];?></h5></div>
-												<div style="text-align:right;" class="col-sm-6"><h5><?php echo $row[5];?></h5></div>	
+												<div style="text-align:right;" class="col-sm-6"><h5><?php echo $row[4];?></h5></div>	
 											</div>		
 																	
-											<a href="customerprofile.php?cid=<?php echo $row[7]; ?>" class="text-uppercase"><h3>
-												<?php echo $row[8].' '.$row[9];?> 
+											<a href="customerprofile.php?cid=<?php echo $row[6]; ?>" class="text-uppercase"><h3>
+												<?php echo $row[7].' '.$row[8];?> 
 											</h3></a>
-		                                    <h5>Phone Number: <?php echo $row[11];?></h5> 
-											<h5>E-mail: <?php echo $row[10];?></h5>	
+		                                    <h5>Phone Number: <?php echo $row[10];?></h5> 
+											<h5>E-mail: <?php echo $row[9];?></h5>	
 											
 										</div>
 									</div>
-									<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[12];?> </p>
+									<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[11];?> </p>
+											<h5>Total Payment: <?php echo $row[40];?></h5>	
+									
 									<ul class="btns">
 										<?php 
-											if($row[6]=='2' or $row[6]=='3' or $row[6]=='4')
+											if($row[5]=='2' or $row[5]=='3' or $row[5]=='4')
 											{
 											    $class='x';
 											}
@@ -741,19 +750,36 @@ if(isset($_POST['logout']))
 												$class='';
 											}
 											?>			
-										<li class="<?php echo $class; ?>"><a href="index.php?upid=<?php echo $row[0]; ?>" style="color:green;" onclick="return confirm('Are you sure to delete job request ?')?true:false;">Confirm Job</a></li>
+										<li class="<?php echo $class; ?>"><a href="index.php?upid=<?php echo $row[0]; ?>" style="color:green;" onclick="return confirm('Are you sure to Confirm job request ?')?true:false;">Confirm Job</a></li>
 										<li class="<?php echo $class; ?>"><a href="index.php?hid=<?php echo $row[0]; ?>" style="color:red;" onclick="return confirm('Are you sure to delete job request ?')?true:false;">Cancel Job</a></li>								
 									</ul>
+									
 									<?php
-									// echo $row[6];
-								 	if($row[6]==2)
+								 	if($row[5]==1)
 									{
-										
-										?>
-									<h4 style="color:red;">Customer canceled your job.</h4>
-									<?php
+										$color2='blue';
+									$jobstatus="Wait for Your confirmation.";
+									}
+									else if($row[5]==2)
+									{
+										$color2='red';
+									$jobstatus="Customer canceled your job.";							
+									}
+									else if($row[5]==3)
+									{
+										$color2='red';
+									$jobstatus="Job canceled by you.";
+									
+									}
+									else if($row[5]==4)
+									{
+										$color2='green';
+									$jobstatus="Job confirm by you.";
+								
 									}
 									?>
+									<br>
+									<h5 style="color:<?php echo $color2; ?>; font-style: italic;"><strong style="color:#777777;font-style:normal;">Job Status:</strong> <?php echo $jobstatus;?></h5>
 								</div>
 							</div>
 
@@ -973,7 +999,7 @@ if(isset($_POST['logout']))
 						</div>
 						<div class="col-lg-4 sidebar">
 							<div class="single-slidebar">
-								<h4>Labor by Location</h4>
+								<h4>Total labor in every state</h4>
 								<ul class="cat-list">
                                 <?php
 									$qry1="select * from state";
@@ -1006,12 +1032,12 @@ if(isset($_POST['logout']))
 								</ul>
 							</div>
 
-							<div class="single-slidebar">
+<!-- 							<div class="single-slidebar">
 								<h4>Top rated labor</h4>
 								<div class="active-relatedjob-carusel">
+ -->
 
-
-							<?php
+							<!-- <?php
 					    	    $qry="select * from labor l,review r where l.l_id=r.r_laborid ORDER by r.r_rating DESC LIMIT 3";
 					    	    
 							    $res=mysqli_query($con,$qry);
@@ -1019,12 +1045,12 @@ if(isset($_POST['logout']))
 							        {
 							        	?>
 									
-									<div class="single-rated">
+									<div class="single-rated"> -->
 										<!-- <a href="single.php?lid=<?php echo $row[0]; ?>"> -->
 										<!-- <img class="img-fluid"src="labor/labor_img/<?php echo $row[0];?>/<?php echo $row[16]; ?>" width="100" height="100" alt=""></a> -->
-										<img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " src="../labor/labor_img/<?php echo $row[0];?>/<?php echo $row[16]; ?>" alt="">
-									<!-- </a> -->
-										<a href="#" class="text-uppercase">
+										<!-- <img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " src="../labor/labor_img/<?php echo $row[0];?>/<?php echo $row[16]; ?>" alt="">
+									 </a> -->
+										<!-- <a href="#" class="text-uppercase">
 											<h3>
 									    <?php echo $row[1].' '.$row[2];?>
 										</h3>
@@ -1039,7 +1065,7 @@ if(isset($_POST['logout']))
 									</div>
 									 <?php
 										}
-							        ?>
+							        ?>  -->
 
 									<!-- <div class="single-rated">
 										<img class="img-fluid" src="img/r1.jpg" alt="">
@@ -1065,8 +1091,8 @@ if(isset($_POST['logout']))
 										<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
 										<a href="#" class="btns text-uppercase">Apply job</a>
 									</div> -->																		
-								</div>
-							</div>							
+								<!-- </div>
+							</div>	 -->						
 
 							<div class="single-slidebar">
 								<h4>Labor by Category</h4>

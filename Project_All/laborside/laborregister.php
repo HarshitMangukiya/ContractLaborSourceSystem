@@ -4,7 +4,7 @@
   session_start();
   
     if(isset($_SESSION['laborname'])){
-      echo "welcome".$_SESSION['laborname'];
+      // echo "welcome".$_SESSION['laborname'];
       header("location:index.php"); 
     }
     else
@@ -43,6 +43,7 @@
       <link rel="stylesheet" href="../css/animate.min.css">
       <link rel="stylesheet" href="../css/owl.carousel.css">
       <link rel="stylesheet" href="../css/main.css">
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
       <style type="text/css">
         div.gallery{
         /*border: 1px solid #777;*/
@@ -140,8 +141,10 @@ $('#state').on('change',function(){
 
 </head>
  <?php
+ $flag='';
  if(isset($_POST['register']))
  {
+         
 
       $qry="SELECT `AUTO_INCREMENT` as id FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'labor' AND TABLE_NAME ='labor'";
       
@@ -180,17 +183,30 @@ $('#state').on('change',function(){
             if(mysqli_num_rows($res)==1)
             {
              $leaderid=$_POST['leaderid'];  
+
             }
             else
             {
-              echo "Enter the another Leader Id"; 
+              echo "<script>alert('Invalid leader id enter another leader id')</script>";
+              // echo "Enter the another Leader Id"; 
             }
         }
       }
 
      // $qry="insert into customer(c_firstname,c_lastname,c_email,c_phone,c_password,c_date) values(0,'$firstname','$lastname','$email','$phone','$password',NOW())";
+          $sql = $con->query("SELECT * FROM labor where l_phone='$phone'");
+                $numR = $sql->num_rows;
+                if($numR>=1)
+                {                 
+                  $flag=2;
+                }
+                else
+                {
+                  $flag=1;
+                }
 
-
+     if($flag==1)
+     {           
     $qry="insert into labor(l_id,l_firstname,l_lastname,l_gender,l_age,l_phone,l_aadharno,l_address,l_country,l_state,l_city,l_pincode,l_password,l_status,l_charge,l_date,l_categoryid,l_leaderid) values(0,'$firstname','$lastname','$gender','$age','$phone','$aadharno','$address','$country','$state','$city','$pincode','$password','$status','$charge',NOW(),'$category','$leaderid')";
 // echo $qry;
      $res=mysqli_query($con,$qry);
@@ -202,12 +218,18 @@ $('#state').on('change',function(){
             mkdir($path.$folder);
           }     
         echo "insert record into customer table";
-        header("location:index.php");
+      echo "<script> window.location.href='index.php';</script>";
+           exit;
         }   
         else
         {
           echo "erro not insert customer";
         }
+     }
+     else if($flag==2)
+     {
+      echo "<script>alert('Enter another phone number.this phone number already exists')</script>";
+     }   
     
 }
     ?>
@@ -268,7 +290,7 @@ $('#state').on('change',function(){
                             {
                               $color='red';
                               $status1='unavailable';             
-                          }         
+                            }         
                       }
 
                     ?>
@@ -278,7 +300,7 @@ $('#state').on('change',function(){
                 <li><a href="profile.php"><?php echo $name;?></a></li>
                 <div class="dropdown-divider"></div>
                 <li><a href="profile.php">Your Profile</a></li>
-                <li><a href="#">Your Order</a></li>
+                <!-- <li><a href="#">Your Order</a></li> -->
                 <div class="dropdown-divider"></div>
                 <li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li>
                     </ul>
@@ -289,10 +311,10 @@ $('#state').on('change',function(){
                       
                 if(isset($_POST['currentstatus']))
                 {
-                $status1=$_POST['currentstatus'];
+                
 
 
-                   if($status1=='available')
+                   if($_POST['currentstatus']=='available')
                    {
                     $color='red';
                    $status1='unavailable';
@@ -310,6 +332,8 @@ $('#state').on('change',function(){
                     if($res>0)
                     {
                       //echo "update record into customer table";
+                      echo "<script> window.location.href='index.php';</script>";
+                      exit;
                     }   
                     else
                     {
@@ -411,7 +435,7 @@ $('#state').on('change',function(){
     <input type="password" id="password1" class="form-control mb-4" name="password4" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
     <span id="error_password1" class="text-danger"></span>
 
-      <div class="d-flex justify-content-around">
+      <!-- <div class="d-flex justify-content-around"> -->
         <!-- <div>
            Remember me 
           <div class="form-check">
@@ -419,12 +443,12 @@ $('#state').on('change',function(){
             <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
           </div>
         </div> -->
-        <div>
+        <!-- <div> -->
           <!-- Forgot password -->
-          <a href="#">Forgot password?</a>
+        <!--   <a href="#">Forgot password?</a>
         </div>
       </div>
-
+ -->
         <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login1">Log In</button>
 
         <p align="center">Don't Have An Account ?
