@@ -1592,8 +1592,16 @@ if(isset($_POST['logout']))
 		                    
 		                      // echo $qry3;
 		                      $res3=mysqli_query($con,$qry3);
+
+		                        $targetpath=$path.$foldername."/".$myimg;
+		                      if(move_uploaded_file($_FILES['workimage']['tmp_name'][$i],$targetpath))
+		                      {
+		                        // echo "insert multi image";
+		                      }
+		                      
 		                      if($res3>0)
 		                      {
+
 		                        // echo "insert record into image table";
 		                        // header("location:profile.php");
 		                        echo "<script> window.location.href='laborsingle.php';</script>";
@@ -1605,11 +1613,7 @@ if(isset($_POST['logout']))
 		                      }
 
 
-		                      $targetpath=$path.$foldername."/".$myimg;
-		                      if(move_uploaded_file($_FILES['workimage']['tmp_name'][$i],$targetpath))
-		                      {
-		                        // echo "insert multi image";
-		                      }
+		                    
 
 		                    }
 		                    else
@@ -1643,6 +1647,7 @@ if(isset($_POST['logout']))
 		        	// echo "insert record into video table";
 		          // header("location:categoryadmin.php");
 		            echo "<script> window.location.href='laborsingle.php';</script>";
+		            exit;
 		        }		
 		        else
 		        {
@@ -1682,6 +1687,7 @@ if(isset($_POST['logout']))
 				// echo "delete record from image table";
 				// header("location:profile.php");
 		        echo "<script> window.location.href='laborsingle.php';</script>";
+		        exit;
 
 			}
 			else

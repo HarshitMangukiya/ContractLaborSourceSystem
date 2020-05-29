@@ -38,7 +38,7 @@ if(isset($_POST['logout']))
 	<link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="../../assets/css/atlantis.min.css">
 	<!-- CSS Just for demo purpose, don't include it in your project -->
-	<link rel="stylesheet" href="../../assets/css/demo.css">
+	<!-- <link rel="stylesheet" href="../../assets/css/demo.css"> -->
 </head>
 <body>
 <form method="post" enctype="multipart/form-data">
@@ -758,6 +758,7 @@ if(isset($_POST['logout']))
 						        if($res>0)
 						        {
 						        echo "<script> window.location.href='categorydisplay.php';</script>";
+						        exit;
 								}		
 						        else
 						        {
@@ -778,8 +779,10 @@ if(isset($_POST['logout']))
 									
 												<div class="form-group">
 													<label for="password">Category Name: </label>
-													<input type="text" class="form-control" id="password" name="category" placeholder="Enter Category Name "
+													<input type="text" class="form-control" id="category" name="category" placeholder="Enter Category Name "
 													value="<?php echo $caname;?>">
+												    <span id="error_firstname3" class="text-danger"></span>
+
 												</div>
 								
 											</div>
@@ -793,7 +796,7 @@ if(isset($_POST['logout']))
 									</div>
 									<div class="card-action">
 										
-										<button class="btn btn-success" type="submit" name="update">Submit</button>
+										<button class="btn btn-success" type="submit" name="update" id='signup3'>Submit</button>
 										<a class="btn btn-danger" href="index.php">Cancel</a>
 										<!-- <button class="btn btn-danger" type="submit" >Cancel</button> -->
 									</div>
@@ -918,6 +921,7 @@ if(isset($_POST['logout']))
 	<script src="../../assets/js/atlantis.min.js"></script>
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
 	<script src="../../assets/js/setting-demo2.js"></script>
+	<script src="labor/categoryvalidate.js"></script>
 </form>
 </body>
 </html>

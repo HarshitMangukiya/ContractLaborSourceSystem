@@ -38,7 +38,9 @@ if(isset($_POST['logout']))
 	<link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="../../assets/css/atlantis.min.css">
 	<!-- CSS Just for demo purpose, don't include it in your project -->
-	<link rel="stylesheet" href="../../assets/css/demo.css">
+	<!-- <link rel="stylesheet" href="../../assets/css/demo.css"> -->
+	<script src="../../../../Labor/jquery.js"></script>
+
 </head>
 <body>
 <form method="post" enctype="multipart/form-data">
@@ -745,7 +747,8 @@ if(isset($_POST['logout']))
 												</div> -->
 												<div class="form-group">
 													<label for="password">Category Name: </label>
-													<input type="text" class="form-control" id="password" name="category" placeholder="Enter Category Name ">
+													<input type="text" class="form-control" id="category" name="category" placeholder="Enter Category Name ">
+												    <span id="error_firstname3" class="text-danger"></span>
 												</div>
 												<!-- <div class="form-group form-inline">
 													<label for="inlineinput" class="col-md-3 col-form-label">Inline Input</label>
@@ -1181,7 +1184,7 @@ if(isset($_POST['logout']))
 												{
 									        	// echo "insert record into category table";				// header("location:index.php");
 						        		echo "<script> window.location.href='categorydisplay.php';</script>";
-
+						        				exit;
 												}		
 												else
 											    {
@@ -1189,7 +1192,7 @@ if(isset($_POST['logout']))
 											    }
 											}			
 									  	?>
-										<button class="btn btn-success" type="submit" name="insert">Submit</button>
+										<button class="btn btn-success" type="submit" name="insert" id="signup3">Submit</button>
 										<a class="btn btn-danger" href="index.php">Cancel</a>
 										<!-- <button class="btn btn-danger" type="submit" >Cancel</button> -->
 									</div>
@@ -1314,6 +1317,10 @@ if(isset($_POST['logout']))
 	<script src="../../assets/js/atlantis.min.js"></script>
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
 	<script src="../../assets/js/setting-demo2.js"></script>
+	<script src="labor/categoryvalidate.js"></script>
+	<!-- <script src="../labor/countryvalidate.js"></script> -->
+
+	
 </form>
 </body>
 </html>

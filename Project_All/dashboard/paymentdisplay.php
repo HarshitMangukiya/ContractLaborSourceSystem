@@ -891,7 +891,7 @@ if(isset($_POST['logout']))
 											<thead>
 												<tr>
 													<th style="width:10">Id</th>
-													<th>Customer Id</th>
+													<th>Customer Name</th>
 													<th>Payment Method</th>
 													<th>Total Payment</th>
 													<th>Membership Start Date</th>
@@ -921,7 +921,7 @@ if(isset($_POST['logout']))
 											<tfoot>
 												<tr>
 													<th>Id</th>
-													<th>Customer Id</th>
+													<th>Customer Name</th>
 													<th>Payment Method</th>
 													<th>Total Payment</th>
 													<th>Membership Start Date</th>
@@ -1002,6 +1002,13 @@ if(isset($_POST['logout']))
 												$res=mysqli_query($con,$qry);
 												while($row=mysqli_fetch_row($res))
 													{
+
+												$qry1="select * from customer where c_id='$row[1]'";
+												$res1=mysqli_query($con,$qry1);
+												while($row1=mysqli_fetch_row($res1))
+													{
+															 $customername=$row1[1].' '.$row1[2];
+													}
 														// if(empty($row[16]))
 														// {
 														// 	$imagename="../../../img/avatar-13.jpg";
@@ -1051,7 +1058,8 @@ if(isset($_POST['logout']))
 													?>
 													<tr>
 													<td><?php echo $row[0];?></td>
-													<td><a href="./customerdb/customersingle.php?cuid=<?php echo $row[1]; ?>"><?php echo $row[1];?></a></td>
+
+													<td><a href="./customerdb/customersingle.php?cuid=<?php echo $row[1]; ?>"><?php echo $customername;?></a></td>
 													<td><?php echo $row[2];?></td>
 													<td><?php echo $row[3];?></td>
 													<td><?php echo $row[4];?></td>

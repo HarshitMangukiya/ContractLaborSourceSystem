@@ -892,10 +892,9 @@ if(isset($_POST['logout']))
 													<th style="width:10">Id</th>
 													<th>Customer Id</th>
 													<th>Labor Id</th>
-													<th>Total Labor</th>
 													<th>Total Charge</th>
 													<th>Hired Date</th>
-													<th>Job flag</th>
+													<th>Job status</th>
 													<!-- <th>Phone no.</th>
 													<th>Aadhar no.</th>
 													<th>Address</th>
@@ -923,10 +922,9 @@ if(isset($_POST['logout']))
 													<th>Id</th>
 													<th>Customer Id</th>
 													<th>Labor Id</th>
-													<th>Total Labor</th>
 													<th>Total Charge</th>
 													<th>Hired Date</th>
-													<th>Job flag</th>
+													<th>Job status</th>
 													<!-- <th>Aadhar no.</th>
 													<th>Address</th>
 													<th>Location</th>
@@ -978,6 +976,7 @@ if(isset($_POST['logout']))
 													{
 														// echo "delete record from labor table";
 														header("location:hiredlabordisplay.php");
+														exit;
 													}
 													else
 													{
@@ -1003,6 +1002,25 @@ if(isset($_POST['logout']))
 												$res=mysqli_query($con,$qry);
 												while($row=mysqli_fetch_row($res))
 													{
+
+																																							
+
+												$qry4="select * from customer where c_id='$row[1]'";
+												$res4=mysqli_query($con,$qry4);
+												while($row4=mysqli_fetch_row($res4))
+													{
+														$customername=$row4[1].' '.$row4[2];
+
+													}
+
+
+												$qry5="select * from labor where l_id='$row[2]'";
+												$res5=mysqli_query($con,$qry5);
+												while($row5=mysqli_fetch_row($res5))
+													{
+														$laborname=$row5[1].' '.$row5[2];
+
+													}			
 														// if(empty($row[16]))
 														// {
 														// 	$imagename="../../../img/avatar-13.jpg";
@@ -1052,12 +1070,37 @@ if(isset($_POST['logout']))
 													?>
 													<tr>
 													<td><?php echo $row[0];?></td>
-													<td><a href="./customerdb/customersingle.php?cuid=<?php echo $row[1]; ?>"><?php echo $row[1];?></a></td>
-													<td><a href="laborsingle.php?laid=<?php echo $row[2]; ?>"><?php echo $row[2];?></a></td>
+													<td><a href="./customerdb/customersingle.php?cuid=<?php echo $row[1]; ?>"><?php echo $customername;?></a></td>
+													<td><a href="laborsingle.php?laid=<?php echo $row[2]; ?>"><?php echo $laborname;?></a></td>
 													<td><?php echo $row[3];?></td>
 													<td><?php echo $row[4];?></td>
-													<td><?php echo $row[5];?></td>
-													<td><?php echo $row[6];?></td>
+
+													<?php
+													if($row[5]==1)
+														{
+															$jobstatus='Wait for confirmaiton';
+															$color='blue';
+														}
+														else if($row[5]==2)
+														{
+															$jobstatus='Canceled by customer';			
+															$color='red';
+
+														}
+														else if($row[5]==3)
+														{
+															$jobstatus='Canceled by labor';
+															$color='red';
+															
+														}
+														else if($row[5]==4)
+														{
+															$jobstatus='Job confirmed by labor';
+															$color='green';
+															
+														}
+														?>			
+													<td style="color:<?php echo $color;?>; font-style: italic;"><?php echo $jobstatus;?></td>
 													<!-- <td><?php echo $row[6];?></td>
 													<td><?php echo $row[7];?></td>
 													<td><?php echo $row[8];?></td>

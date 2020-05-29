@@ -919,25 +919,26 @@ $('#state').on('change',function(){
 	      $charge=$_POST['charge'];
 	      $categoryid=$_POST['category'];
 
+		$leaderid=$_POST['leaderid'];	
 
-		    if(!empty($_POST['leaderid']))
-		    {   
-			    if(isset($_POST['leaderid']))
-			    {
-			      	$le=$_POST['leaderid'];
-			      	$qry="select * from labor where l_id='$le'"; 
-				    $res=mysqli_query($con,$qry);
-			        if(mysqli_num_rows($res)==1)
-			        {
-			         $leaderid=$_POST['leaderid'];	
-			         // echo "dsvcccv";
-			        }
-			      	else
-			     	{
-			            $leaderid=$leaderid1;	
-			     	}
-			    }
-	        }
+		    // if(!empty($_POST['leaderid']))
+		    // {   
+			   //  if(isset($_POST['leaderid']))
+			   //  {
+			   //    	$le=$_POST['leaderid'];
+			   //    	$qry="select * from labor where l_id='$le'"; 
+				  //   $res=mysqli_query($con,$qry);
+			   //      if(mysqli_num_rows($res)==1)
+			   //      {
+			   //       $leaderid=$_POST['leaderid'];	
+			   //       // echo "dsvcccv";
+			   //      }
+			   //    	else
+			   //   	{
+			   //          $leaderid=$leaderid1;	
+			   //   	}
+			   //  }
+	     //    }
 
 
 
@@ -946,13 +947,13 @@ $('#state').on('change',function(){
 	    {  
 	      $qry="update labor set l_firstname='$firstname',l_lastname='$lastname',l_gender='$gender',l_age='$age',l_email='$email',l_phone='$phone',l_aadharno='$aadharno',l_address='$address',l_location='$location',l_country='$country',l_state='$state',l_city='$city',l_pincode='$pincode',l_password='$password',l_about='$about',l_status='$status',l_charge='$charge',l_categoryid='$categoryid',l_leaderid='$leaderid' where l_id=".$_REQUEST['laid'];
 	      $flag=0;
-	      // echo $qry;
+	      echo $qry;
 	     
 	    }
 	    else
 	    {
 	      $qry="update labor set l_firstname='$firstname',l_lastname='$lastname',l_gender='$gender',l_age='$age',l_email='$email',l_phone='$phone',l_aadharno='$aadharno',l_address='$address',l_location='$location',l_country='$country',l_state='$state',l_city='$city',l_pincode='$pincode',l_password='$password',l_about='$about',l_image='$myimg',l_status='$status',l_charge='$charge',l_categoryid='$categoryid',l_leaderid='$leaderid' where l_id=".$_REQUEST['laid'];
-	      // echo $qry;
+	      echo $qry;
 	    }
 
 	      $res=mysqli_query($con,$qry);
@@ -961,6 +962,7 @@ $('#state').on('change',function(){
 	          // echo "update record into customer table";
 	           // header("location:labordisplay.php");
 		        echo "<script> window.location.href='labordisplay.php';</script>";
+		        exit;
 	        }   
 	        else
 	        {
@@ -1178,9 +1180,31 @@ $('#state').on('change',function(){
 
 												<div class="form-group">
 													<label for="password">Leader Id: </label>
-													<input type="text" class="form-control" id="leaderid3"
-													 name="leaderid" placeholder="Enter Leader id " value="<?php echo $leaderid1;?>">
-												    <span id="error_leaderid3" class="text-danger"></span>
+													<select name="leaderid" style="border-radius:5px;">
+													<option value disabled selected>select Leader Id</option>
+													    <?php
+													      $qry="select * from labor"; 
+													      $res=mysqli_query($con,$qry);
+													      while($row=mysqli_fetch_row($res))
+													      {
+													        if($leaderid1==$row[0])
+													        {
+													        ?>
+													        <option value="<?php echo $row[0]; ?>" selected><?php echo $row[0]; ?></option>     
+													        <?php
+													        }
+													        else
+													        {
+													      ?>
+													        <option value="<?php echo $row[0]; ?>"><?php echo $row[0]; ?></option>
+													      <?php
+													        }
+													      }
+													    ?>
+													</select>
+<!-- 													<input type="text" class="form-control" id="leaderid3"
+													 name="leaderid" placeholder="Enter Leader id " value="<?php echo $leaderid1;?>"> -->
+												    <!-- <span id="error_leaderid3" class="text-danger"></span> -->
 												</div>
 
 

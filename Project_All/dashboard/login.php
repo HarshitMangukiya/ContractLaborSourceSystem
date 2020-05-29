@@ -63,7 +63,9 @@ if(isset($_POST['login']))
         {
           // echo "<script>swal('Error, 'Invalid Uasename or Password...!');</script>";
           // header("location:login.php"); 
-          echo "Invalid Uasename or Password..."; 
+          // echo "Invalid Uasename or Password..."; 
+          echo "<script>alert('Invalid Uasename or Password...')</script>";
+          
         }
       }else
       {
@@ -101,7 +103,7 @@ if(isset($_POST['login']))
 
 
       
-      <div class="d-flex justify-content-around">
+      <!-- <div class="d-flex justify-content-around"> -->
         <!-- <div>
            Remember me 
           <div class="form-check">
@@ -109,11 +111,11 @@ if(isset($_POST['login']))
             <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
           </div>
         </div> -->
-        <div>
+        <!-- <div> -->
           <!-- Forgot password -->
-          <a href="#">Forgot password?</a>
+          <!-- <a href="#">Forgot password?</a>
         </div>
-      </div>
+      </div> -->
       <!-- Sign in button -->
       <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" id="login" name="login">Log In</button>
 

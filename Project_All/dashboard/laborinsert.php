@@ -891,25 +891,27 @@ $('#state').on('change',function(){
       // $status=$_POST['status'];
       $charge=$_POST['charge'];
       $category=$_POST['category'];
+	$leaderid=$_POST['leaderid'];  
+    
       // $leaderid=$_POST['leaderid'];
 
-       if(!empty($_POST['leaderid']))
-      {
-        if(isset($_POST['leaderid']))
-        {     
-            $le=$_POST['leaderid'];
-            $qry="select * from labor where l_id='$le'"; 
-            $res=mysqli_query($con,$qry);
-            if(mysqli_num_rows($res)==1)
-            {
-             $leaderid=$_POST['leaderid'];  
-            }
-            else
-            {
-              echo "Enter the another Leader Id"; 
-            }
-        }
-      }
+      //  if(!empty($_POST['leaderid']))
+      // {
+      //   if(isset($_POST['leaderid']))
+      //   {     
+      //       $le=$_POST['leaderid'];
+      //       $qry="select * from labor where l_id='$le'"; 
+      //       $res=mysqli_query($con,$qry);
+      //       if(mysqli_num_rows($res)==1)
+      //       {
+      //        $leaderid=$_POST['leaderid'];  
+      //       }
+      //       else
+      //       {
+      //         echo "Enter the another Leader Id"; 
+      //       }
+      //   }
+      // }
 
       if($flag==1)
       {
@@ -932,7 +934,7 @@ $('#state').on('change',function(){
         {
         	// echo "insert record into customer table";
 			echo "<script> window.location.href='labordisplay.php';</script>";
-          
+          	exit;
         }		
         else
         {
@@ -1106,10 +1108,21 @@ $rowCount = $query->num_rows;
 												</div>
 
 												<div class="form-group">
-													<label for="password">Leader Id: </label>
-													<input type="text" class="form-control" id="leaderid3"
-													 name="leaderid" placeholder="Enter Leader id ">
-												    <span id="error_leaderid3" class="text-danger"></span>
+													<label for="password">Leader Id: </label>		
+												<select name="leaderid" id="leaderid3" style="border-radius:4px;border-width:1px;">
+												<option value disabled selected>select Leader Id</option>
+												    <?php
+												      $qry="select * from labor"; 
+												      $res=mysqli_query($con,$qry);
+												      while($row=mysqli_fetch_row($res))
+												      {
+												      ?>
+												        <option value="<?php echo $row[0]; ?>"><?php echo $row[0]; ?></option>
+												      <?php
+												      }
+												    ?>
+												</select>
+											    <!-- <span id="error_leaderid3" class="text-danger"></span> -->
 												</div>
 
 
