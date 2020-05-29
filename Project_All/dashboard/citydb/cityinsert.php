@@ -817,10 +817,11 @@ $('#state').on('change',function(){
       $res=mysqli_query($con,$qry);
         if($res>0)
         {
-        	echo "insert record into city table";
+        	// echo "insert record into city table";
           // header("location:cityadmin.php");
 
 		    echo "<script> window.location.href='citydisplay.php';</script>";
+		    exit;
 
         }		
         else

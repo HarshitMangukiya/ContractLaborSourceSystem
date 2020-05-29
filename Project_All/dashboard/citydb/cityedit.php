@@ -850,7 +850,8 @@ $('#state').on('change',function(){
         {
         	// echo "update record into state table";
           // header("location:cityadmin.php");
-		    echo "<script> window.location.href='citydisplay.php';</script>";        	
+		    echo "<script> window.location.href='citydisplay.php';</script>";  
+		    exit;      	
         }		
         else
         {

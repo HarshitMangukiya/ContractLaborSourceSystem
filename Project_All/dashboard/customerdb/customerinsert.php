@@ -879,6 +879,7 @@ $('#state').on('change',function(){
         	// echo "insert record into customer table";
           // header("location:customerdisplay.php");
 	      echo "<script> window.location.href='customerdisplay.php';</script>";
+	      exit;
 
         }		
         else

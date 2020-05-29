@@ -820,6 +820,7 @@ $('#state').on('change',function(){
         	// echo "insert record into country table";
            // header("location:stateadmin.php");
 		    echo "<script> window.location.href='statedisplay.php';</script>";
+		    exit;
 
         }		
         else

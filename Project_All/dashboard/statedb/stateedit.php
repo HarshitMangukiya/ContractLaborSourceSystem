@@ -841,6 +841,7 @@ $('#state').on('change',function(){
         	// echo "update record into state table";
           // header("location:stateadmin.php");
 		    echo "<script> window.location.href='statedisplay.php';</script>";
+		    exit;
         	
         }		
         else

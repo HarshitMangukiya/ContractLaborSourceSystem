@@ -424,7 +424,7 @@ $('#state').on('change',function(){
 						</div>
 					</div>
 					<ul class="nav nav-primary">
-						<li class="nav-item">
+					<!-- 	<li class="nav-item">
 							<a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
 								<i class="fas fa-home"></i>
 								<p>Dashboard</p>
@@ -629,7 +629,7 @@ $('#state').on('change',function(){
 								<span class="badge badge-success">4</span>
 							</a>
 						</li>
-
+ -->
 						<li class="nav-item active">
 							<a data-toggle="collapse" href="#submenu">
 								<i class="fas fa-bars"></i>
@@ -818,6 +818,7 @@ $('#state').on('change',function(){
         	// echo "insert record into country table";
            // header("location:countrydisplay.php");
 		    echo "<script> window.location.href='countrydisplay.php';</script>";
+		    exit;
 
         }		
         else

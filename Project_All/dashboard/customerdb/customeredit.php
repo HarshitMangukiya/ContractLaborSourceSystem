@@ -926,6 +926,7 @@ $('#state').on('change',function(){
 		        {
 		          // echo "update record into customer table";
 				  echo "<script> window.location.href='customerdisplay.php';</script>";
+				  exit;
 
 		         // header("location:customerdisplay.php");
 		        }   

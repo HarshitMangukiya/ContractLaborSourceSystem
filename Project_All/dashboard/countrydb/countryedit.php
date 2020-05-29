@@ -840,6 +840,7 @@ $('#state').on('change',function(){
         	// echo "update record into country table";
           // header("location:countryadmin.php");
 		    echo "<script> window.location.href='countrydisplay.php';</script>";
+		    exit;
 
         }		
         else
