@@ -216,7 +216,7 @@ if(isset($_POST['logout']))
 
 			    $qry="select * from labor where l_phone='$phone' and l_password='$password' and l_dflag<>'1'";   
 			    
-			   //echo $qry;
+			   // echo $qry;
 			       if($res=mysqli_query($con,$qry))
 			      {
 			        if(mysqli_num_rows($res)==1)
@@ -254,6 +254,10 @@ if(isset($_POST['logout']))
     <input type="password" id="password1" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
     <span id="error_password1" class="text-danger"></span>
 
+  <div class="d-flex justify-content-around">
+
+          <a href="forgetpassword.php">Forgot password</a>
+</div>
       <!-- <div class="d-flex justify-content-around"> -->
         <!-- <div>
            Remember me 
@@ -580,8 +584,67 @@ if(isset($_POST['logout']))
 				$res11=mysqli_query($con,$qry11);
 				while($row11=mysqli_fetch_row($res11))
 				{
+				 $customername=$row11[1];		
 				 $lid=$row11[2];
 				}
+
+
+				$qry16="select * from customer where c_id='$customername'";
+				$res16=mysqli_query($con,$qry16);
+				while($row16=mysqli_fetch_row($res16))
+				{
+
+					$customeremail=$row16[3];	
+
+					include('../SendEmail/autoload.php');
+
+    							// if (isset($_POST['name']) && isset($_POST['email'])) {
+        
+						        $name ='JOB Listing.com';
+						        $email =$customeremail;
+						        $subject = 'Confirm';
+						        $body = 'Labor confirmed your job.';
+
+						        require_once "PHPMailer/PHPMailer.php";
+						        require_once "PHPMailer/SMTP.php";
+						        require_once "PHPMailer/Exception.php";
+
+						        // $mail = new PHPMailer();
+
+						   		$mail = new PHPMailer\PHPMailer\PHPMailer();
+
+						        //SMTP Settings
+						        $mail->isSMTP();
+						        $mail->Host = "smtp.gmail.com";
+						        $mail->SMTPAuth = true;
+						        $mail->Username = "mangukiyaharshit@gmail.com";
+						        $mail->Password = 'harshit2211';
+						        $mail->Port = 465; //587
+						        $mail->SMTPSecure = "ssl"; //tls
+
+						        //Email Settings
+						        $mail->isHTML(true);
+						        $mail->setFrom($email,$name);
+						        $mail->addAddress($email);
+						        $mail->Subject = $subject;
+						        $mail->Body = $body;
+
+						        if ($mail->send()) {
+						            $status = "success";
+						            // $response = "Email is sent!";
+						            echo $status;
+						        } else {
+						            $status = "failed";
+						            echo $status;
+						            // $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
+						        }
+
+				}
+
+								
+
+
+
 
 				$qry12="update labor set l_status='unavailable' where l_id='$lid'";
 				$res12=mysqli_query($con,$qry12);
@@ -621,7 +684,61 @@ if(isset($_POST['logout']))
 				$res9=mysqli_query($con,$qry9);
 				while($row9=mysqli_fetch_row($res9))
 				{
+				 $customername=$row9[1];		
 				 $lid3=$row9[2];
+				}
+
+
+				$qry16="select * from customer where c_id='$customername'";
+				$res16=mysqli_query($con,$qry16);
+				while($row16=mysqli_fetch_row($res16))
+				{
+
+					$customeremail=$row16[3];	
+
+					include('../SendEmail/autoload.php');
+
+    							// if (isset($_POST['name']) && isset($_POST['email'])) {
+        
+						        $name ='JOB Listing.com';
+						        $email =$customeremail;
+						        $subject = 'Cancel your order';
+						        $body = 'Labor canceled your job due to some reasons.';
+
+						        require_once "PHPMailer/PHPMailer.php";
+						        require_once "PHPMailer/SMTP.php";
+						        require_once "PHPMailer/Exception.php";
+
+						        // $mail = new PHPMailer();
+
+						   		$mail = new PHPMailer\PHPMailer\PHPMailer();
+
+						        //SMTP Settings
+						        $mail->isSMTP();
+						        $mail->Host = "smtp.gmail.com";
+						        $mail->SMTPAuth = true;
+						        $mail->Username = "mangukiyaharshit@gmail.com";
+						        $mail->Password = 'harshit2211';
+						        $mail->Port = 465; //587
+						        $mail->SMTPSecure = "ssl"; //tls
+
+						        //Email Settings
+						        $mail->isHTML(true);
+						        $mail->setFrom($email,$name);
+						        $mail->addAddress($email);
+						        $mail->Subject = $subject;
+						        $mail->Body = $body;
+
+						        if ($mail->send()) {
+						            $status = "success";
+						            // $response = "Email is sent!";
+						            echo $status;
+						        } else {
+						            $status = "failed";
+						            echo $status;
+						            // $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
+						        }
+
 				}
 
 				$qry10="update labor set l_status='available' where l_id='$lid3'";
@@ -998,7 +1115,7 @@ if(isset($_POST['logout']))
 
 						</div>
 						<div class="col-lg-4 sidebar">
-							<div class="single-slidebar">
+							<!-- <div class="single-slidebar">
 								<h4>Total labor in every state</h4>
 								<ul class="cat-list">
                                 <?php
@@ -1020,7 +1137,7 @@ if(isset($_POST['logout']))
 						            <?php
 	          							}
 	          						}
-    	      					 ?>
+    	      					 ?> -->
 <!-- 
 									<li><a class="justify-content-between d-flex" href="category.php"><p>New York</p><span>37</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.php"><p>Park Montana</p><span>57</span></a></li>
@@ -1029,8 +1146,8 @@ if(isset($_POST['logout']))
 									<li><a class="justify-content-between d-flex" href="category.php"><p>Florida</p><span>47</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.php"><p>Rocky Beach</p><span>27</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.php"><p>Chicago</p><span>17</span></a></li> -->
-								</ul>
-							</div>
+								<<!-- /ul>
+							</div> -->
 
 <!-- 							<div class="single-slidebar">
 								<h4>Top rated labor</h4>
@@ -1125,6 +1242,51 @@ if(isset($_POST['logout']))
 									<li><a class="justify-content-between d-flex" href="category.php"><p>Developer</p><span>27</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.php"><p>Accounting</p><span>17</span></a></li> -->
  								</ul>
+							</div>
+
+							<div class="single-slidebar">
+								<h4>Leader</h4>
+								<ul class="cat-list">
+
+									<?php
+									$qry6="select * from labor where l_leaderid<>'' and l_dflag<>'1' group by l_leaderid";
+									$res6=mysqli_query($con,$qry6);
+									while($row6=mysqli_fetch_row($res6))
+									{
+										$ladid=$row6[21];
+
+										$qry8="select * from labor where l_id='$row6[21]'";
+										$res8=mysqli_query($con,$qry8);
+										while($row8=mysqli_fetch_row($res8))
+										{
+											
+										      $qry14="select * from city where ci_id='$row8[12]'"; 
+										      $res14=mysqli_query($con,$qry14);
+										      while($row14=mysqli_fetch_row($res14))
+										      {
+										        
+										      	$cityname=$row14[1];     
+										      }
+										        
+											$leadername=$row8[1].' '.$row8[2].' ('.$cityname.')';
+
+										}
+									
+										?>
+	 					      		<li><a class="justify-content-between d-flex" href="single.php?lid=<?php echo $row6[21]; ?>">
+	 								<?php echo $leadername;?>
+									<?php
+									$qry7="select count(*) as led from labor where l_dflag<>'1' and l_leaderid='$ladid' group by l_leaderid";
+									// echo $qry
+									$res7=mysqli_query($con,$qry7);
+									while($row7=mysqli_fetch_array($res7))
+									{
+									?>
+            						<span><?php echo $row7['led']; ?></span></a></li>
+						            <?php
+	          							}
+	          						}?>
+	          					</ul>
 							</div>
 <!-- 
 							<div class="single-slidebar">

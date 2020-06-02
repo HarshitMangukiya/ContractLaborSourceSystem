@@ -247,7 +247,10 @@ if(isset($_POST['logout']))
     <p align="left">Password *
     <input type="password" id="password1" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
     <span id="error_password1" class="text-danger"></span>
+  <div class="d-flex justify-content-around">
 
+          <a href="forgetpassword.php">Forgot password</a>
+</div>
       <!-- <div class="d-flex justify-content-around"> -->
         <!-- <div>
            Remember me 
@@ -316,17 +319,94 @@ if(isset($_POST['logout']))
 							8160119895
 							
 						</div>
+						
+						<?php
+
+						if(isset($_POST['send']))
+						{
+							include('autoload.php');
+
+    						
+        
+						        $name =$_POST['name'];
+						        $email =$_POST['email'];
+						        $subject =$_POST['subject'];
+						        $body =$_POST['message'];
+
+						        require_once "PHPMailer/PHPMailer.php";
+						        require_once "PHPMailer/SMTP.php";
+						        require_once "PHPMailer/Exception.php";
+
+						        // $mail = new PHPMailer();
+
+						   		$mail = new PHPMailer\PHPMailer\PHPMailer();
+
+						        //SMTP Settings
+						        $mail->isSMTP();
+						        $mail->Host = "smtp.gmail.com";
+						        $mail->SMTPAuth = true;
+						        $mail->Username = "mangukiyaharshit@gmail.com";
+						        $mail->Password = 'harshit2211';
+						        $mail->Port = 465; //587
+						        $mail->SMTPSecure = "ssl"; //tls
+
+						        //Email Settings
+						        $mail->isHTML(true);
+						        $mail->setFrom($email,$name);
+						        $mail->addAddress('mangukiyaharshit@gmail.com');
+						        $mail->Subject = $subject;
+						        $mail->Body = $body;
+
+						        if ($mail->send()) {
+						            $status = "success";
+						            // $response = "Email is sent!";
+						            // echo $status;
+						        } else {
+						            $status = "failed";
+						            // echo $status;
+						            // $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
+						        }
+
+						}
+
+						?>
+
+    
+
 						<div class="col-lg-8">
-							<form class="form-area " id="myForm" action="mail.php" method="post" class="contact-form text-right">
+							<form class="form-area" class="contact-form text-right">
 								<div class="row">	
 									<div class="col-lg-12 form-group">
-										<input name="name" placeholder="Enter your name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" class="common-input mb-20 form-control" type="text">
-									
-										<input name="email" placeholder="Enter email address" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" class="common-input mb-20 form-control" type="email">
+										<p>Name *
+										<input name="name" id="name4" placeholder="Enter your name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" class="common-input mb-20 form-control" type="text"><span id="error_name4" class="text-danger"></span>
+									</p>
+    									
 
-										<input name="subject" placeholder="Enter your subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your subject'" class="common-input mb-20 form-control" type="text">
-										<textarea class="common-textarea mt-10 form-control" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" ></textarea><br>
-										<button class="ticker-btn" style="float:center;border-width:0px;">Send Message</button>
+										<p>Email *
+										<input name="email" id="email4" placeholder="Enter email address" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" class="common-input mb-20 form-control" type="email">
+    									<span id="error_email4" class="text-danger"></span>
+
+										</p>
+
+										
+										<p>Subject *
+										<input name="subject" id="subject4" placeholder="Enter your subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your subject'" class="common-input mb-20 form-control" type="text">
+    									<span id="error_subject4" class="text-danger"></span>
+
+										</p>
+
+										
+										<p>Messege *
+										<textarea class="common-textarea mt-10 form-control" id="body4" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" ></textarea><br>
+
+    									<span id="error_body4" class="text-danger"></span>
+										</p>
+
+
+
+										<button class="ticker-btn" style="float:center;border-width:0px;" name='send' id='send' >Send Message</button>
+										
+
 										<div class="mt-20 alert-msg" style="text-align: left;"></div>
 									</div>
 								</div>
@@ -429,6 +509,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			<script src="../js/mail-script.js"></script>	
 			<script src="../js/main.js"></script>
 			<script src="../js/login.js"></script>
+			<script src="../js/contactvalidate.js"></script>
+
 
 			</form>	
 		</body>

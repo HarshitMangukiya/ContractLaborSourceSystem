@@ -1,6 +1,6 @@
 	<!DOCTYPE html>
 	<html lang="zxx" class="no-js">
-<?php include('../labor/dbConfig.php');
+	<?php include('../Labor/dbConfig.php');
 	session_start();
 	if(isset($_SESSION['laborname'])){
 		// echo "welcome".$_SESSION['laborname'];
@@ -8,16 +8,14 @@
 else
 {
 	//header("location:index.php");	
-    echo "<script> window.location.href='index.php';</script>";
-
 }
 if(isset($_POST['logout']))
 {
-	 //session_destroy();
+	 //session_destroy
 		unset($_SESSION['laborname']);
         header("Location:index.php");
 }
-?>
+	 ?>
 	<head>
 
 		<!-- Mobile Specific Meta -->
@@ -48,20 +46,18 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="../css/owl.carousel.css">
 			<link rel="stylesheet" href="../css/main.css">
 
+			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <link rel="stylesheet" href="../Labor/module/AcidJs.RatingStars/AcidJs.RatingStars/styles/RatingStars.css" />
-        	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
 
 			<style type="text/css">
-			div.gallery {
-			  margin: 5px;
-			  border: 1px solid #ccc;
-			  float: left;
-			  width: 180px;
-			  border-radius:4px;			  
-			}
+			li.x{
+               pointer-events: none;
+	           }
 
-			div.gallery:hover {
-			  border: 1px solid #777;
+	        img.gallery:hover {
+			  /*border: 1px solid #777;*/
 			  max-width:100%;
 			  border-radius:4px;
 			  position:relative; 
@@ -69,21 +65,18 @@ if(isset($_POST['logout']))
 			  /*box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px;*/	
 			  box-shadow: 2px 10px 20px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 			}
-
-			div.gallery img {
-			  width:178px;
-			  height:150px;
+			img.gallery {
+			  margin: 5px;
+			  border: 1px solid #ccc;
+			  float: left;
+			  width: 180px;
+			  border-radius:4px;	
+			  height:150px;		  
 			}
 
-			div.desc {
-			  padding: 15px;
-			  text-align: center;
-			}
 
 			</style>
-	
 		</head>
-
 		<body>
             <form method="post" enctype="multipart/form-data">
 			  <header id="header" id="home">
@@ -94,11 +87,11 @@ if(isset($_POST['logout']))
 				      </div>
 				      <nav id="nav-menu-container">
 				        <ul class="nav-menu">
-				          <li class="menu-active"><a href="index.php">Home</a></li>
+				         <li class="menu-active"><a href="index.php">Home</a></li>
 				          <li><a href="about-us.php">About Us</a></li>
 				          <!-- <li><a href="category.php">Category</a></li> -->
-	<!-- 			          <li><a href="price.html">Price</a></li>
-				          <li><a href="blog-home.html">Blog</a></li> -->
+				          <!-- <li><a href="price.php">Price</a></li> -->
+				          <!-- <li><a href="blog-home.html">Blog</a></li> -->
 				          <li><a href="contact.php">Contact</a></li>
 				          <li class="menu-has-children"><a href="#">Pages</a>
 				            <ul>
@@ -108,8 +101,10 @@ if(isset($_POST['logout']))
 				            </ul>
 				          </li>
           
-          		          &nbsp &nbsp	
+          		
+				            &nbsp &nbsp	
 				          <?php
+				          $lid='';
 				          if(isset($_SESSION['laborname']))
 				          {
 				          	$lid=$_SESSION['laborname'];
@@ -153,6 +148,8 @@ if(isset($_POST['logout']))
 				            </ul>
 				          </li>
 
+                            <!-- Job Status logic --> 
+					    
 				<?php
 	                
 			    	if(isset($_POST['currentstatus']))
@@ -172,15 +169,13 @@ if(isset($_POST['logout']))
 
 
 				    	$qry="update labor set l_status='$status1' where l_id='$lid'";
-				    	// echo $qry;
+				    	echo $qry;
 				        $res=mysqli_query($con,$qry);
 				        if($res>0)
 				        {
 				          //echo "update record into customer table";
-				        	// echo "<script> window.location.href='profile.php';</script>";
-		                        // exit;
-				        	header("location:profile.php");
-				        	exit();
+				        	header("location:index.php");
+						   exit;
 				        }   
 				        else
 				        {
@@ -189,18 +184,22 @@ if(isset($_POST['logout']))
 
 				    }
 			    ?>
-
+					
 				          <li>
 				          	<p style="color:white;margin-left:8px;">Job Status</p>
 				          	<button type="submit" name="currentstatus" value="<?php echo $status1;?>" style="width:90px;height:30px;background-color:<?php echo $color;?>;color:white;border-width:1px;border-radius:5px;border:1px solid;position:relative; box-shadow:0 5px 20px rgba(0,0,0,0.2); ">
 				          	<?php echo $status1;?></button>
-				          </li>
+				          </li>	
+				          	<!-- <li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li> -->
 				          <?php
 				          }
 				          else
 				          {?>
-				          <li><a class="ticker-btn" href="index.php">Signup</a></li>
-				          <li><a class="ticker-btn" href="index.php">Login</a></li>
+				          <li><a class="ticker-btn" href="laborregister.php">Signup</a></li>
+				          <li><button type="button" class="ticker-btn" data-toggle="modal" data-target="#myModal" style="border-width:0px;">Login</button></li>
+       					  
+
+				          <!-- <li><a class="ticker-btn" href="laborlogin.php">Login</a></li> -->
 				          <?php	
 				          }
 				          ?>
@@ -211,146 +210,6 @@ if(isset($_POST['logout']))
 			    </div>
 			  </header><!-- #header -->
 
-<!-- labor profile update start -->
-<?php
-	      	$leaderid='';
-	if(isset($_POST['xx']))
-    {
-     
-		  $firstname=ucfirst($_POST['firstname']);
-	      $lastname=ucfirst($_POST['lastname']);
-	      $gender=$_POST['gender'];
-	      $age=$_POST['age'];
-	      $email=$_POST['email'];
-	      // $phone=$_POST['phone'];
-	      $aadharno=$_POST['aadharno'];
-	      $address=$_POST['address'];
-	      $location=$_POST['location'];
-	      $country=$_POST['country'];
-	      $state=$_POST['state'];
-	      $city=$_POST['city'];
-	      $pincode=$_POST['pincode'];
-	      $password=$_POST['password'];
-	      $about=$_POST['about'];
-		  $flag='';
-
-	      
-	      	  
-	      $path="../Labor/labor_img/";
-	      
-	   	  	if($_FILES["fimage"]["name"]!=null)
-	      	{
-	      	    $qry="select * from labor where l_id='$lid'";
-				$res=mysqli_query($con,$qry);
-				while($row=mysqli_fetch_row($res))
-				{
-					$fimage=$row[16];
-					if(!empty($row[16]))
-					{
-						  $oldimage=$path.$folder.'/'.$fimage;
-		      			// echo $oldimage;
-		      			unlink($oldimage);
-					}
-				}
-		    
-
-		      $target_file = $path.basename($_FILES["fimage"]["name"]);
-		      // Select file type
-		      $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-		      // Valid file extensions
-		      $extensions_arr = array("jpg","jpeg","png","gif");
-		      // Check extension  
-		      $imgSize = $_FILES['fimage']['size'];
-	          if(in_array($imageFileType,$extensions_arr) )
-	          {
-
-	              if($imgSize < 5000000)   
-	              {
-
-	                $myimg=time().$_FILES['fimage']['name'];
-	                // echo $myimg;
-
-	                $targetpath=$path.$folder."/".$myimg;
-	                if(move_uploaded_file($_FILES['fimage']['tmp_name'],$targetpath))
-	                {
-	                  // echo "insert image";
-	                }
-	           
-	              }
-	              else{
-	                echo "Sorry, your file is too large.";
-	              }
-	                
-	          }
-	          else
-	          {
-	            echo "please Select valid extention front image file";
-	          }
-	        }
-	        else
-	        { 
-	          $flag=1;
-	        }
-
-	      // $status=$_POST['status'];
-	      $charge=$_POST['charge'];
-	      $categoryid=$_POST['category'];
-
-
-		    if(!empty($_POST['leaderid']))
-		    {   
-			    if(isset($_POST['leaderid']))
-			    {
-			      	$le=$_POST['leaderid'];
-			      	$qry="select * from labor where l_id='$le'"; 
-				    $res=mysqli_query($con,$qry);
-			        if(mysqli_num_rows($res)==1)
-			        {
-
-			         		$leaderid=$_POST['leaderid'];	
-			     		
-			        }
-			      	else
-			     	{
-			      		// echo "Enter the another Leader Id";
-			            // $leaderid=$leaderid1;	
-         			 	echo "<script>alert('Invalid leaderid enter another leader id')</script>";
-
-
-			     	}
-			    }
-	        }
-
-
-
-
-	    if($flag==1)
-	    {  
-	      $qry="update labor set l_firstname='$firstname',l_lastname='$lastname',l_gender='$gender',l_age='$age',l_email='$email',l_aadharno='$aadharno',l_address='$address',l_location='$location',l_country='$country',l_state='$state',l_city='$city',l_pincode='$pincode',l_password='$password',l_about='$about',l_charge='$charge',l_categoryid='$categoryid',l_leaderid='$leaderid' where l_id='$lid'";
-	      $flag=0;
-	      // echo $qry;
-	    }
-	    else
-	    {
-	      $qry="update labor set l_firstname='$firstname',l_lastname='$lastname',l_gender='$gender',l_age='$age',l_email='$email',l_aadharno='$aadharno',l_address='$address',l_location='$location',l_country='$country',l_state='$state',l_city='$city',l_pincode='$pincode',l_password='$password',l_about='$about',l_image='$myimg',l_charge='$charge',l_categoryid='$categoryid',l_leaderid='$leaderid' where l_id='$lid'";
-	      // echo $qry;
-	    }
-
-	      $res=mysqli_query($con,$qry);
-	        if($res>0)
-	        {
-	          // echo "update record into customer table";
-	           // header("location:index.php");
-	        	echo "<script> window.location.href='profile.php';</script>";
-				   exit;
-	        }   
-	        else
-	        {
-	          echo "erro not update customer";
-	        }
-    }
-?>
-<!-- labor profile update end -->
 
 			<!-- start banner Area -->
 			<section class="banner-area relative" id="home">	
@@ -359,9 +218,9 @@ if(isset($_POST['logout']))
 					<div class="row d-flex align-items-center justify-content-center">
 						<div class="about-content col-lg-12">
 							<h1 class="text-white">
-								Profile Details				
+								Leader Details				
 							</h1>	
-							<p class="text-white link-nav"><a href="index.php">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="#"> Profile Details</a></p>
+							<p class="text-white link-nav"><a href="index.php">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="#"> Leader Details</a></p>
 						</div>											
 					</div>
 				</div>
@@ -373,61 +232,49 @@ if(isset($_POST['logout']))
 				<div class="container">
 					<div class="row justify-content-center d-flex">
                     <?php
+                    if(isset($_REQUEST['lid']))
+                    {
+					$qry="select * from labor where l_dflag<>'1' and l_id=".$_REQUEST['lid'];
+					$res=mysqli_query($con,$qry);
+					while($row=mysqli_fetch_row($res))
+						{
 
-					$qry1="select * from labor where l_id='$lid'";
-					// echo $qry1;
-					$res1=mysqli_query($con,$qry1);
-					while($row=mysqli_fetch_row($res1))
-						{
-						if(empty($row[16]))
-						{
-							$imagename1="../img/avatar-13.jpg";
-						}
-						else
-						{
-							$imagename1="../Labor/labor_img/".$row[0].'/'.$row[16];
-						}
-						
-						if(!empty($row[20]))
-						{
-							$qry1="select * from category where ca_id=".$row[20];
-							$res1=mysqli_query($con,$qry1);
-							while($row1=mysqli_fetch_row($res1))
-								{
-									$category=$row1[1];
-								}
-						}
-						$register4 = date("d-m-Y", strtotime($row[19]));  
+							if(empty($row[16]))
+							{
+								$imagename1="../img/avatar-13.jpg";
+							}
+						    else
+							{
+								$imagename1="../Labor/labor_img/".$row[0].'/'.$row[16];
+							}
+					
+							$register1 = date("d-m-Y", strtotime($row[19]));  
 
-
-					?>
+							?>
 						<div class="col-lg-8 post-list">
 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
-									<img src="<?php echo $imagename1; ?>" width="110px" height="110px"
-									style="border-radius:5px;position:relative;z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2);">
+									<img src="<?php echo $imagename1; ?>" width="110px" height="110px" style="border-radius:5px;position:relative;z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2);">
 
 									<ul class="tags">
-<!-- 										<?php
+										<?php
 											$qry1="select * from category where ca_id='$row[20]'";
 											$res1=mysqli_query($con,$qry1);
 											while($row1=mysqli_fetch_row($res1))
 												{
-										?> -->
-									<!-- 	<li>
+										?>
+										<li>
 											<a href="#">
+											
 									    	<?php echo $row1[1];?>
 											</a>
-										</li> -->
-										<li>
-											<a href="profileedit.php" style="text-align:center;font-weight: bold;">Edit profile</a>
 										</li>
 
 
-<!-- 										<?php
+										<?php
 										}
 										?>									
- -->	
+	
 <!-- 										<li>
 											<a href="#">Art</a>
 										</li>
@@ -439,245 +286,69 @@ if(isset($_POST['logout']))
 										</li> -->
 									</ul>
 								</div>
-
-								<div class="details" style="margin-left:15px;">
+								
+								<div class="details" style="margin-left:15px;width:600px;">
 									<div class="title d-flex flex-row justify-content-between">
 										<div class="titles">
-											<div class="row">
-												<div  class="col-sm-12"><h5>Labor Id: <?php echo $row[0];?></h5></div>	
-											</div>	
-											<h3 class="text-uppercase"><?php echo $row[1].' '.$row[2];?></h3>
+											<h5>Labor Id: <?php echo $row[0];?></h5>
+
+											<a href="#"><h3>
+											<?php echo $row[1].' '.$row[2];?>
+											</h3></a>
 											<h5> Age: <?php echo $row[4];?> &nbsp &nbsp &nbsp Gender: <?php echo $row[3];?></h5>					
 										</div>
-										<!-- <ul class="btns">
-											<li><a href="#"><span class="lnr lnr-heart"></span></a></li>
-											<li><a href="#">hire me</a></li>
-										</ul> -->
+										<ul class="btns">
+											<!-- <li><a href="#"><span class="lnr lnr-heart"></span></a></li> -->
+											<?php 
+											if($row[17]=='unavailable')
+											{
+												$color='red';
+											    $class='x';
+											}
+											else
+											{
+												$color='green';
+												$class='';
+											}
+											?>											
+											<!-- <li class="<?php echo $class; ?>"><a href="hiredlabor.php?lid=<?php echo $row[0]; ?>"  onclick="return confirm('Are you sure you want to hire labor ?')?true:false;">hire me</a></li> -->
+										</ul>
 									</div>
 	<!-- 								<p><h6><?php echo $row[15];?></h6></p> -->
 									<h5>Job Nature: Full Day</h5>
 									<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[8];?> </p>
-									<p class="address"><span class="lnr lnr-database"></span> &#x20a8; <?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row[17];?></p>
+									<p class="address"><span class="lnr lnr-database"></span> &#x20a8; <?php echo $row[18];?> &nbsp &nbsp &nbsp Status: <strong style="color:<?php echo $color;?>;text-transform:capitalize;"> <?php echo $row[17];?></strong></p>
 								</div>
 							</div>	
-<!-- insert image start -->
-<?php
-	$filetype=0;
-	if(isset($_POST['insertimg']))
-	{
-
-	      $filetype=$_POST['filetype'];
-	      $laborid=$lid;
-	        
-	        if($filetype==1)
-	        {
-		        if(isset($_FILES["workimage"]))
-		        {
-		          	$path="../Labor/labor_img/";
-		         	$foldername=$lid;
-		          
-		           	$myFile = $_FILES['workimage'];
-		            $fileCount = count($myFile["name"]);
-
-		                for ($i = 0; $i < $fileCount; $i++) {
-
-		                  $target_file = $path.basename($_FILES["workimage"]["name"][$i]);
-		                  //Select file type
-		                  $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-		                  //Valid file extensions
-		                  $extensions_arr = array("jpg","jpeg","png","gif");
-		                  //Check extension
-		                  $imgSize = $_FILES['workimage']['size'][$i];
-
-		 
-		                  if(in_array($imageFileType,$extensions_arr) )
-		                  {
-		                  
-		                    if($imgSize < 5000000)   
-		                    {
-		                      $myimg=time().$_FILES['workimage']["name"][$i];
-		                      //echo $myimg;
-		                      
-		                      $qry="insert into image values(0,'$myimg','$filetype','$laborid')";
-		                      // echo $qry;
-		                      $res=mysqli_query($con,$qry);
-
-		                      	 $targetpath=$path.$foldername."/".$myimg;
-		                      if(move_uploaded_file($_FILES['workimage']['tmp_name'][$i],$targetpath))
-		                      {
-		                        // echo "insert multi image";
-		                      }
-
-		                      if($res>0)
-		                      {
-		                        // echo "insert record into image table";
-		                        // header("location:profile.php");
-		                   
-		                        echo "<script> window.location.href='profile.php';</script>";
-		                        // exit;
-		                      }   
-		                      else
-		                      {
-		                        echo "erro not insert image";
-		                      }
-        						
-
-		                  
-
-		                    }
-		                    else
-		                    {
-		                      echo "file size too large";
-		                    }
-		                  }
-		                  else
-		                  {
-		                    echo "please Select valid extention front image file";
-		                  }
-
-		                }
-		        }
-		        else
-		        {
-		          echo "please Select image file";
-		        }
-		    }
-		    
-		    if($filetype==2)
-		    {
-		    	
-		    	$video=str_replace('https://youtu.be/', '',$_POST['video']);
-		    	// echo $video;
-		    	
-		      	$qry="insert into image values(0,'$video','$filetype','$laborid')";
-		      	$res=mysqli_query($con,$qry);
-		        if($res>0)
-		        {
-		        	// echo "insert record into video table";
-		          // header("location:categoryadmin.php");
-		        	echo "<script> window.location.href='profile.php';</script>";
-		                        exit;
-		        }		
-		        else
-		        {
-		        	echo "erro not insert video";
-		        }
-		    }
-
-	}
-
-
-	if(isset($_REQUEST['did']))
-	{
-
-	  $path1="../Labor/labor_img/";
-
-			
-			$qry1="select * from image where i_id=".$_REQUEST['did'];
-			$res1=mysqli_query($con,$qry1);
-			while($row1=mysqli_fetch_row($res1))
-			{
-				if($row1[2]==1)
-				{
-				//$dirpath=$path.$row[0];
-				$oldimage1=$path1.$row1[3].'/'.$row1[1];
-				// echo $oldimage1;
-				unlink($oldimage1);
-				//echo $dirpath;
-				//rmdir($dirpath);
-				}
-			}
-
-
-			$qry2="delete from image where i_id=".$_REQUEST['did'];
-			$res2=mysqli_query($con,$qry2);
-			if($res2==1)
-			{
-				// echo "delete record from image table";
-				// header("location:profile.php");
-				echo "<script> window.location.href='profile.php';</script>";
-				   exit;
-			}
-			else
-			{
-				echo "not delete record";
-			}
-	}
-
-?>
-<!-- insert image End -->
-
-
-							<div class="single-post job-experience">
-								<!-- labor id:<input type="text" name="laborid"><br> -->
-				
-								 <h5>
-								<img src="../img/pages/list.jpg" alt=""> File Type: 
-								<select name="filetype" id="filetype" style="border-radius:4px;">
-									<option value disabled selected>Select FileType</option>
-									<option value="1">image</option>
-									<option value="2">Video</option>
-								</select>
-								<span id="error_filetype" class="text-danger"></span></h5>
+                            <div class="row" style="margin-right:1px;margin-left:1px;">
+							<div class="single-post job-details col-sm-12">
+								<div>
+								<h4 class="single-title">Work Image</h4>
 								
-								<h5> 
-								<img src="../img/pages/list.jpg"> Video Link:  
-								<input type="text" name="video" id="video" >
-								<span id="error_video" class="text-danger"></span></h5>
-
-
-								<h5>Ex: You have to insert only red text in video link https://youtu.be/<strong style="color:red;text-decoration: underline;">Mc3Vt37d04M</strong> and You can insert share link Ex: https://youtu.be/ZVG5u3_o93U</h5>
-
-							    <h5><img src="../img/pages/list.jpg">							
-								Work Image: <input type="file" id="workimage" name="workimage[]" multiple>
-								<span id="error_workimage" class="text-danger"></span></h5>
-
-								
-								<input type="submit" name="insertimg" id="insertimg" class="ticker-btn" style="border-width:0px;">
-
-							</div>
-
-
-							<!-- work image start -->
-                            <div class="row" style="margin-left:1px;margin-right:1px;">
-								<div class="single-post job-experience col-sm-12" >
-
-									<h4 class="single-title job-details">Work Image</h4>
-								    
 									<?php
-										$count=0;
-										$qry4="select * from image where i_laborid='$lid' and i_flag='1' group by i_id"; 
-									    $res4=mysqli_query($con,$qry4);
-										while($row4=mysqli_fetch_row($res4))
-								        {
-
-								        if($count==4)
-								        {
-								           $count=0;
-								        ?>
-								        <br>
-								        <?php
-								        }	   
-								        ?>
-								        <div class="gallery">							        
-										<img src="../labor/labor_img/<?php echo $row[0];?>/<?php echo $row4[1]; ?>" >
-										<div class="desc"><a href="profile.php?did=<?php echo $row4[0]; ?>" class="ticker-btn" onclick="return confirm('Are you sure to delete image ?')?true:false;">Delete</a></div>
-										
-										</div>
-										<?php
-										$count++;
-									    }
-									?>
-									
+									$count=0;
+									$qry4="select * from image where i_laborid='$row[0]' and i_flag='1'"; 
+								    $res4=mysqli_query($con,$qry4);
+									while($row4=mysqli_fetch_row($res4))
+							        {							        	
+							        if($count==4)
+							        {
+							           $count=0;
+							        ?>
+							        <br>
+							        <?php
+							        }	   
+							        ?>
+									<img src="../labor/labor_img/<?php echo $row[0];?>/<?php echo $row4[1]; ?>" class="gallery">
+									<?php
+									$count++;
+								    }
+								    ?>
+								
 								</div>
 							</div>
-							<!-- work image End -->
-
-                            <div class="row" style="margin-left:1px;margin-right:1px;">
-
-								<div class="single-post job-details col-sm-12">
-									
-									
+							</div>
+							<div class="single-post job-details">			
 									<h4 class="single-title">Work Video Link</h4>
 									<?php
 									$count1=0;
@@ -685,34 +356,24 @@ if(isset($_POST['logout']))
 									// echo $qry4;
 								    $res4=mysqli_query($con,$qry4);
 								    
-									while($row4=mysqli_fetch_row($res4))
+									while($row4=mysqli_fetch_row($res4))	
 							        {
-							        
-							        if($count1==3)
-							        {
-							        ?>
-							        <br>
-							        <?php
-							           $count1=0;
-							        
-							        }
-							        ?>
-							        	<div class="gallery">	   
-							       		<?php
-										$go_to_address="https://www.youtube.com/embed/".$row4[1];
-							        	echo "<iframe SRC=\"".$go_to_address."\" width=\"180\" height=\"150\" framespacing=0 frameborder=no border=0 scrolling=auto style=\"border-radius:5px\"></iframe>";
-							        	?>
-							        	<div class="desc"><a href="profile.php?did=<?php echo $row4[0]; ?>" class="ticker-btn" onclick="return confirm('Are you sure to delete image ?')?true:false;">Delete</a></div>
-										
-										</div>
-							        	<?php
+								        if($count1==3)
+								        {
+								           $count1=0;
+								        ?>
+								        <br>
+								        <?php
+								        }	   
+							       
+									$go_to_address="https://www.youtube.com/embed/".$row4[1];
+							        	echo "<iframe SRC=\"".$go_to_address."\" width=\"180\" height=\"150\" framespacing=0 frameborder=no border=0 scrolling=auto style=\"border-radius:5px;margin-right:10px;\"></iframe>";
+
 									$count1++;
 								    }
 								    ?>
-								   
-								</div>	
 							</div>
-							
+
 							<div class="single-post job-details">
 								<h4 class="single-title">About Me</h4>
 								<p>
@@ -733,12 +394,6 @@ if(isset($_POST['logout']))
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
 										<span>Phone: <?php echo $row[6]; ?></span>
-									</li>
-
-									<li>
-										<img src="../img/pages/list.jpg" alt="">
-										<span>Category: <?php echo $category; ?></span>
-										<br>
 									</li>
 
 									<li>
@@ -807,7 +462,7 @@ if(isset($_POST['logout']))
 
 									<li>
 										<img src="../img/pages/list.jpg" alt="">
-										<span>Registration Date: <?php echo $register4; ?></span>		
+										<span>Registration Date: <?php echo $register1; ?></span>		
 									</li>
 									<!-- <li>	
 										<img src="img/pages/list.jpg" alt="">
@@ -961,11 +616,11 @@ if(isset($_POST['logout']))
 							</div> -->														
 						</div> 
                         <?php
-					
+					}
 }
 				    ?>
 						<div class="col-lg-4 sidebar">
-							<div class="single-slidebar">
+							<!-- <div class="single-slidebar">
 								<h4>Total labor in every state</h4>
 								<ul class="cat-list">
                                <?php
@@ -975,10 +630,10 @@ if(isset($_POST['logout']))
 									{
 									$stateid=$row1[0];
 										?>
-	 					            <li><a class="justify-content-between d-flex" href="#">
+	 					            <li><a class="justify-content-between d-flex" href="search.php?stateid=<?php echo $row1[0]?>">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
-									$qry2="select count(*) as sta from labor where l_state='$stateid' group by l_state";
+									$qry2="select count(*) as sta from labor where l_dflag<>'1' and l_state='$stateid' group by l_state";
 									$res2=mysqli_query($con,$qry2);
 									while($row2=mysqli_fetch_array($res2))
 									{
@@ -987,7 +642,7 @@ if(isset($_POST['logout']))
 						            <?php
 	          							}
 	          						}
-    	      					 ?>
+    	      					 ?> -->
 
 									<!-- <li><a class="justify-content-between d-flex" href="category.html"><p>New York</p><span>37</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Park Montana</p><span>57</span></a></li>
@@ -996,8 +651,8 @@ if(isset($_POST['logout']))
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Florida</p><span>47</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Rocky Beach</p><span>27</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Chicago</p><span>17</span></a></li> -->
-								</ul>
-							</div>
+								<!-- </ul>
+							</div> -->
 
 							<!-- <div class="single-slidebar">
 								<h4>Top rated labor</h4>
@@ -1009,20 +664,19 @@ if(isset($_POST['logout']))
 							    $res5=mysqli_query($con,$qry5);
 								while($row5=mysqli_fetch_row($res5))
 							        {
-							   			if(empty($row5[16]))
+										if(empty($row5[16]))
 										{
-											$imagename2="../img/avatar-13.jpg";
+											$imagename2="img/avatar-13.jpg";
 										}
 										else
 										{
-											$imagename2="../Labor/labor_img/".$row5[0].'/'.$row5[16];
+											$imagename2="Labor/labor_img/".$row5[0].'/'.$row5[16];
 										}
 									?>
-									<div class="single-rated"> -->
-										<!-- <a href="single.php?lid=<?php echo $row5[0]; ?>"> -->
-										<!-- <img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " class="img-fluid" src="<?php echo $imagename2; ?>" alt=""> -->
-									<!-- </a>											 -->
-										<!-- <a href="#" class="text-uppercase"><h3>
+									<div class="single-rated">
+										<a href="single.php?lid=<?php echo $row5[0]; ?>">
+										<img style="max-width:100%;border-radius:4px;position:relative;width:150px;height:150px; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px; " class="img-fluid" src="<?php echo $imagename2; ?>" alt=""></a>											
+										<a href="single.php?lid=<?php echo $row5[0]; ?>" class="text-uppercase"><h3>
 									    <?php echo $row5[1].' '.$row5[2];?>
 										</h3></a>
 	                                    <h5> Age: <?php echo $row5[4];?> &nbsp &nbsp &nbsp 
@@ -1031,9 +685,24 @@ if(isset($_POST['logout']))
 										<h5>Job Nature: Full Day</h5>
 										<p class="address"><span class="lnr lnr-map"></span> <?php echo $row5[8];?> </p>
 										<p class="address"><span class="lnr lnr-database"></span> &#x20a8;
-										 <?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <?php echo $row5[17];?></p> -->
-										<!-- <a href="#" class="btns text-uppercase">Hire Me</a> -->
-									<!-- </div>
+										 <?php echo $row5[18];?> &nbsp &nbsp &nbsp Status: <strong style="color:<?php echo $color1;?>;text-transform:capitalize;"> <?php echo $row5[17];?></strong></p>
+										<?php 
+											if($row5[17]=='unavailable')
+											{
+												$color1='green';
+											    $class='x';
+											}
+											else
+											{
+												$color1='red';
+												$class='';
+											}
+										?>
+
+										<ul>
+										<li class="<?php echo $class; ?>"><a href="hiredlabor.php?lid=<?php echo $row5[0]; ?>" class="btns text-uppercase"  onclick="return confirm('Are you sure you want to hire labor ?')?true:false;">Hire Me</a></li>
+										</ul>
+									</div>
 									 <?php
 										}
 							        ?> -->
@@ -1075,7 +744,7 @@ if(isset($_POST['logout']))
 										<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
 										<a href="#" class="btns text-uppercase">Apply job</a>
 									</div> -->																		
-								<!-- </div>
+							<!-- 	</div>
 							</div>		 -->					
 
 							<div class="single-slidebar">
@@ -1089,10 +758,10 @@ if(isset($_POST['logout']))
 									{
 									$catid=$row1[0];
 										?>
-	 					            <li><a class="justify-content-between d-flex" href="#">
+	 					            <li><a class="justify-content-between d-flex"  href="#">
 	 								<p><?php echo $row1[1];?></p>
 									<?php
-									$qry2="select count(*) as cat from labor where l_categoryid='$catid' group by l_categoryid";
+									$qry2="select count(*) as cat from labor where l_dflag<>'1' and l_categoryid='$catid' group by l_categoryid";
 									$res2=mysqli_query($con,$qry2);
 									while($row2=mysqli_fetch_array($res2))
 									{
@@ -1110,6 +779,41 @@ if(isset($_POST['logout']))
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Developer</p><span>27</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Accounting</p><span>17</span></a></li> -->
 								</ul>
+							</div>
+
+							<div class="single-slidebar">
+								<h4>Total labor under leader</h4>
+								<ul class="cat-list">
+
+									<?php
+									$qry6="select * from labor where l_leaderid<>'' and l_dflag<>'1' group by l_leaderid";
+									$res6=mysqli_query($con,$qry6);
+									while($row6=mysqli_fetch_row($res6))
+									{
+										$ladid=$row6[21];
+
+										$qry8="select * from labor where l_id='$row6[21]'";
+										$res8=mysqli_query($con,$qry8);
+										while($row8=mysqli_fetch_row($res8))
+										{
+											$leadername=$row8[1].' '.$row8[2];
+										}
+									
+										?>
+	 					      		<li><a class="justify-content-between d-flex" href="single.php?lid=<?php echo $row6[21]; ?>">
+	 								<?php echo $leadername;?>
+									<?php
+									$qry7="select count(*) as led from labor where l_dflag<>'1' and l_leaderid='$ladid' group by l_leaderid";
+									// echo $qry
+									$res7=mysqli_query($con,$qry7);
+									while($row7=mysqli_fetch_array($res7))
+									{
+									?>
+            						<span><?php echo $row7['led']; ?></span></a></li>
+						            <?php
+	          							}
+	          						}?>
+	          					</ul>
 							</div>
 
 <!-- 							<div class="single-slidebar">
@@ -1171,20 +875,20 @@ if(isset($_POST['logout']))
 
 
 			<!-- Start callto-action Area -->
-		<!-- 	<section class="callto-action-area section-gap">
+			<section class="callto-action-area section-gap">
 				<div class="container">
 					<div class="row d-flex justify-content-center">
 						<div class="menu-content col-lg-9">
 							<div class="title text-center">
 								<h1 class="mb-10 text-white">Join us today without any hesitation</h1>
 								<p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-								<a class="primary-btn" href="register.php">I am a Customer</a>
-								<a class="primary-btn" href="#">i am a labor</a>
+								<a class="primary-btn" href="../register.php">I am a Customer</a>
+								<a class="primary-btn" href="laborregister.php">I am a Labor</a>
 							</div>
 						</div>
 					</div>	
 				</div>	
-			</section> -->
+			</section>
 			<!-- End calto-action Area -->
 
 			<!-- start footer Area -->		
@@ -1263,9 +967,9 @@ if(isset($_POST['logout']))
 			<!-- End footer Area -->		
 
 			<script src="../js/vendor/jquery-2.2.4.min.js"></script>
-			<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 			<script src="../js/vendor/bootstrap.min.js"></script>			
-			<!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script> -->
+			<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
   			<script src="../js/easing.min.js"></script>			
 			<script src="../js/hoverIntent.js"></script>
 			<script src="../js/superfish.min.js"></script>	
@@ -1277,7 +981,7 @@ if(isset($_POST['logout']))
 			<script src="../js/parallax.min.js"></script>		
 			<script src="../js/mail-script.js"></script>	
 			<script src="../js/main.js"></script>	
-			<script src="../js/image.js"></script>	
+			<script src="../js/login.js"></script>	
 
 		</form>
 		</body>

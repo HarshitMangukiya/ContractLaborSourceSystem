@@ -434,7 +434,10 @@ $('#state').on('change',function(){
     <p align="left">Password *
     <input type="password" id="password1" class="form-control mb-4" name="password4" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
     <span id="error_password1" class="text-danger"></span>
+  <div class="d-flex justify-content-around">
 
+          <a href="forgetpassword.php">Forgot password</a>
+</div>
       <!-- <div class="d-flex justify-content-around"> -->
         <!-- <div>
            Remember me 

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+  <?php include('../labor/dbConfig.php'); 
+  session_start();
+  if(isset($_SESSION['laborname'])){
+    // echo "welcome".$_SESSION['emailname'];
+    header("location:index.php");        
+
+}
+  ?>
+
+<head>
+  <title></title>
+<!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="../img/fav.png">
+    <!-- Author Meta -->
+    <meta name="author" content="codepixer">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Job Listing</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
+      <!--
+      CSS
+      ============================================= -->
+      <link rel="stylesheet" href="../css/linearicons.css">
+      <link rel="stylesheet" href="../css/font-awesome.min.css">
+      <link rel="stylesheet" href="../css/bootstrap.css">
+      <link rel="stylesheet" href="../css/magnific-popup.css">
+      <link rel="stylesheet" href="../css/nice-select.css">          
+      <link rel="stylesheet" href="../css/animate.min.css">
+      <link rel="stylesheet" href="../css/owl.carousel.css">
+      <link rel="stylesheet" href="../css/main.css">
+       <style type="text/css">
+        div.gallery{
+        /*border: 1px solid #777;*/
+        max-width:100%;
+        border-radius:5px;
+        position:relative; 
+        z-index:1;
+        /*box-shadow:0 5px 20px rgba(0,0,0,0.2); left:20px;*/ 
+        box-shadow: 2px 10px 20px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+
+      </style>
+
+
+</head>
+
+  <body>
+      <form method="post" enctype="multipart/form-data">
+
+        <header id="header" id="home" style="background-color:black;">
+          <div class="container">
+            <div class="row align-items-center justify-content-between d-flex">
+              <div id="logo">
+                <a href="index.php"><img src="img/logo.png" alt="" title="" /></a>
+              </div>
+              <nav id="nav-menu-container">
+                <ul class="nav-menu">
+                  <li class="menu-active"><a href="index.php">Home</a></li>
+                  <li><a href="about-us.php">About Us</a></li>
+                  <!-- <li><a href="category.php">Category</a></li> -->
+                  <!-- <li><a href="price.php">Price</a></li> -->
+                  <!-- <li><a href="blog-home.html">Blog</a></li> -->
+                  <li><a href="contact.php">Contact</a></li>
+                  <li class="menu-has-children"><a href="#">Pages</a>
+                    <ul>
+                <!-- <li><a href="elements.html">elements</a></li> -->
+                <li><a href="search.php">search</a></li>
+                <li><a href="single.php">single</a></li>
+                    </ul>
+                  </li>
+                  
+<!--                   &nbsp &nbsp 
+                  <?php
+                  if(isset($_SESSION['emailname']))
+                  {
+                    $cid=$_SESSION['emailname'];
+                    $qry="select * from customer where c_id='$cid'";
+              $res=mysqli_query($con,$qry);
+              while($row=mysqli_fetch_row($res))
+              {
+                $name=$row[1]." ".$row[2];
+                // $imagename=$row[13];
+                  if(empty($row[13]))
+                {
+                  $imagename="img/avatar-13.jpg";
+                }
+                else
+                {
+                  $imagename="Labor/customer_img/".$row[13];
+                }
+
+              }
+                    ?> -->
+                    <!-- <li class="menu-has-children"><a href="profile.php"><img style="max-width:100%;border-radius:4px; position:relative; z-index:1; box-shadow:0 5px 20px rgba(0,0,0,0.2); border:1px solid; " src="<?php echo $imagename; ?>" width="40" height="40" alt="" ></a> -->
+                    <!-- <ul>
+                <li>Signed in as</li>
+                <li><a href="profile.php"><?php echo $name;?></a></li>
+                <div class="dropdown-divider"></div>
+                <li><a href="profile.php">Your Profile</a></li>
+                <li><a href="hiredlabor.php">Your Order</a></li>
+                <div class="dropdown-divider"></div>
+                <li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li>
+                    </ul>
+                  </li> -->
+                    <!-- <li><input type="submit" class="ticker-btn" name="logout" value="Logout"></li> -->
+                 <!--  <?php
+                  }
+                  // else
+                  {
+                  ?> -->
+                  <!-- <li><a class="ticker-btn" href="register.php">Signup</a></li> -->
+                  <!-- <li><button type="button" class="ticker-btn" data-toggle="modal" data-target="#myModal" style="border-width:0px;">Login</button></li> -->
+
+<!--                   <?php 
+                  }
+                  ?>   -->
+
+                </ul>
+              </nav><!-- #nav-menu-container -->            
+            </div>
+          </div>
+        </header><!-- #header -->
+
+          <!-- start banner Area -->
+<!--       <section class="banner-area relative" id="home">  
+        <div class="overlay overlay-bg"></div>
+        <div class="container">
+          <div class="row d-flex align-items-center justify-content-center">
+            <div class="about-content col-lg-12">
+              <h1 class="text-white">
+                About Us        
+              </h1> 
+              <p class="text-white link-nav"><a href="index.php">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="about-us.php"> About Us</a></p>
+            </div>                      
+          </div>
+        </div>
+      </section>
+ -->      <!-- End banner Area -->  
+
+  <?php
+        session_start();
+      
+        if(!empty($_SESSION['laboremail']))
+        {
+        if(isset($_POST['forget']))
+        {   
+            $passwordx=$_POST['confirmpassword'];
+            
+            
+            $qry="update labor set l_password='$passwordx' where l_id=".$_SESSION['laboremail'];
+            $res=mysqli_query($con,$qry);
+            print_r($res);
+            if($res>0)
+            {
+              // $x="update record into user table";
+               // header("location:hiredlaboradmin.php");
+               echo "<script> window.location.href='index.php';</script>";
+              exit;
+            }   
+            else
+            {
+              // echo "error not update ";
+            }
+            
+        }
+      }
+      else
+      {
+               echo "<script> window.location.href='index.php';</script>";
+      }
+
+        ?> 
+    
+<body style="overflow-x:hidden;">
+  <!-- Material form login -->
+<div class="row">
+    <div class="col-sm-4"></div>
+  <div class="col-sm-4 gallery" style="margin-top:10%;margin-bottom:10%;">
+
+<br>
+    <!-- Form --><!-- 
+    <form class="text-center" style="color:#757575;" method="post" enctype="multipart/form-data"> -->
+
+
+      <div id="logo gallery">
+          <h4 class="card-header info-color white-text text-center py-4" style="background-color: #17a2b8;color:white;border-radius:5px;" >
+                  <img src="img/logo.png" alt="" title="" align="left" />
+                  <strong>Change Password</strong>
+  
+          </h4>                  
+      </div> 
+      <br>
+        <p align="left">Password *
+    <input type="password" class="form-control mb-4" placeholder="Enter Password" id="password2" name="password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password '"></p>
+    <span id="error_password2" class="text-danger"></span>
+
+
+    <p align="left">Confirm Password *
+    <input type="password" class="form-control mb-4" placeholder="Enter Confirm password" id="confirmpassword" name="confirmpassword" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Confirm Password '"></p>
+    <span id="error_confirmpassword" class="text-danger"></span>
+
+
+    <small id="materialRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+     At least 6 characters and 1 digit and 1 special character (Ex:@#$&*!)
+     </small>
+
+
+
+      <!-- Sign in button -->
+      <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="forget" id="signup">Submit</button>
+
+    </div>
+  <div class="col-sm-4"></div>
+
+</div>
+
+    <!-- </form> -->
+
+
+      <!-- Social login -->
+      <!-- <p>or sign in with:</p>
+      <a type="button" class="btn-floating btn-fb btn-sm">
+        <i class="fa fa-facebook"></i>
+      </a>
+      <a type="button" class="btn-floating btn-tw btn-sm">
+        <i class="fa fa-twitter"></i>
+      </a>
+      <a type="button" class="btn-floating btn-li btn-sm">
+        <i class="fa fa-dribbble"></i>
+      </a>
+      <a type="button" class="btn-floating btn-git btn-sm">
+        <i class="fa fa-github"></i>
+      </a> -->
+
+
+      <!-- Start callto-action Area -->
+      <section class="callto-action-area section-gap" id="join">
+        <div class="container">
+          <div class="row d-flex justify-content-center">
+            <div class="menu-content col-lg-9">
+              <div class="title text-center">
+                <h1 class="mb-10 text-white">Join us today without any hesitation</h1>
+                <p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                <a class="primary-btn" href="../register.php">I am a Customer</a>
+                <a class="primary-btn" href="laborregister.php">I am a Labor</a>
+              </div>
+            </div>
+          </div>  
+        </div>  
+      </section>
+      <!-- End calto-action Area -->
+
+
+        <!-- start footer Area -->    
+      <footer class="footer-area section-gap">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3  col-md-12">
+              <div class="single-footer-widget">
+                  <h6>QUICK LINKS</h6>
+                <ul class="footer-nav">
+                  <li><a href="index.php">Home</a></li>
+                  <li><a href="about-us.php">About Us</a></li>
+                  <li><a href="laborregister.php">Sign Up</a></li>
+                  <!-- <li><a href="category.php">Category</a></li> -->
+                  <!-- <li><a href="price.php">Price</a></li> -->
+                  <li><a href="contact.php">Contact</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-6  col-md-12">
+              <div class="single-footer-widget newsletter">
+                <h6>Newsletter</h6>
+                <p>You can trust us. we only send promo offers, not a single spam.</p>
+                <div id="mc_embed_signup">
+                  <form target="_blank" novalidate="true" method="get" class="form-inline">
+
+                    <div class="form-group row" style="width: 100%">
+                      <div class="col-lg-8 col-md-12">
+                        <input name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '" type="email">
+                        <div style="position: absolute; left: -5000px;">
+                          <!-- <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text"> -->
+                        </div>
+                      </div> 
+                    
+                      <div class="col-lg-4 col-md-12">
+                        <button class="nw-btn primary-btn">Subscribe<span class="lnr lnr-arrow-right"></span></button>
+                      </div> 
+                    </div>    
+                    <div class="info"></div>
+                  </form>
+                </div>    
+              </div>
+            </div>
+            <div class="col-lg-3  col-md-12">
+              <div class="single-footer-widget mail-chimp">
+                <h6 class="mb-20">Instragram Feed</h6>
+                <ul class="instafeed d-flex flex-wrap">
+                  <li><img src="../img/i1.jpg" alt=""></li>
+                  <li><img src="../img/i2.jpg" alt=""></li>
+                  <li><img src="../img/i3.jpg" alt=""></li>
+                  <li><img src="../img/i4.jpg" alt=""></li>
+                  <li><img src="../img/i5.jpg" alt=""></li>
+                  <li><img src="../img/i6.jpg" alt=""></li>
+                  <li><img src="../img/i7.jpg" alt=""></li>
+                  <li><img src="../img/i8.jpg" alt=""></li>
+                </ul>
+              </div>
+            </div>            
+          </div>
+
+          <div class="row footer-bottom d-flex justify-content-between">
+            <p class="col-lg-8 col-sm-12 footer-text m-0 text-white">
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+<!-- Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> -->
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+            <div class="col-lg-4 col-sm-12 footer-social">
+              <a href="#"><i class="fa fa-facebook"></i></a>
+              <a href="#"><i class="fa fa-twitter"></i></a>
+              <a href="#"><i class="fa fa-dribbble"></i></a>
+              <a href="#"><i class="fa fa-behance"></i></a>
+            </div>
+          </div>
+        </div>
+      </footer>
+      <!-- End footer Area -->    
+
+
+      <script src="../js/vendor/jquery-2.2.4.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="../js/vendor/bootstrap.min.js"></script>      
+      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
+        <script src="../js/easing.min.js"></script>      
+      <script src="../js/hoverIntent.js"></script>
+      <script src="../js/superfish.min.js"></script> 
+      <script src="../js/jquery.ajaxchimp.min.js"></script>
+      <script src="../js/jquery.magnific-popup.min.js"></script> 
+      <script src="../js/owl.carousel.min.js"></script>      
+      <script src="../js/jquery.sticky.js"></script>
+      <script src="../js/jquery.nice-select.min.js"></script>      
+      <script src="../js/parallax.min.js"></script>    
+      <script src="../js/mail-script.js"></script> 
+      <script src="../js/main.js"></script>
+      <script src="../js/login.js"></script>
+      <script src="../js/forgetpasswordlabor.js"></script>
+
+
+
+    <!-- Form -->
+
+<!-- Material form login -->
+</form>
+</body>
+</html>
