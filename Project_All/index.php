@@ -57,6 +57,13 @@ if(isset($_POST['logout']))
 	           }
 
 			</style>
+			<!-- <script type="text/javascript">
+			  function ShowHideDiv(chkPassport) {
+			        var dvPassport = document.getElementById("dvPassport");
+			        dvPassport.style.display = chkPassport.checked ? "block" : "none";
+			    }
+			</script> -->
+
 		</head>
 		<body>
 			<form method="post" enctype="multipart/form-data" action="search.php">
@@ -188,17 +195,65 @@ if(isset($_POST['logout']))
 									// $enddate = date("d-m-Y", strtotime($end));	      
 
 			                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment','$start','$end')";
-			                        echo $qry;
+			                        // echo $qry;
 			                        
 			                        
 									$res=mysqli_query($con,$qry);
 									if($res>0)
 									{
 			                        	$flag=0;
-										// echo "insert record into payment table condition one";
-									    // header("location:index.php");
-									     	echo "<script> window.location.href='index.php';</script>";
-				   							exit;
+
+
+
+											$qry18="select * from customer where c_id=".$_SESSION['emailname'];
+											$res18=mysqli_query($con,$qry18);
+											while($row18=mysqli_fetch_row($res18))
+											{
+
+				                        		include('SendEmail/autoload.php');
+				        
+										        $name ='JOB Listing.com';
+										        $email =$row18[3];
+										        $subject = 'Payment Successful';
+										        $body = 'you have paid 100 rupees and you will get a 1-month membership with each and every service.';
+
+										        require_once "PHPMailer/PHPMailer.php";
+										        require_once "PHPMailer/SMTP.php";
+										        require_once "PHPMailer/Exception.php";
+
+										        // $mail = new PHPMailer();
+
+										   		$mail = new PHPMailer\PHPMailer\PHPMailer();
+
+										        //SMTP Settings
+										        $mail->isSMTP();
+										        $mail->Host = "smtp.gmail.com";
+										        $mail->SMTPAuth = true;
+										        $mail->Username = "mangukiyaharshit@gmail.com";
+										        $mail->Password = 'harshit2211';
+										        $mail->Port = 465; //587
+										        $mail->SMTPSecure = "ssl"; //tls
+
+										        //Email Settings
+										        $mail->isHTML(true);
+										        $mail->setFrom($email,$name);
+										        $mail->addAddress($email);
+										        $mail->Subject = $subject;
+										        $mail->Body = $body;
+
+										        if ($mail->send()) {
+										            $status = "success";
+										            // $response = "Email is sent!";
+										            // echo $status;
+										        } else {
+										            $status = "failed";
+										            // echo $status;
+										            // $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
+										        }
+
+										     	echo "<script> window.location.href='index.php';</script>";
+					   							exit;
+				   							}
 										// echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
 
 									}		
@@ -235,9 +290,61 @@ if(isset($_POST['logout']))
 								if($res>0)
 								{
 									$flag=0;
-									// echo "insert record into payment table conditon two";
-									echo "<script> window.location.href='index.php';</script>";
-				   							exit;
+										
+										$qry18="select * from customer where c_id=".$_SESSION['emailname'];
+											$res18=mysqli_query($con,$qry18);
+											while($row18=mysqli_fetch_row($res18))
+											{
+
+				                        		include('SendEmail/autoload.php');
+				        
+										        $name ='JOB Listing.com';
+										        $email =$row18[3];
+										        $subject = 'Payment Successful';
+										        $body = 'You have paid 100 rupees and you will get a 1-month membership with each and every service.';
+
+										        require_once "PHPMailer/PHPMailer.php";
+										        require_once "PHPMailer/SMTP.php";
+										        require_once "PHPMailer/Exception.php";
+
+										        // $mail = new PHPMailer();
+
+										   		$mail = new PHPMailer\PHPMailer\PHPMailer();
+
+										        //SMTP Settings
+										        $mail->isSMTP();
+										        $mail->Host = "smtp.gmail.com";
+										        $mail->SMTPAuth = true;
+										        $mail->Username = "mangukiyaharshit@gmail.com";
+										        $mail->Password = 'harshit2211';
+										        $mail->Port = 465; //587
+										        $mail->SMTPSecure = "ssl"; //tls
+
+										        //Email Settings
+										        $mail->isHTML(true);
+										        $mail->setFrom($email,$name);
+										        $mail->addAddress($email);
+										        $mail->Subject = $subject;
+										        $mail->Body = $body;
+
+										        if ($mail->send()) {
+										            $status = "success";
+										            // $response = "Email is sent!";
+										            // echo $status;
+										        } else {
+										            $status = "failed";
+										            // echo $status;
+										            // $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
+										        }
+
+										     	echo "<script> window.location.href='index.php';</script>";
+					   							exit;
+				   							}
+
+
+
+									// echo "<script> window.location.href='index.php';</script>";
+				   		// 					exit;
 									// echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
 
 								    // header("location:index.php");
@@ -297,18 +404,69 @@ if(isset($_POST['logout']))
 									// $enddate = date("d-m-Y", strtotime($end));	      
 
 			                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment','$start','$end')";
-			                        echo $qry;
+			                        // echo $qry;
 			                        
 			                        
 									$res=mysqli_query($con,$qry);
 									if($res>0)
 									{
 			                        	$flag=0;
+
+
+											$qry18="select * from customer where c_id=".$_SESSION['emailname'];
+											$res18=mysqli_query($con,$qry18);
+											while($row18=mysqli_fetch_row($res18))
+											{
+
+				                        		include('SendEmail/autoload.php');
+				        
+										        $name ='JOB Listing.com';
+										        $email =$row18[3];
+										        $subject = 'Payment Successful';
+										        $body = 'you have paid 150 rupees and you will get a 3-month membership with each and every service.';
+
+										        require_once "PHPMailer/PHPMailer.php";
+										        require_once "PHPMailer/SMTP.php";
+										        require_once "PHPMailer/Exception.php";
+
+										        // $mail = new PHPMailer();
+
+										   		$mail = new PHPMailer\PHPMailer\PHPMailer();
+
+										        //SMTP Settings
+										        $mail->isSMTP();
+										        $mail->Host = "smtp.gmail.com";
+										        $mail->SMTPAuth = true;
+										        $mail->Username = "mangukiyaharshit@gmail.com";
+										        $mail->Password = 'harshit2211';
+										        $mail->Port = 465; //587
+										        $mail->SMTPSecure = "ssl"; //tls
+
+										        //Email Settings
+										        $mail->isHTML(true);
+										        $mail->setFrom($email,$name);
+										        $mail->addAddress($email);
+										        $mail->Subject = $subject;
+										        $mail->Body = $body;
+
+										        if ($mail->send()) {
+										            $status = "success";
+										            // $response = "Email is sent!";
+										            // echo $status;
+										        } else {
+										            $status = "failed";
+										            // echo $status;
+										            // $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
+										        }
+
+										     	echo "<script> window.location.href='index.php';</script>";
+					   							exit;
+				   							}
 										// echo "insert record into payment table condition one";
 									    // header("location:index.php");
 										// echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
-										echo "<script> window.location.href='index.php';</script>";
-				   							exit;
+										// echo "<script> window.location.href='index.php';</script>";
+				   			// 				exit;
 
 									}		
 									else
@@ -344,10 +502,61 @@ if(isset($_POST['logout']))
 								if($res>0)
 								{
 									$flag=0;
+
+
+											$qry18="select * from customer where c_id=".$_SESSION['emailname'];
+											$res18=mysqli_query($con,$qry18);
+											while($row18=mysqli_fetch_row($res18))
+											{
+
+				                        		include('SendEmail/autoload.php');
+				        
+										        $name ='JOB Listing.com';
+										        $email =$row18[3];
+										        $subject = 'Payment Successful';
+										        $body = 'you have paid 150 rupees and you will get a 3-month membership with each and every service.';
+
+										        require_once "PHPMailer/PHPMailer.php";
+										        require_once "PHPMailer/SMTP.php";
+										        require_once "PHPMailer/Exception.php";
+
+										        // $mail = new PHPMailer();
+
+										   		$mail = new PHPMailer\PHPMailer\PHPMailer();
+
+										        //SMTP Settings
+										        $mail->isSMTP();
+										        $mail->Host = "smtp.gmail.com";
+										        $mail->SMTPAuth = true;
+										        $mail->Username = "mangukiyaharshit@gmail.com";
+										        $mail->Password = 'harshit2211';
+										        $mail->Port = 465; //587
+										        $mail->SMTPSecure = "ssl"; //tls
+
+										        //Email Settings
+										        $mail->isHTML(true);
+										        $mail->setFrom($email,$name);
+										        $mail->addAddress($email);
+										        $mail->Subject = $subject;
+										        $mail->Body = $body;
+
+										        if ($mail->send()) {
+										            $status = "success";
+										            // $response = "Email is sent!";
+										            // echo $status;
+										        } else {
+										            $status = "failed";
+										            // echo $status;
+										            // $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
+										        }
+
+										     	echo "<script> window.location.href='index.php';</script>";
+					   							exit;
+				   							}
 									// echo "insert record into payment table conditon two";
 									// echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
-									echo "<script> window.location.href='index.php';</script>";
-				   							exit;
+									// echo "<script> window.location.href='index.php';</script>";
+				   		// 					exit;
 
 								    // header("location:index.php");
 								}		
@@ -406,18 +615,69 @@ if(isset($_POST['logout']))
 									// $enddate = date("d-m-Y", strtotime($end));	      
 
 			                        $qry="insert into payment values(0,'$customerid','$method','$totalpayment','$start','$end')";
-			                        echo $qry;
+			                        // echo $qry;
 			                        
 			                        
 									$res=mysqli_query($con,$qry);
 									if($res>0)
 									{
 			                        	$flag=0;
+
+
+											$qry18="select * from customer where c_id=".$_SESSION['emailname'];
+											$res18=mysqli_query($con,$qry18);
+											while($row18=mysqli_fetch_row($res18))
+											{
+
+				                        		include('SendEmail/autoload.php');
+				        
+										        $name ='JOB Listing.com';
+										        $email =$row18[3];
+										        $subject = 'Payment Successful';
+										        $body = 'you have paid 200 rupees and you will get a 1-year membership with each and every service.';
+
+										        require_once "PHPMailer/PHPMailer.php";
+										        require_once "PHPMailer/SMTP.php";
+										        require_once "PHPMailer/Exception.php";
+
+										        // $mail = new PHPMailer();
+
+										   		$mail = new PHPMailer\PHPMailer\PHPMailer();
+
+										        //SMTP Settings
+										        $mail->isSMTP();
+										        $mail->Host = "smtp.gmail.com";
+										        $mail->SMTPAuth = true;
+										        $mail->Username = "mangukiyaharshit@gmail.com";
+										        $mail->Password = 'harshit2211';
+										        $mail->Port = 465; //587
+										        $mail->SMTPSecure = "ssl"; //tls
+
+										        //Email Settings
+										        $mail->isHTML(true);
+										        $mail->setFrom($email,$name);
+										        $mail->addAddress($email);
+										        $mail->Subject = $subject;
+										        $mail->Body = $body;
+
+										        if ($mail->send()) {
+										            $status = "success";
+										            // $response = "Email is sent!";
+										            // echo $status;
+										        } else {
+										            $status = "failed";
+										            // echo $status;
+										            // $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
+										        }
+
+										     	echo "<script> window.location.href='index.php';</script>";
+					   							exit;
+				   							}
 										// echo "insert record into payment table condition one";
 									    // header("location:index.php");
 										// echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
-										echo "<script> window.location.href='index.php';</script>";
-				   							exit;
+										// echo "<script> window.location.href='index.php';</script>";
+				   			// 				exit;
 
 									}		
 									else
@@ -453,11 +713,62 @@ if(isset($_POST['logout']))
 								if($res>0)
 								{
 									$flag=0;
+
+
+											$qry18="select * from customer where c_id=".$_SESSION['emailname'];
+											$res18=mysqli_query($con,$qry18);
+											while($row18=mysqli_fetch_row($res18))
+											{
+
+				                        		include('SendEmail/autoload.php');
+				        
+										        $name ='JOB Listing.com';
+										        $email =$row18[3];
+										        $subject = 'Payment Successful';
+										        $body = 'you have paid 200 rupees and you will get a 1-year membership with each and every service.';
+
+										        require_once "PHPMailer/PHPMailer.php";
+										        require_once "PHPMailer/SMTP.php";
+										        require_once "PHPMailer/Exception.php";
+
+										        // $mail = new PHPMailer();
+
+										   		$mail = new PHPMailer\PHPMailer\PHPMailer();
+
+										        //SMTP Settings
+										        $mail->isSMTP();
+										        $mail->Host = "smtp.gmail.com";
+										        $mail->SMTPAuth = true;
+										        $mail->Username = "mangukiyaharshit@gmail.com";
+										        $mail->Password = 'harshit2211';
+										        $mail->Port = 465; //587
+										        $mail->SMTPSecure = "ssl"; //tls
+
+										        //Email Settings
+										        $mail->isHTML(true);
+										        $mail->setFrom($email,$name);
+										        $mail->addAddress($email);
+										        $mail->Subject = $subject;
+										        $mail->Body = $body;
+
+										        if ($mail->send()) {
+										            $status = "success";
+										            // $response = "Email is sent!";
+										            // echo $status;
+										        } else {
+										            $status = "failed";
+										            // echo $status;
+										            // $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
+										        }
+
+										     	echo "<script> window.location.href='index.php';</script>";
+					   							exit;
+				   							}
 									// echo "insert record into payment table conditon two";
 									// echo "<script>swal('Good job!', 'Payment Successful.', 'success');</script>";
 								    // header("location:index.php");
-								    echo "<script> window.location.href='index.php';</script>";
-				   							exit;
+								    // echo "<script> window.location.href='index.php';</script>";
+				   					// 		exit;
 								}		
 								else
 								{
@@ -545,8 +856,8 @@ if(isset($_POST['logout']))
     <input type="password" id="password" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
     <span id="error_password" class="text-danger"></span>
 
-
-      <!-- <div class="d-flex justify-content-around"> -->
+<!-- <form method="post">  -->
+     
         <!-- <div>
            Remember me 
           <div class="form-check">
@@ -554,12 +865,31 @@ if(isset($_POST['logout']))
             <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
           </div>
         </div> -->
-        <!-- <div> -->
-          <!-- Forgot password -->
-         <!--  <a href="#">Forgot password?</a>
-        </div>
-      </div> -->
+       <div class="d-flex justify-content-around">
 
+          <a href="forgetpassword.php">Forgot password</a>
+</div>
+       
+<!--  
+    <label for="chkPassport">
+    <input type="checkbox" id="chkPassport" onclick="ShowHideDiv(this)" />
+    Forgot password
+    </label>
+    
+    <div id="dvPassport" style="display: none">
+    
+    <p align="left">Email *
+    <input type="email" class="form-control mb-4" placeholder="Enter Your Email Id" name="emailforget" id="emailforget" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Your Email ID'"></p>
+    <span id="error_emailforget" class="text-danger"></span>
+   	Note:-After submit check your mail on your phone.
+     <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="forget" id="forget" >Submit</button>
+
+
+    </div>
+
+      </div>
+  </form>
+ -->
         <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login">Log In</button>
 
         <p align="center">Don't Have An Account ?
@@ -926,9 +1256,11 @@ if(isset($_POST['logout']))
 												$color='green';
 												$class='';
 											}
-											?>											
-											<li class="<?php echo $class; ?>"><a href="hiredlabor.php?lid=<?php echo $row[0]; ?>" onclick="return confirm('Are you sure you want to hire labor ?')?true:false;">hire me</a></li>
+											?>			
 
+																			
+											<li class="<?php echo $class; ?>"><a href="hiredlabor.php?lid=<?php echo $row[0]; ?>" onclick="return confirm('Are you sure you want to hire labor ?')?true:false;">hire me</a></li>
+											
 											<!-- <?php
 											if(isset($_POST['hireme']))
 											{

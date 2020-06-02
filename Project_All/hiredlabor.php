@@ -48,6 +48,8 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
 			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <link rel="stylesheet" href="Labor/module/AcidJs.RatingStars/AcidJs.RatingStars/styles/RatingStars.css" />
+
 
 
 				<style type="text/css">
@@ -138,7 +140,7 @@ if(isset($_POST['logout']))
         <!-- hiredlabor insert start -->
         <?php
 		$enddate='';
-		$qry="select * from payment where p_customerid='$cid'";
+		$qry="select * from payment where p_customerid='$cid' order by p_id desc limit 1";
 		// echo $qry;
 		$res=mysqli_query($con,$qry);
 		while($row=mysqli_fetch_row($res))
@@ -175,14 +177,66 @@ if(isset($_POST['logout']))
 					if($res8>0)
 					{
 							$qry7="update labor set l_status='unavailable' where l_id='$laborid'";
-							echo $qry7;
+							// echo $qry7;
 						$res7=mysqli_query($con,$qry7);
 						if($res7>0)
 						{
 
-							// echo "insert record into hiredlabor table";
+
+							$qry14="select * from labor l,hiredlabor h where h.h_laborid=l.l_id and h.h_customerid='$cid' group by h.h_id order by h_id desc limit 1";
+							// echo $qry;
+							$res14=mysqli_query($con,$qry14);
+
+							while($row14=mysqli_fetch_row($res14))
+							{
+								// echo "insert record into hiredlabor table";
+
+								include('SendEmail/autoload.php');
+    			
+        
+						        $name ='JOB Listing.com';
+						        $email =$row14[5];
+						        $subject = 'Confirm';
+						        $body = 'You are hired by a customer to give me your confirmation as soon as possible.';
+
+						        require_once "PHPMailer/PHPMailer.php";
+						        require_once "PHPMailer/SMTP.php";
+						        require_once "PHPMailer/Exception.php";
+
+						        // $mail = new PHPMailer();
+
+						   		$mail = new PHPMailer\PHPMailer\PHPMailer();
+
+						        //SMTP Settings
+						        $mail->isSMTP();
+						        $mail->Host = "smtp.gmail.com";
+						        $mail->SMTPAuth = true;
+						        $mail->Username = "mangukiyaharshit@gmail.com";
+						        $mail->Password = 'harshit2211';
+						        $mail->Port = 465; //587
+						        $mail->SMTPSecure = "ssl"; //tls
+
+						        //Email Settings
+						        $mail->isHTML(true);
+						        $mail->setFrom($email,$name);
+						        $mail->addAddress($email);
+						        $mail->Subject = $subject;
+						        $mail->Body = $body;
+
+						        if ($mail->send()) {
+						            $status = "success";
+						            // $response = "Email is sent!";
+						            // echo $status;
+						        } else {
+						            $status = "failed";
+						            // echo $status;
+						        }
+
+						       
+
 						   header("location:hiredlabor.php");
 						   exit;
+							}
 						 
 						}		
 						else
@@ -242,6 +296,60 @@ if(isset($_POST['logout']))
 				{
 				 $lid7=$row10[2];
 				}
+
+
+				$qry16="select * from labor where l_id='$lid7'";
+				$res16=mysqli_query($con,$qry16);
+				while($row16=mysqli_fetch_row($res16))
+				{
+
+					$laboremail=$row16[5];	
+
+					include('SendEmail/autoload.php');
+
+    							// if (isset($_POST['name']) && isset($_POST['email'])) {
+        
+						        $name ='JOB Listing.com';
+						        $email =$laboremail;
+						        $subject = 'Customer cancel job';
+						        $body = 'Customer canceled your job due to some reasons.';
+
+						        require_once "PHPMailer/PHPMailer.php";
+						        require_once "PHPMailer/SMTP.php";
+						        require_once "PHPMailer/Exception.php";
+
+						        // $mail = new PHPMailer();
+
+						   		$mail = new PHPMailer\PHPMailer\PHPMailer();
+
+						        //SMTP Settings
+						        $mail->isSMTP();
+						        $mail->Host = "smtp.gmail.com";
+						        $mail->SMTPAuth = true;
+						        $mail->Username = "mangukiyaharshit@gmail.com";
+						        $mail->Password = 'harshit2211';
+						        $mail->Port = 465; //587
+						        $mail->SMTPSecure = "ssl"; //tls
+
+						        //Email Settings
+						        $mail->isHTML(true);
+						        $mail->setFrom($email,$name);
+						        $mail->addAddress($email);
+						        $mail->Subject = $subject;
+						        $mail->Body = $body;
+
+						        if ($mail->send()) {
+						            $status = "success";
+						            // $response = "Email is sent!";
+						            // echo $status;
+						        } else {
+						            $status = "failed";
+						            // echo $status;
+						            // $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
+						        }
+
+				}
+
 
 				$qry11="update labor set l_status='available' where l_id='$lid7'";
 				$res11=mysqli_query($con,$qry11);
@@ -412,7 +520,7 @@ if(isset($_POST['logout']))
 								<h5 style="color:<?php echo $color2; ?>; font-style: italic;"><strong style="color:#777777;font-style:normal;">Job Status:</strong> <?php echo $jobstatus;?></h5>
 								
 								<?php
-
+	
 							$qry10="select * from labor l,hiredlabor h where h.h_laborid=l.l_id and h.h_customerid='$cid' group by h.h_id order by h_id desc limit 1";
 							// echo $qry;
 							$res10=mysqli_query($con,$qry10);
@@ -428,10 +536,48 @@ if(isset($_POST['logout']))
 										
 										if(isset($_POST['review2']))
 											{
+
+										    	$x1=isset($_POST['group-1'])?$_POST['group-1']:'';
+										    	// echo $x1;
+										    	$x2=isset($_POST['group-2'])?$_POST['group-2']:'';
+										    	// echo $x2;
+										    
+										    	$x3=isset($_POST['group-3'])?$_POST['group-3']:'';
+										    
+										    	// echo $x3;
+										    	$x4=isset($_POST['group-4'])?$_POST['group-4']:'';
+										    	// echo $x4;
+										    	$x5=isset($_POST['group-5'])?$_POST['group-5']:'';
+										    	// echo $x5;
+										    	if(!empty($x1))
+										    	{
+										    		$rating=$x1;
+										    	}
+										    	else if(!empty($x2))
+										    	{
+										    		$rating=$x2;					    		
+										    	}
+										    	else if(!empty($x3))
+										    	{
+										    		$rating=$x3;					    				
+										    	}
+										    	else if(!empty($x4))
+										    	{
+										    		$rating=$x4;					    		
+										    	}
+										    	else if(!empty($x5))
+										    	{
+										    		$rating=$x5;					    		
+										    	}
+										    	else
+										    	{
+										    		$rating=1;					    												    		
+										    	}
+					    	
 							
 												   $customerid=$row[24];
 												    $laborid=$row10[0];
-												    $rating=$_POST['rating'];
+												    // $rating=$_POST['rating'];
 												    $review=$_POST['review'];
 												   
 
@@ -439,10 +585,7 @@ if(isset($_POST['logout']))
 												// echo $qry9;
 												$res9=mysqli_query($con,$qry9);
 												if($res9>0)
-												{
-													// echo "insert record into review table";
-												   // header("location:hiredlabor.php");
-													
+												{						
     										echo "<script> window.location.href='hiredlabor.php';</script>";
 												   exit;
 												}		
@@ -452,22 +595,38 @@ if(isset($_POST['logout']))
 												}
 											}
 										
-																	
+
+												
 										?>
 										
-										<form method="post">
-											Rating: <input type="text" name="rating">
+											Rate this labor: 
+											<!-- <input type="text" name="rating"> -->
 	<!-- 										 <img src="img/pages/list.jpg" alt=""> -->
-											<br>
+										   <div class="html-chunk">
+												
+									            <div class="acidjs-rating-stars">  
+									           
+									                <form>
+									                    <input type="radio" name="group-1" id="group-1-0" value="5" /><label for="group-1-0"></label><!--
+									                    --><input type="radio" name="group-2" id="group-1-1" value="4" /><label for="group-1-1"></label><!--
+									                    --><input type="radio" name="group-3" id="group-1-2" value="3" /><label for="group-1-2"></label><!--
+									                    --><input type="radio" name="group-4" id="group-1-3" value="2" /><label for="group-1-3"></label><!--
+									                    --><input type="radio" name="group-5" id="group-1-4"  value="1" /><label for="group-1-4"></label>
+									                </form>
+									            </div>
+									                    <!-- <input type="submit" name="submit"> -->
+									        </div>
+											<!-- <br> -->
 											<span>Review: 
 											<input type="text" class="form-control" placeholder="Write Your review. " id="review" name="review" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Write Your review.'"></span>
 	    									<span id="error_review" class="text-danger"></span>
 	    									<br>
 										
-											<input type="submit" name="review2" value="Submit" class="ticker-btn" style="border-width:0px;">
+											<input type="submit" name="review2" value="Submit" id="rating" class="ticker-btn" style="border-width:0px;">
 										</form>
 
 									<?php
+										
 									}
 								}
 							}
@@ -1010,6 +1169,9 @@ if(isset($_POST['logout']))
 			<script src="js/parallax.min.js"></script>		
 			<script src="js/mail-script.js"></script>	
 			<script src="js/main.js"></script>
+			<script src="js/main.js"></script>
+			<script src="js/review1.js"></script>
+
 			</form>	
 		</body>
 	</html>

@@ -280,7 +280,7 @@ if(isset($_POST['logout']))
 							$res6=mysqli_query($con,$qry6);
 							while($row6=mysqli_fetch_row($res6))
 							{
-								$startdate=$row6[4];
+								// $startdate=$row6[4];
 								$enddate=$row6[5];
 							}
 
@@ -293,11 +293,10 @@ if(isset($_POST['logout']))
 							    // 24 * 60 * 60 = 86400 seconds 
 							    return abs(round($diff / 86400)); 
 							} 
-
+							$startdate=date('Y/m/d');
 							$startdate1 = date("d-m-Y", strtotime($startdate));  
 							$enddate1 = date("d-m-Y", strtotime($enddate));  
-						
-						
+
 							$dateDiff =dateDiffInDays($startdate1, $enddate1); 
 
 							if(date("Y-m-d")<$enddate)

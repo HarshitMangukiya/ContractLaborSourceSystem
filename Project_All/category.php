@@ -194,7 +194,10 @@ if(isset($_POST['logout']))
     <p align="left">Password *
     <input type="password" id="password" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
     <span id="error_password" class="text-danger"></span>
+      <div class="d-flex justify-content-around">
 
+          <a href="forgetpassword.php">Forgot password</a>
+</div>
 
       <!-- <div class="d-flex justify-content-around"> -->
         <!-- <div>

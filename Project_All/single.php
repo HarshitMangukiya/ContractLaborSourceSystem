@@ -47,7 +47,11 @@ if(isset($_POST['logout']))
 			<link rel="stylesheet" href="css/animate.min.css">
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
+
 			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <link rel="stylesheet" href="Labor/module/AcidJs.RatingStars/AcidJs.RatingStars/styles/RatingStars.css" />
+        <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
 
 			<style type="text/css">
 			li.x{
@@ -527,6 +531,125 @@ if(isset($_POST['logout']))
 										<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquaut enim ad minim veniam.</span>
 									</li>																	 -->										
 								</ul>
+							</div>
+
+							<div class="single-post job-details">
+								<h4 class="single-title">Review</h4>
+								<?php
+
+									$avg='';
+								    $sql = $con->query("SELECT * FROM review where  r_laborid='$row[0]'");
+								    $numR = $sql->num_rows;
+								   	if($numR>0)
+								   	{
+								    $sql = $con->query("SELECT SUM(r_rating) AS total FROM review");
+								    $rData = $sql->fetch_array();
+								    $total = $rData['total'];
+
+								    $avg = $total / $numR;
+									}
+								    ?>
+								    <h5>Average Rating: <strong style="max-width:100%;border-radius:5px; position:relative; z-index:1; box-shadow:0 10px 20px rgba(0,0,0,0.2); margin-right:10px;background-color:green;color:white; font-size: 150%;padding-left:15px;padding-right:15px;"> <?php echo round($avg,1);?></strong></h5>
+								    <i class='fas fa-user-alt' style='font-size:24px;margin-left:130px;'><?php echo $numR;?></i>
+								    <br>
+								    <?php
+									$qry7="select * from review where r_laborid='$row[0]'";
+									// echo $qry7;
+									$res7=mysqli_query($con,$qry7);
+									while($row7=mysqli_fetch_row($res7))
+										{
+											$reviewd=$row7[5];  
+											$reviewdate = date("d-m-Y", strtotime($reviewd));  
+
+											$qry13="select * from customer where c_id='$row7[1]'";
+												$res13=mysqli_query($con,$qry13);
+												while($row13=mysqli_fetch_row($res13))
+													{
+														$customername=$row13[1].' '.$row13[2];
+														if(empty($row13[13]))
+														{
+															$imagename3="img/avatar-13.jpg";
+														}
+													    else
+														{
+															$imagename3="Labor/customer_img/".$row13[13];
+														}
+
+
+													?>
+											<div class="single-title">		
+											
+											<h6><img style="max-width:100%;border-radius:50%; position:relative; z-index:1; box-shadow:0 10px 20px rgba(0,0,0,0.2); margin-right:10px;" src="<?php echo $imagename3; ?>" width="40" height="40" alt=""> <?php echo $customername?> 
+												<label style="margin-left:400px;"><?php echo $reviewdate;?></label></h6>
+												
+											<!-- <div class="row"> -->
+												<!-- <dir class="col-sm-3"> -->
+
+														<div class="acidjs-rating-stars" style="margin-left:80px;">
+														<div class="acidjs-rating-stars acidjs-rating-disabled">
+
+													<?php
+														for($a=0;$a<5;$a++)
+														 {
+															if($a>$row7[3]){
+																?>
+															
+																<input type="radio" value="1" disabled="disabled" checked><label for="group-1-0" ></label>
+
+														<?php	} 
+														else
+															{
+																?>
+     												<input disabled="disabled" type="radio" name="group-3" id="group-3-4"  value="5" /><label for="group-3-4"></label>
+															
+															<?php
+															}
+														}
+														?>
+<!-- 														<?php
+														for ($i=0; $i<$row7[3]; $i++) { 
+															// echo $row7[3];
+															
+															?>
+ -->														   <!--  <input type="radio" value="1" disabled="disabled" checked><label for="group-1-0" ></label>								 -->
+														    
+	   													<!-- <input type="radio" id="group-2-0" value="5"><label for="group-2-0"></label> -->
+											<!-- 		<?php																	
+														   			    				
+													}
+													?>
+													<?php
+													for ($j=0; $j<5-$row7[3]; $j++) { 
+															// echo $row7[3];
+															?>
+											 -->			    <!-- <input type="radio"><label for="group-1-0" ></label>								 -->
+														    <!-- <input type="radio"> -->
+     												<!-- <input disabled="disabled" type="radio" name="group-3" id="group-3-4"  value="5" /><label for="group-3-4"></label>
+ -->
+	   													<!-- <input type="radio" id="group-2-0" value="5"><label for="group-2-0"></label> -->
+													<!-- <?php	
+																
+														   			    				
+													}
+													?> -->
+													
+													</div>
+													<h6><?php echo $row7[4] ?> </h6>
+												</div>
+												
+												</div>
+												
+												<!-- </div> -->
+											<!-- </div> -->
+											<?php
+									}	}
+
+								?>
+
+								<p>
+
+								</p>
+
 							</div>
 						<!-- 	<div class="single-post job-experience">
 								<h4 class="single-title">Job Features & Overviews</h4>
