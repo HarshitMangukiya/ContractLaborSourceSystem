@@ -762,6 +762,11 @@ if(isset($_POST['logout']))
 											<span class="sub-item">Hired Labor</span>
 										</a>
 									</li>
+									<li>
+										<a href="reviewdisplay.php">
+											<span class="sub-item">Labor Review</span>
+										</a>
+									</li>
 								</ul>
 							</div>
 						</li>
@@ -1865,7 +1870,14 @@ if(isset($_POST['logout']))
 										<img src="../../../img/pages/list.jpg" alt="">
 										<span>Registration Date: <?php echo $row[19]; ?></span>		
 							</div>
-													<?php
+
+<!-- 
+									<div class="detail1">
+
+								<h3>Review</h3>
+								
+								</div>
+ -->													<?php
 													}
 											}
 											?>

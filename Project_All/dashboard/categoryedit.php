@@ -701,6 +701,11 @@ if(isset($_POST['logout']))
 											<span class="sub-item">Hired Labor</span>
 										</a>
 									</li>
+									<li>
+										<a href="reviewdisplay.php">
+											<span class="sub-item">Labor Review</span>
+										</a>
+									</li>
 								</ul>
 							</div>
 						</li>

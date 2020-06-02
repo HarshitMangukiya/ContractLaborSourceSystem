@@ -267,7 +267,7 @@ if(isset($_POST['logout']))
 								</div>
 							</div>
 						</li>
-								<?php
+						<?php
 						$qry="select * from customer where c_id=".$_SESSION['admin'];
 
 						$res=mysqli_query($con,$qry);
@@ -288,6 +288,7 @@ if(isset($_POST['logout']))
 											<div class="avatar-lg"><img src="../../assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
 											<div class="u-text">
 												<h4><?php echo $row[1];?> <?php echo $row[2];?></h4>
+												
 												<p class="text-muted"><?php echo $row[3];?></p>
 												<!-- <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a> -->
 											</div>
@@ -295,19 +296,22 @@ if(isset($_POST['logout']))
 									</li>
 									<li>
 										<div class="dropdown-divider"></div>
-										<!-- <a class="dropdown-item" href="#">My Profile</a>
-										<a class="dropdown-item" href="#">My Balance</a>
+										<!-- <a class="dropdown-item" href="#">My Profile</a> -->
+										<!-- <a class="dropdown-item" href="#">My Balance</a>
 										<a class="dropdown-item" href="#">Inbox</a>
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#">Account Setting</a>
-										<div class="dropdown-divider"></div> -->
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" href="#">Logout</a>
+ -->
 										<input type="submit" name="logout" value="Logout" class="dropdown-item">
-									</li>
+
+</li>
 								</div>
 							</ul>
 						</li>
-					<?php }
-					?>
+					<?php
+					 }?>
 					</ul>
 				</div>
 			</nav>
@@ -334,7 +338,7 @@ if(isset($_POST['logout']))
 
 							<div class="collapse in" id="collapseExample">
 								<ul class="nav">
-									<!-- <li>
+<!-- 									<li>
 										<a href="#profile">
 											<span class="link-collapse">My Profile</span>
 										</a>
@@ -343,8 +347,8 @@ if(isset($_POST['logout']))
 										<a href="#edit">
 											<span class="link-collapse">Edit Profile</span>
 										</a>
-									</li> -->
-									<li>
+									</li>
+ -->									<li>
 										<input type="submit" name="logout" value="Logout" class="dropdown-item">
 
 									</li>
@@ -353,7 +357,7 @@ if(isset($_POST['logout']))
 						</div>
 					</div>
 					<ul class="nav nav-primary">
-						<!-- <li class="nav-item">
+					<!-- 	<li class="nav-item">
 							<a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
 								<i class="fas fa-home"></i>
 								<p>Dashboard</p>
@@ -591,14 +595,14 @@ if(isset($_POST['logout']))
 											<span class="sub-item">Labor</span>
 											<span class="caret"></span>
 										</a>
-										<div class="collapse show" id="subnav2">
+										<div class="collapse" id="subnav2">
 											<ul class="nav nav-collapse subnav">
 												<li>
 													<a href="laborinsert.php">
 														<span class="sub-item">Add New Labor</span>
 													</a>
 												</li>
-												<li class="active">
+												<li>
 													<a href="labordisplay.php">
 														<span class="sub-item">Edit Labor Detail</span>
 													</a>
@@ -696,7 +700,7 @@ if(isset($_POST['logout']))
 											<span class="sub-item">Hired Labor</span>
 										</a>
 									</li>
-									<li>
+									<li class="active">
 										<a href="reviewdisplay.php">
 											<span class="sub-item">Labor Review</span>
 										</a>
@@ -723,13 +727,13 @@ if(isset($_POST['logout']))
 								<i class="flaticon-right-arrow"></i>
 							</li>
 							<li class="nav-item">
-								<a href="#">Labor</a>
+								<a href="#">Labor Review</a>
 							</li>
 							<li class="separator">
 								<i class="flaticon-right-arrow"></i>
 							</li>
 							<li class="nav-item">
-								<a href="#">Edit Labor Detail</a>
+								<a href="#">Edit Labor Review Detail</a>
 							</li>
 						</ul>
 					</div>
@@ -828,7 +832,7 @@ if(isset($_POST['logout']))
 							<div class="card">
 								<div class="card-header">
 									<!-- <div class="d-flex align-items-center"> -->
-										<h4 class="card-title">Labor Information</h4>
+										<h4 class="card-title">Labor Review Information</h4>
 										<!-- <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
 											<i class="fa fa-plus"></i>
 											Add Row
@@ -891,12 +895,12 @@ if(isset($_POST['logout']))
 											<thead>
 												<tr>
 													<th style="width:10">Id</th>
-													<th>Firstname</th>
-													<th>Lastname</th>
-													<th>Gender</th>
-													<th>Age</th>
-													<th>Email</th>
-													<th>Phone no.</th>
+													<th>Customer Name</th>
+													<th>Labor Name</th>
+													<th>Rating</th>
+													<th>Review</th>
+													<th>Date</th>
+													<!-- <th>Phone no.</th>
 													<th>Aadhar no.</th>
 													<th>Address</th>
 													<th>Location</th>
@@ -911,23 +915,22 @@ if(isset($_POST['logout']))
 													<th>Charge</th>
 													<th>Password</th>
 													<th>Leader Id</th>
-													<th>Reg.date</th>		
+													<th>Reg.date</th>	 -->	
 													<!-- <th style="width: 10%">Images</th> -->
-													<th style="width: 10%">Action</th>
-													<th style="width: 10%">Action</th>
+												<!-- 	<th style="width: 10%">Action</th>
+													<th style="width: 10%">Action</th> -->
 													<th style="width: 10%">Action</th>
 												</tr>
 											</thead>
 											<tfoot>
 												<tr>
 													<th>Id</th>
-													<th>Firstname</th>
-													<th>Lastname</th>
-													<th>Gender</th>
-													<th>Age</th>
-													<th>Email</th>
-													<th>Phone no.</th>
-													<th>Aadhar no.</th>
+													<th>Customer Name</th>
+													<th>Labor Name</th>
+													<th>Rating</th>
+													<th>Review</th>
+													<th>Date</th>
+													<!-- <th>Aadhar no.</th>
 													<th>Address</th>
 													<th>Location</th>
 													<th>Country</th>
@@ -941,10 +944,10 @@ if(isset($_POST['logout']))
 													<th>Charge</th>
 													<th>Password</th>
 													<th>Leader Id</th>
-													<th>Reg.date</th>
+													<th>Reg.date</th> -->
 													<!-- <th>images</th> -->
-													<th>Action</th>
-													<th>Action</th>
+<!-- 													<th>Action</th>
+													<th>Action</th> -->
 													<th>Action</th>
 											</tr>
 											</tfoot>
@@ -952,7 +955,7 @@ if(isset($_POST['logout']))
 											
 											<?php
 
-												if(isset($_REQUEST['laid']))
+												if(isset($_REQUEST['rid']))
 												{
 													// $path="../../../Labor/labor_img/";
 
@@ -970,7 +973,22 @@ if(isset($_POST['logout']))
 													// }
 
 													//$con=mysqli_connect("localhost","root","","labor");
-													// $qry="delete from labor where l_id=".$_REQUEST['laid'];
+													$qry3="delete from review where r_id=".$_REQUEST['rid'];
+													// echo $qry3;
+													// die();
+													$res3=mysqli_query($con,$qry3);
+													if($res3==1)
+													{
+														// echo "delete record from labor table";
+														header("location:reviewdisplay.php");
+														// exit;
+													}
+													else
+													{
+														echo "not delete";
+													}
+
+													// $qry="update labor set l_dflag='1' where l_id=".$_REQUEST['laid'];
 													// $res=mysqli_query($con,$qry);
 													// if($res==1)
 													// {
@@ -982,80 +1000,115 @@ if(isset($_POST['logout']))
 													// 	echo "not delete";
 													// }
 
-													$qry="update labor set l_dflag='1' where l_id=".$_REQUEST['laid'];
-													$res=mysqli_query($con,$qry);
-													if($res==1)
-													{
-														// echo "delete record from labor table";
-														header("location:labordisplay.php");
-													}
-													else
-													{
-														echo "not delete";
-													}
-
 
 												}
 
-												$qry="select * from labor where l_dflag<>'1'";
+												$qry="select * from review";
 												$res=mysqli_query($con,$qry);
 												while($row=mysqli_fetch_row($res))
 													{
-														if(empty($row[16]))
-														{
-															$imagename="../../../img/avatar-13.jpg";
-														}
-														else
-														{
-															$imagename="../../../Labor/labor_img/".$row
-															[0].'/'.$row[16];
-															// echo $imagename;
-														}
-														if(!empty($row[20]))
-														{
-														$qry1="select * from category where ca_id=".$row[20];
-														$res1=mysqli_query($con,$qry1);
-														while($row1=mysqli_fetch_row($res1))
-															{
-																$category=$row1[1];
-															}
-														}
-														if(!empty($row[10]))
-														{
-														$qry1="select * from country where id=".$row[10];
-														$res1=mysqli_query($con,$qry1);
-														while($row1=mysqli_fetch_row($res1))
-															{
-																$country=$row1[1];
-															}
-														}
-														if(!empty($row[11]))
-														{
-														$qry1="select * from state where s_id=".$row[11];
-														$res1=mysqli_query($con,$qry1);
-														while($row1=mysqli_fetch_row($res1))
-															{
-																$state=$row1[1];
-															}
-														}
-														if(!empty($row[12]))
-														{
-														$qry1="select * from city where ci_id=".$row[12];
-														$res1=mysqli_query($con,$qry1);
-														while($row1=mysqli_fetch_row($res1))
-															{
-																$city=$row1[1];
-															}
-														}
+
+																																							
+
+												$qry4="select * from customer where c_id='$row[1]'";
+												$res4=mysqli_query($con,$qry4);
+												while($row4=mysqli_fetch_row($res4))
+													{
+														$customername=$row4[1].' '.$row4[2];
+
+													}
+
+
+												$qry5="select * from labor where l_id='$row[2]'";
+												$res5=mysqli_query($con,$qry5);
+												while($row5=mysqli_fetch_row($res5))
+													{
+														$laborname=$row5[1].' '.$row5[2];
+
+													}			
+														// if(empty($row[16]))
+														// {
+														// 	$imagename="../../../img/avatar-13.jpg";
+														// }
+														// else
+														// {
+														// 	$imagename="../../../Labor/labor_img/".$row
+														// 	[0].'/'.$row[16];
+														// 	// echo $imagename;
+														// }
+														// if(!empty($row[20]))
+														// {
+														// $qry1="select * from category where ca_id=".$row[20];
+														// $res1=mysqli_query($con,$qry1);
+														// while($row1=mysqli_fetch_row($res1))
+														// 	{
+														// 		$category=$row1[1];
+														// 	}
+														// }
+														// if(!empty($row[10]))
+														// {
+														// $qry1="select * from country where id=".$row[10];
+														// $res1=mysqli_query($con,$qry1);
+														// while($row1=mysqli_fetch_row($res1))
+														// 	{
+														// 		$country=$row1[1];
+														// 	}
+														// }
+														// if(!empty($row[11]))
+														// {
+														// $qry1="select * from state where s_id=".$row[11];
+														// $res1=mysqli_query($con,$qry1);
+														// while($row1=mysqli_fetch_row($res1))
+														// 	{
+														// 		$state=$row1[1];
+														// 	}
+														// }
+														// if(!empty($row[12]))
+														// {
+														// $qry1="select * from city where ci_id=".$row[12];
+														// $res1=mysqli_query($con,$qry1);
+														// while($row1=mysqli_fetch_row($res1))
+														// 	{
+														// 		$city=$row1[1];
+														// 	}
+														// }
 													?>
 													<tr>
 													<td><?php echo $row[0];?></td>
-													<td><a href="laborsingle.php?laid=<?php echo $row[0]; ?>"><?php echo $row[1];?></a></td>
-													<td><?php echo $row[2];?></td>
+													<td><a href="./customerdb/customersingle.php?cuid=<?php echo $row[1]; ?>"><?php echo $customername;?></a></td>
+													<td><a href="laborsingle.php?laid=<?php echo $row[2]; ?>"><?php echo $laborname;?></a></td>
 													<td><?php echo $row[3];?></td>
 													<td><?php echo $row[4];?></td>
 													<td><?php echo $row[5];?></td>
-													<td><?php echo $row[6];?></td>
+
+
+<!-- 													<?php
+													if($row[5]==1)
+														{
+															$jobstatus='Wait for confirmaiton';
+															$color='blue';
+														}
+														else if($row[5]==2)
+														{
+															$jobstatus='Canceled by customer';			
+															$color='red';
+
+														}
+														else if($row[5]==3)
+														{
+															$jobstatus='Canceled by labor';
+															$color='red';
+															
+														}
+														else if($row[5]==4)
+														{
+															$jobstatus='Job confirmed by labor';
+															$color='green';
+															
+														}
+														?> -->			
+													<!-- <td><?php echo $j;?></td> -->
+													<!-- <td><?php echo $row[6];?></td>
 													<td><?php echo $row[7];?></td>
 													<td><?php echo $row[8];?></td>
 													<td><?php echo $row[9];?></td>
@@ -1070,18 +1123,18 @@ if(isset($_POST['logout']))
 													<td><?php echo $row[18];?></td>
 													<td><?php echo $row[14];?></td>	
 													<td><?php echo $row[21];?></td>
-													<td><?php echo $row[19];?></td>
+													<td><?php echo $row[19];?></td> -->
 													<!-- <td><a href="laborimagedisplay.php?laid=<?php echo $row[0]; ?>" >Labor Images</a></td>													 -->
-													<td ><a href="laborsingle.php?laid=<?php echo $row[0]; ?>" ><span class="icon-eye" ></span></a></td>
+<!-- 													<td ><a href="laborsingle.php?laid=<?php echo $row[0]; ?>" ><span class="icon-eye" ></span></a></td>
 													<td>
 														<div class="form-button-action">
 															<a href="laboredit.php?laid=<?php echo $row[0]; ?>" class="btn btn-link btn-primary btn-lg">		
 																<i class="fa fa-edit"></i>
 															</a>
-														</div></td>						
+														</div></td> -->						
 													<td>
 														<div class="form-button-action">
-														<a href="labordisplay.php?laid=<?php echo $row[0]; ?>" class="btn btn-link btn-danger">	
+														<a href="reviewdisplay.php?rid=<?php echo $row[0]; ?>" class="btn btn-link btn-danger">	
 														<i class="fa fa-times"></i>
 														</a>
 														</div>

@@ -700,6 +700,11 @@ if(isset($_POST['logout']))
 											<span class="sub-item">Hired Labor</span>
 										</a>
 									</li>
+									<li>
+										<a href="reviewdisplay.php">
+											<span class="sub-item">Labor Review</span>
+										</a>
+									</li>
 								</ul>
 							</div>
 						</li>
@@ -890,8 +895,8 @@ if(isset($_POST['logout']))
 											<thead>
 												<tr>
 													<th style="width:10">Id</th>
-													<th>Customer Id</th>
-													<th>Labor Id</th>
+													<th>Customer Name</th>
+													<th>Labor Name</th>
 													<th>Total Charge</th>
 													<th>Hired Date</th>
 													<th>Job status</th>
@@ -920,8 +925,8 @@ if(isset($_POST['logout']))
 											<tfoot>
 												<tr>
 													<th>Id</th>
-													<th>Customer Id</th>
-													<th>Labor Id</th>
+													<th>Customer Name</th>
+													<th>Labor Name</th>
 													<th>Total Charge</th>
 													<th>Hired Date</th>
 													<th>Job status</th>
@@ -976,7 +981,7 @@ if(isset($_POST['logout']))
 													{
 														// echo "delete record from labor table";
 														header("location:hiredlabordisplay.php");
-														exit;
+														// exit;
 													}
 													else
 													{
