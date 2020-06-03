@@ -81,6 +81,21 @@ if(isset($_POST['logout']))
 			}
 
 			</style>
+			
+				<style type="text/css">	
+				strong.star {
+			    list-style: none;
+			    display: inline-block;
+			    margin-right: 5px;
+			    cursor: pointer;
+			    color: #9E9E9E;
+
+			}
+
+			strong.star.selected {
+			    color: #f5b301;
+			}
+			</style>
 	
 		</head>
 
@@ -849,7 +864,24 @@ if(isset($_POST['logout']))
 									}
 								    ?>
 								    <h5>Average Rating: <strong style="max-width:100%;border-radius:5px; position:relative; z-index:1; box-shadow:0 10px 20px rgba(0,0,0,0.2); margin-right:10px;background-color:green;color:white; font-size: 150%;padding-left:15px;padding-right:15px;"> <?php echo round($avg,1);?></strong></h5>
-								    <i class='fas fa-user-alt' style='font-size:24px;margin-left:130px;'><?php echo $numR;?></i>
+								    	<h5 style="margin-left:100px;">	
+													<?php	
+													 for ($count = 1; $count <= 5; $count ++) {
+												        $starRatingId = $avg . '_' . $count;
+												        
+												        if ($count <= $avg) {
+												            ?>
+												           <strong value="' . $count . '" id="' . $starRatingId . '" class="star selected">&#9733;</strong>
+												        <?php
+												        } else {?>
+												            <strong value="' . $count . '"  id="' . $starRatingId . '" class="star" >&#9733;</strong>
+												        <?php
+												    	}
+												    } 
+												    ?>
+												  <i class='fas fa-user-alt' style='font-size:14px;'><?php echo $numR;?></i>
+												    </h5>
+
 								    <br>
 								    <?php
 									$qry7="select * from review where r_laborid='$row[0]'";
@@ -876,41 +908,35 @@ if(isset($_POST['logout']))
 
 
 													?>
-											<div class="single-title">		
+										<div class="single-title">		
 											
 											<h6><img style="max-width:100%;border-radius:50%; position:relative; z-index:1; box-shadow:0 10px 20px rgba(0,0,0,0.2); margin-right:10px;" src="<?php echo $imagename3; ?>" width="40" height="40" alt=""> <?php echo $customername?> 
 												<label style="margin-left:400px;"><?php echo $reviewdate;?></label></h6>
 												
-											<!-- <div class="row"> -->
-												<!-- <dir class="col-sm-3"> -->
-														<div class="acidjs-rating-stars" style="margin-left:80px;">
-														<div class="acidjs-rating-stars acidjs-rating-disabled">
 
-													<?php
-														for ($i=0; $i<5; $i++) { 
-															if($i>$row7[3])
-															{
-															?>
-														    <input type="radio" value="1" checked><label for="group-1-0" ></label>								<?php
-														    }
-														   	else
-														    {	
-														    ?>
-	   													<input type="radio" id="group-2-0" value="5"><label for="group-2-0"></label>
+	
+													<h4 style="margin-left:80px;">	
 													<?php	
-														}		
-														   			    				
-													}
-													?>
+													 for ($count = 1; $count <= 5; $count ++) {
+												        $starRatingId = $row7[0] . '_' . $count;
+												        
+												        if ($count <= $row7[3]) {
+												            ?>
+												           <strong value="' . $count . '" id="' . $starRatingId . '" class="star selected">&#9733;</strong>
+												        <?php
+												        } else {?>
+												            <strong value="' . $count . '"  id="' . $starRatingId . '" class="star" >&#9733;</strong>
+												        <?php
+												    	}
+												    } 
+												    ?>
+												    </h4>
+
 													
-													</div>
-													<h6><?php echo $row7[4] ?> </h6>
-												</div>
+										
+													<h6 style="margin-left:80px;"><?php echo $row7[4] ?> </h6>
 												
 												</div>
-												
-												<!-- </div> -->
-											<!-- </div> -->
 											<?php
 									}	}
 
@@ -965,7 +991,7 @@ if(isset($_POST['logout']))
 }
 				    ?>
 						<div class="col-lg-4 sidebar">
-							<div class="single-slidebar">
+							<!-- <div class="single-slidebar">
 								<h4>Total labor in every state</h4>
 								<ul class="cat-list">
                                <?php
@@ -987,7 +1013,7 @@ if(isset($_POST['logout']))
 						            <?php
 	          							}
 	          						}
-    	      					 ?>
+    	      					 ?> -->
 
 									<!-- <li><a class="justify-content-between d-flex" href="category.html"><p>New York</p><span>37</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Park Montana</p><span>57</span></a></li>
@@ -996,9 +1022,9 @@ if(isset($_POST['logout']))
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Florida</p><span>47</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Rocky Beach</p><span>27</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Chicago</p><span>17</span></a></li> -->
-								</ul>
+<!-- 								</ul>
 							</div>
-
+ -->
 							<!-- <div class="single-slidebar">
 								<h4>Top rated labor</h4>
 								<div class="active-relatedjob-carusel">

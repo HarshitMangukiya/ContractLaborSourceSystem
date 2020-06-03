@@ -734,7 +734,7 @@ $('#state').on('change',function(){
 							</div> -->														
 						</div> 
        						<div class="col-lg-4 sidebar">
-							<div class="single-slidebar">
+							<!-- <div class="single-slidebar">
 								<h4>Total labor in every state</h4>
 								<ul class="cat-list">
                                <?php
@@ -757,7 +757,7 @@ $('#state').on('change',function(){
 	          							}
 	          						}
     	      					 ?>
-
+ -->
 									<!-- <li><a class="justify-content-between d-flex" href="category.html"><p>New York</p><span>37</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Park Montana</p><span>57</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Atlanta</p><span>33</span></a></li>
@@ -765,8 +765,8 @@ $('#state').on('change',function(){
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Florida</p><span>47</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Rocky Beach</p><span>27</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.html"><p>Chicago</p><span>17</span></a></li> -->
-								</ul>
-							</div>
+							<!-- 	</ul>
+							</div> -->
 
 							<!-- <div class="single-slidebar">
 								<h4>Top rated labor</h4>
