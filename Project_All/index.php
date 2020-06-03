@@ -871,40 +871,13 @@ if(isset($_POST['logout']))
     <input type="password" id="password" class="form-control mb-4" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'" ></p>
     <span id="error_password" class="text-danger"></span>
 
-<!-- <form method="post">  -->
-     
-        <!-- <div>
-           Remember me 
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="materialLoginFormRemember">
-            <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
-          </div>
-        </div> -->
+
        <div class="d-flex justify-content-around">
 
           <a href="forgetpassword.php">Forgot password</a>
 </div>
        
-<!--  
-    <label for="chkPassport">
-    <input type="checkbox" id="chkPassport" onclick="ShowHideDiv(this)" />
-    Forgot password
-    </label>
-    
-    <div id="dvPassport" style="display: none">
-    
-    <p align="left">Email *
-    <input type="email" class="form-control mb-4" placeholder="Enter Your Email Id" name="emailforget" id="emailforget" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Your Email ID'"></p>
-    <span id="error_emailforget" class="text-danger"></span>
-   	Note:-After submit check your mail on your phone.
-     <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="forget" id="forget" >Submit</button>
 
-
-    </div>
-
-      </div>
-  </form>
- -->
         <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="login" id="login">Log In</button>
 
         <p align="center">Don't Have An Account ?
@@ -1273,9 +1246,49 @@ if(isset($_POST['logout']))
 											}
 											?>			
 
+											<?php
+											if(!empty($_SESSION['emailname']))
+											{
+											?>
+
 																			
 											<li class="<?php echo $class; ?>"><a href="hiredlabor.php?lid=<?php echo $row[0]; ?>" onclick="return confirm('Are you sure you want to hire labor ?')?true:false;">hire me</a></li>
-											
+											<?php
+											}
+											else
+											{
+											?>
+											  <button type="button" class="ticker-btn" data-toggle="modal" data-target="#myModal" style="border-width:0px;">hire me</button>
+
+											<?php
+											}
+											?>
+
+<!-- 
+										 	<li class="<?php echo $class; ?>"> <button type="button" style="border-width:0px;" ><a href="#" onclick="x()">hire mefdfdf</a></li></button>
+
+											<script type="text/javascript">
+												function x()
+												{
+													
+													<?php
+												if(!empty($_SESSION['emailname']))
+												{
+													?>
+													alert('<?php echo $_SESSION['emailname'] ?>');
+
+													<?php 
+												}else{
+													?>
+													alert('sesstion is empty');
+
+													<?php 
+												}
+
+												?>
+
+												}
+											</script>  -->
 											<!-- <?php
 											if(isset($_POST['hireme']))
 											{

@@ -205,53 +205,108 @@ if(isset($_POST['logout']))
 
 							while($row14=mysqli_fetch_row($res14))
 							{
-								// echo "insert record into hiredlabor table";
 
-								include('SendEmail/autoload.php');
-    			
-        
-						        $name ='JOB Listing.com';
-						        $email =$row14[5];
-						        $subject = 'Confirm';
-						        $body = 'You are hired by a customer to give me your confirmation as soon as possible.';
+								$qry18="select * from customer where c_id='$row14[24]'";
+								// echo $qry;
+								$res18=mysqli_query($con,$qry18);
 
-						        require_once "PHPMailer/PHPMailer.php";
-						        require_once "PHPMailer/SMTP.php";
-						        require_once "PHPMailer/Exception.php";
+								while($row18=mysqli_fetch_row($res18))
+								{
 
-						        // $mail = new PHPMailer();
+								
+									// echo "insert record into hiredlabor table";
 
-						   		$mail = new PHPMailer\PHPMailer\PHPMailer();
+									include('SendEmail/autoload.php');
+									$maildate=date('Y/m/d');
+	    			
+	        
+							        $name ='JOB Listing.com';
+							        $email =$row14[5];
+							        // $subject = 'Confirm';
+							       $subject = 'You are hired by a customer to give me your confirmation as soon as possible.';
+							        $body='<html>
+											<head>
+											<style>
+											table, th, td {
+											  border: 1px solid black;
+											  border-collapse: collapse;
+											}
+											th, td {
+											  padding: 10px;
+											  text-align: left;    
+											}
 
-						        //SMTP Settings
-						        $mail->isSMTP();
-						        $mail->Host = "smtp.gmail.com";
-						        $mail->SMTPAuth = true;
-						        $mail->Username = "mangukiyaharshit@gmail.com";
-						        $mail->Password = 'harshit2211';
-						        $mail->Port = 465; //587
-						        $mail->SMTPSecure = "ssl"; //tls
+											</style>
+											</head>
+											<body>
 
-						        //Email Settings
-						        $mail->isHTML(true);
-						        $mail->setFrom($email,$name);
-						        $mail->addAddress($email);
-						        $mail->Subject = $subject;
-						        $mail->Body = $body;
+											<table style="width:50%" align="center" >
+											  <tr>
+											    <th colspan="2" style="color:#49e4fa;text-align:center;font-size:25px;" >JOB LISTING</th>
+											  </tr>
+											      <tr>
+											    <th>Customer Name</th>
+											    <th colspan="2">'.$row18[1].' '.$row18[2].'</th>
+											  </tr>
+											    <tr>
+											    <th>Email</th>
+											    <th colspan="2">'.$row18[3].'</th>
+											  </tr>
+											      <tr>
+											    <th>Phone</th>
+											    <th colspan="2">'.$row18[4].'</th>
+											  </tr>
+											  <tr>
+											    <th>Address</th>
+											    <th colspan="2">'.$row18[5].'</th>
+											  </tr>
+											    <tr>
+											    <th>Date</th>
+											    <th>'.$maildate.'</th>
+											  </tr>
+											</table>
+											</body>
+											</html>';
 
-						        if ($mail->send()) {
-						            $status = "success";
-						            // $response = "Email is sent!";
-						            // echo $status;
-						        } else {
-						            $status = "failed";
-						            // echo $status;
-						        }
+							        require_once "PHPMailer/PHPMailer.php";
+							        require_once "PHPMailer/SMTP.php";
+							        require_once "PHPMailer/Exception.php";
 
-						       
+							        // $mail = new PHPMailer();
 
-						   header("location:hiredlabor.php");
-						   exit;
+							   		$mail = new PHPMailer\PHPMailer\PHPMailer();
+
+							        //SMTP Settings
+							        $mail->isSMTP();
+							        $mail->Host = "smtp.gmail.com";
+							        $mail->SMTPAuth = true;
+							        $mail->Username = "mangukiyaharshit@gmail.com";
+							        $mail->Password = 'harshit2211';
+							        $mail->Port = 465; //587
+							        $mail->SMTPSecure = "ssl"; //tls
+
+							        //Email Settings
+							        $mail->isHTML(true);
+							        $mail->setFrom($email,$name);
+							        $mail->addAddress($email);
+							        $mail->Subject = $subject;
+							        $mail->Body = $body;
+
+							        if ($mail->send()) {
+							            $status = "success";
+							            // $response = "Email is sent!";
+							            // echo $status;
+							        } else {
+							            $status = "failed";
+							            // echo $status;
+							        }
+
+							       
+
+								   // header("location:hiredlabor.php");
+								   echo "<script> window.location.href='hiredlabor.php';</script>";
+								   exit;
+						   		}
 							}
 						 
 						}		
@@ -570,6 +625,7 @@ if(isset($_POST['logout']))
 								<h5 style="color:<?php echo $color2; ?>; font-style: italic;"><strong style="color:#777777;font-style:normal;">Job Status:</strong> <?php echo $jobstatus;?></h5>
 								
 								<?php
+
 	
 							$qry10="select * from labor l,hiredlabor h where h.h_laborid=l.l_id and h.h_customerid='$cid' group by h.h_id order by h_id desc limit 1";
 							// echo $qry;
@@ -577,9 +633,22 @@ if(isset($_POST['logout']))
 
 							while($row10=mysqli_fetch_row($res10))
 							{
-								
+								$customerid2=$row[24];
+							    $laborid2=$row10[0];
+							    // $rating=$_POST['rating'];
+								$hiredid2=$row10[23];
+   
+						    $checkIfExistQuery = "select * from review where r_customerid='$customerid2' and r_laborid='$laborid2' and r_hid='$hiredid2' ";
+						    if ($result = mysqli_query($con, $checkIfExistQuery)) {
+						        $rowcount = mysqli_num_rows($result);
+						    }
+						    
+						    if ($rowcount == 0) {
+						       
+
 								if($row10[23]==$row[23])
 								{
+
 
 									if($row10[28]==4)
 									{
@@ -624,14 +693,15 @@ if(isset($_POST['logout']))
 										    		$rating=1;					    												    		
 										    	}
 					    	
-							
+
 												   $customerid=$row[24];
 												    $laborid=$row10[0];
 												    // $rating=$_POST['rating'];
+												    $hiredid=$row10[23];
 												    $review=$_POST['review'];
 												   
 
-												$qry9="insert into review values(0,'$customerid','$laborid','$rating','$review',NOW())";
+												$qry9="insert into review values(0,'$customerid','$laborid','$rating','$review',NOW(),'$hiredid')";
 												// echo $qry9;
 												$res9=mysqli_query($con,$qry9);
 												if($res9>0)
@@ -679,7 +749,9 @@ if(isset($_POST['logout']))
 										
 									}
 								}
+
 							}
+						}
 								?>
 								</div>
 							</div>

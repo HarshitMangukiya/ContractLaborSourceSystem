@@ -270,14 +270,55 @@ if(isset($_POST['logout']))
 
 						if(isset($_POST['send']))
 						{
+
 							include('SendEmail/autoload.php');
 
-    						
-        
 						        $name =$_POST['name'];
 						        $email =$_POST['email'];
 						        $subject =$_POST['subject'];
-						        $body =$_POST['message'];
+						        // $body =$_POST['message'];
+								$maildate=date('Y/m/d');
+
+						        $body='<html>
+										<head>
+										<style>
+										table, th, td {
+										  border: 1px solid black;
+										  border-collapse: collapse;
+										}
+										th, td {
+										  padding: 10px;
+										  text-align: left;    
+										}
+
+										</style>
+										</head>
+										<body>
+
+										<table style="width:50%" align="center" >
+										  <tr>
+										    <th>Name</th>
+										    <th colspan="2">'.$_POST['name'].'</th>
+										  </tr>
+										    <tr>
+										    <th>Email</th>
+										    <th colspan="2">'.$_POST['email'].'</th>
+										  </tr>
+										      <tr>
+										    <th>Subject</th>
+										    <th colspan="2">'.$_POST['subject'].'</th>
+										  </tr>
+										  <tr>
+										    <th>Message</th>
+										    <th colspan="2">'.$_POST['message'].'</th>
+										  </tr>
+										    <tr>
+										    <th>Date</th>
+										    <th colspan="2">'.$maildate.'</th>
+										  </tr>
+										</table>
+										</body>
+										</html>';
 
 						        require_once "PHPMailer/PHPMailer.php";
 						        require_once "PHPMailer/SMTP.php";
@@ -312,6 +353,49 @@ if(isset($_POST['logout']))
 						            // echo $status;
 						            // $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
 						        }
+
+
+						       include('SendEmail/autoload.php');
+    			
+        
+						        $name ='JOB Listing.com';
+						        $email =$_POST['email'];
+						        $subject = 'Thank You';
+						        $body = 'Thank you for contact us.';
+
+						        require_once "PHPMailer/PHPMailer.php";
+						        require_once "PHPMailer/SMTP.php";
+						        require_once "PHPMailer/Exception.php";
+
+						        // $mail = new PHPMailer();
+
+						   		$mail = new PHPMailer\PHPMailer\PHPMailer();
+
+						        //SMTP Settings
+						        $mail->isSMTP();
+						        $mail->Host = "smtp.gmail.com";
+						        $mail->SMTPAuth = true;
+						        $mail->Username = "mangukiyaharshit@gmail.com";
+						        $mail->Password = 'harshit2211';
+						        $mail->Port = 465; //587
+						        $mail->SMTPSecure = "ssl"; //tls
+
+						        //Email Settings
+						        $mail->isHTML(true);
+						        $mail->setFrom($email,$name);
+						        $mail->addAddress($email);
+						        $mail->Subject = $subject;
+						        $mail->Body = $body;
+
+						        if ($mail->send()) {
+						            $status = "success";
+						            // $response = "Email is sent!";
+						            // echo $status;
+						        } else {
+						            $status = "failed";
+						            // echo $status;
+						        }
+
 
 						}
 
