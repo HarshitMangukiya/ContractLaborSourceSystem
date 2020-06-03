@@ -39,6 +39,20 @@ if(isset($_POST['logout']))
 	<link rel="stylesheet" href="../../assets/css/atlantis.min.css">
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<!-- <link rel="stylesheet" href="../../assets/css/demo.css"> -->
+		<style type="text/css">	
+				strong.star {
+			    list-style: none;
+			    display: inline-block;
+			    margin-right: 5px;
+			    cursor: pointer;
+			    color: #9E9E9E;
+
+				}
+
+				strong.star.selected {
+				    color: #f5b301;
+				}
+				</style>
 </head>
 
 <body>
@@ -1077,7 +1091,24 @@ if(isset($_POST['logout']))
 													<td><?php echo $row[0];?></td>
 													<td><a href="./customerdb/customersingle.php?cuid=<?php echo $row[1]; ?>"><?php echo $customername;?></a></td>
 													<td><a href="laborsingle.php?laid=<?php echo $row[2]; ?>"><?php echo $laborname;?></a></td>
-													<td><?php echo $row[3];?></td>
+													<td>
+														<h4 style="width:200px;">	
+														<?php	
+														 for ($count = 1; $count <= 5; $count ++) {
+													        $starRatingId = $row[0] . '_' . $count;
+													        
+													        if ($count <= $row[3]) {
+													            ?>
+													           <strong value="' . $count . '" id="' . $starRatingId . '" class="star selected">&#9733;</strong>
+													        <?php
+													        } else {?>
+													            <strong value="' . $count . '"  id="' . $starRatingId . '" class="star" >&#9733;</strong>
+													        <?php
+													    	}
+													    } 
+													    ?>
+													    </h4>
+													</td>
 													<td><?php echo $row[4];?></td>
 													<td><?php echo $row[5];?></td>
 
