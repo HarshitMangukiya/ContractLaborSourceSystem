@@ -914,6 +914,8 @@ if(isset($_POST['logout']))
 													<th>Rating</th>
 													<th>Review</th>
 													<th>Date</th>
+													<th>Hired Id</th>
+
 													<!-- <th>Phone no.</th>
 													<th>Aadhar no.</th>
 													<th>Address</th>
@@ -944,6 +946,8 @@ if(isset($_POST['logout']))
 													<th>Rating</th>
 													<th>Review</th>
 													<th>Date</th>
+													<th>Hired Id</th>
+
 													<!-- <th>Aadhar no.</th>
 													<th>Address</th>
 													<th>Location</th>
@@ -1111,6 +1115,7 @@ if(isset($_POST['logout']))
 													</td>
 													<td><?php echo $row[4];?></td>
 													<td><?php echo $row[5];?></td>
+													<td><?php echo $row[6];?></td>
 
 
 <!-- 													<?php

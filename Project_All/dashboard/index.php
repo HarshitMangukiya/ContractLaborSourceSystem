@@ -710,9 +710,9 @@ if(isset($_POST['logout']))
 								</ul>
 							</div>
 						</li>
-						<li class="mx-4 mt-2">
+<!-- 						<li class="mx-4 mt-2">
 							<a href="http://themekita.com/atlantis-bootstrap-dashboard.html" class="btn btn-primary btn-block"><span class="btn-label mr-2"> <i class="fa fa-heart"></i> </span>Buy Pro</a> 
-						</li>
+						</li> -->
 					</ul>
 				</div>
 			</div>
@@ -726,11 +726,11 @@ if(isset($_POST['logout']))
 						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 							<div>
 								<h2 class="text-white pb-2 fw-bold">Dashboard</h2>
-								<h5 class="text-white op-7 mb-2">Free Bootstrap 4 Admin Dashboard</h5>
+								<!-- <h5 class="text-white op-7 mb-2">Free Bootstrap 4 Admin Dashboard</h5> -->
 							</div>
 							<div class="ml-md-auto py-2 py-md-0">
-								<a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>
-								<a href="#" class="btn btn-secondary btn-round">Add Customer</a>
+								<!-- <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a> -->
+								<!-- <a href="#" class="btn btn-secondary btn-round">Add Customer</a> -->
 							</div>
 						</div>
 					</div>
@@ -741,51 +741,57 @@ if(isset($_POST['logout']))
 							<div class="card full-height">
 								<div class="card-body">
 									<div class="card-title">Overall statistics</div>
-									<div class="card-category">Daily information about statistics in system</div>
+									<div class="card-category">Information about customer and labor growth.</div>
 									<div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
 										<div class="px-2 pb-2 pb-md-0 text-center">
 											<div id="circles-1"></div>
-											<h6 class="fw-bold mt-3 mb-0">New Users</h6>
+											<h6 class="fw-bold mt-3 mb-0">Total Customer</h6>
 										</div>
 										<div class="px-2 pb-2 pb-md-0 text-center">
 											<div id="circles-2"></div>
-											<h6 class="fw-bold mt-3 mb-0">Sales</h6>
+											<h6 class="fw-bold mt-3 mb-0">Total Labor</h6>
 										</div>
 										<div class="px-2 pb-2 pb-md-0 text-center">
 											<div id="circles-3"></div>
-											<h6 class="fw-bold mt-3 mb-0">Subscribers</h6>
+											<h6 class="fw-bold mt-3 mb-0">Total Sale Membership Package</h6>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="card full-height">
+							<div class="card">
 								<div class="card-body">
-									<div class="card-title">Total income & spend statistics</div>
-									<div class="row py-3">
-										<div class="col-md-4 d-flex flex-column justify-content-around">
+									<div class="card-title">Total income</div>
+									<!-- <div class="row py-3"> -->
+										<!-- <div class="col-md-4 d-flex flex-column justify-content-around"> -->
 											<div>
-												<h6 class="fw-bold text-uppercase text-success op-8">Total Income</h6>
-												<h3 class="fw-bold">$9.782</h3>
+												<!-- <h6 class="fw-bold text-uppercase text-success op-8">Total Income</h6> -->
+
+												<?php
+													$sql = $con->query("SELECT SUM(p_totalpayment) AS total FROM payment");
+												    $rData = $sql->fetch_array();
+													$total = $rData['total'];
+												?>
+												<h3 class="fw-bold">₹ <?php echo $total;?></h3>
 											</div>
-											<div>
+										<!-- 	<div>
 												<h6 class="fw-bold text-uppercase text-danger op-8">Total Spend</h6>
 												<h3 class="fw-bold">$1,248</h3>
-											</div>
-										</div>
-										<div class="col-md-8">
+											</div> -->
+										<!-- </div> -->
+										<!-- <div class="col-md-8">
 											<div id="chart-container">
 												<canvas id="totalIncomeChart"></canvas>
 											</div>
-										</div>
+										</div> -->
 									</div>
-								</div>
+								<!-- </div> -->
 							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-8">
+					<!-- <div class="row"> -->
+					<!-- 	<div class="col-md-8">
 							<div class="card">
 								<div class="card-header">
 									<div class="card-head-row">
@@ -813,9 +819,9 @@ if(isset($_POST['logout']))
 									<div id="myChartLegend"></div>
 								</div>
 							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card card-primary">
+						</div> -->
+						<!-- <div class="col-md-4"> -->
+							<!-- <div class="card card-primary">
 								<div class="card-header">
 									<div class="card-title">Daily Sales</div>
 									<div class="card-category">March 25 - April 02</div>
@@ -828,8 +834,8 @@ if(isset($_POST['logout']))
 										<canvas id="dailySalesChart"></canvas>
 									</div>
 								</div>
-							</div>
-							<div class="card">
+							</div> -->
+							<!-- <div class="card">
 								<div class="card-body pb-0">
 									<div class="h1 fw-bold float-right text-warning">+7%</div>
 									<h2 class="mb-2">213</h2>
@@ -838,10 +844,10 @@ if(isset($_POST['logout']))
 										<div id="lineChart"></div>
 									</div>
 								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row row-card-no-pd">
+							</div> -->
+						<!-- </div> -->
+					<!-- </div> -->
+		<!-- 			<div class="row row-card-no-pd">
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
@@ -959,12 +965,12 @@ if(isset($_POST['logout']))
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<div class="row">
 						<div class="col-md-4">
 							<div class="card">
 								<div class="card-header">
-									<div class="card-title">Top Products</div>
+									<div class="card-title">Top Membership Package</div>
 								</div>
 								<div class="card-body pb-0">
 									<div class="d-flex">
@@ -972,11 +978,12 @@ if(isset($_POST['logout']))
 											<img src="../assets/img/logoproduct.svg" alt="..." class="avatar-img rounded-circle">
 										</div>
 										<div class="flex-1 pt-1 ml-2">
-											<h6 class="fw-bold mb-1">CSS</h6>
-											<small class="text-muted">Cascading Style Sheets</small>
+											<h6 class="fw-bold mb-1">Real Basic</h6>
+											<small class="text-muted">₹ 100 Per One Month </small>
 										</div>
 										<div class="d-flex ml-auto align-items-center">
-											<h3 class="text-info fw-bold">+$17</h3>
+											<!-- <h3 class="text-info fw-bold"></h3> -->
+											<div id="circles-4"></div>
 										</div>
 									</div>
 									<div class="separator-dashed"></div>
@@ -985,11 +992,13 @@ if(isset($_POST['logout']))
 											<img src="../assets/img/logoproduct.svg" alt="..." class="avatar-img rounded-circle">
 										</div>
 										<div class="flex-1 pt-1 ml-2">
-											<h6 class="fw-bold mb-1">J.CO Donuts</h6>
-											<small class="text-muted">The Best Donuts</small>
+											<h6 class="fw-bold mb-1">Real Standred</h6>
+											<small class="text-muted">₹ 150 Per Six Month </small>
 										</div>
 										<div class="d-flex ml-auto align-items-center">
-											<h3 class="text-info fw-bold">+$300</h3>
+											<!-- <h3 class="text-info fw-bold">₹ 300</h3> -->
+											<div id="circles-5"></div>
+
 										</div>
 									</div>
 									<div class="separator-dashed"></div>
@@ -998,21 +1007,34 @@ if(isset($_POST['logout']))
 											<img src="../assets/img/logoproduct3.svg" alt="..." class="avatar-img rounded-circle">
 										</div>
 										<div class="flex-1 pt-1 ml-2">
-											<h6 class="fw-bold mb-1">Ready Pro</h6>
-											<small class="text-muted">Bootstrap 4 Admin Dashboard</small>
+											<h6 class="fw-bold mb-1">Real Ultimate</h6>
+											<small class="text-muted">₹ 200 Per Year Month</small>
 										</div>
 										<div class="d-flex ml-auto align-items-center">
-											<h3 class="text-info fw-bold">+$350</h3>
+											<!-- <h3 class="text-info fw-bold">₹ 350</h3> -->
+											<div id="circles-6"></div>
+
 										</div>
 									</div>
 									<div class="separator-dashed"></div>
-									<div class="pull-in">
+									<!-- <div class="pull-in">
 										<canvas id="topProductsChart"></canvas>
-									</div>
+									</div> -->
+									<div align="center">
+									<div class="card-title">Total income</div>
+											
+
+												<?php
+													$sql = $con->query("SELECT SUM(p_totalpayment) AS total FROM payment");
+												    $rData = $sql->fetch_array();
+													$total = $rData['total'];
+												?>
+												<h3 class="fw-bold">₹ <?php echo $total;?></h3>
+											</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<!-- <div class="col-md-4">
 							<div class="card">
 								<div class="card-body">
 									<div class="card-title fw-mediumbold">Suggested People</div>
@@ -1092,8 +1114,8 @@ if(isset($_POST['logout']))
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-md-4">
+						</div> -->
+						<!-- <div class="col-md-4">
 							<div class="card card-primary bg-primary-gradient">
 								<div class="card-body">
 									<h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Active user right now</h4>
@@ -1107,9 +1129,9 @@ if(isset($_POST['logout']))
 									</ul>
 								</div>
 							</div>
-						</div>
+						</div> -->
 					</div>
-					<div class="row">
+					<!-- <div class="row">
 						<div class="col-md-6">
 							<div class="card full-height">
 								<div class="card-header">
@@ -1144,8 +1166,8 @@ if(isset($_POST['logout']))
 									</ol>
 								</div>
 							</div>
-						</div>
-						<div class="col-md-6">
+						</div> -->
+<!-- 						<div class="col-md-6">
 							<div class="card full-height">
 								<div class="card-header">
 									<div class="card-head-row">
@@ -1232,8 +1254,8 @@ if(isset($_POST['logout']))
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
+						</div> -->
+					<!-- </div> -->
 				</div>
 			</div>
 			<footer class="footer">
@@ -1377,14 +1399,56 @@ if(isset($_POST['logout']))
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
 	<script src="../assets/js/setting-demo.js"></script>
 	<script src="../assets/js/demo.js"></script>
+
+
+	<?php
+
+		$sql = $con->query("SELECT * FROM customer");
+		$numR = $sql->num_rows;
+
+
+		$sql1 = $con->query("SELECT * FROM labor");
+		$numR1 = $sql1->num_rows;
+
+
+		$sql2 = $con->query("SELECT * FROM payment");
+		$numR2 = $sql2->num_rows;
+
+
+		$sql3 = $con->query("SELECT * FROM payment where p_totalpayment='100'");
+		$numR3 = $sql3->num_rows;
+
+
+		$sql4 = $con->query("SELECT * FROM payment where p_totalpayment='150'");
+		$numR4 = $sql4->num_rows;
+
+
+		$sql5 = $con->query("SELECT * FROM payment where p_totalpayment='200'");
+		$numR5 = $sql5->num_rows;
+
+
+		
+	 // 	if($numR>0)
+	 // 	{
+		// 	$sql = $con->query("SELECT SUM(r_rating) AS total FROM review");
+		//     $rData = $sql->fetch_array();
+		// 	$total = $rData['total'];
+
+		// 	$avg = $total / $numR;
+
+		// }
+	
+	?>
+
+	
 	<script>
 		Circles.create({
 			id:'circles-1',
 			radius:45,
-			value:60,
+			value:<?php echo $numR; ?>,
 			maxValue:100,
 			width:7,
-			text: 5,
+			text:<?php echo $numR; ?>,
 			colors:['#f1f1f1', '#FF9E27'],
 			duration:400,
 			wrpClass:'circles-wrp',
@@ -1396,10 +1460,10 @@ if(isset($_POST['logout']))
 		Circles.create({
 			id:'circles-2',
 			radius:45,
-			value:70,
+			value:<?php echo $numR1; ?>,
 			maxValue:100,
 			width:7,
-			text: 36,
+			text: <?php echo $numR1; ?>,
 			colors:['#f1f1f1', '#2BB930'],
 			duration:400,
 			wrpClass:'circles-wrp',
@@ -1411,10 +1475,10 @@ if(isset($_POST['logout']))
 		Circles.create({
 			id:'circles-3',
 			radius:45,
-			value:40,
+			value:<?php echo $numR2;?>,
 			maxValue:100,
 			width:7,
-			text: 12,
+			text:<?php echo $numR2;?>,
 			colors:['#f1f1f1', '#F25961'],
 			duration:400,
 			wrpClass:'circles-wrp',
@@ -1423,6 +1487,54 @@ if(isset($_POST['logout']))
 			styleText:true
 		})
 
+		Circles.create({
+			id:'circles-4',
+			radius:45,
+			value:<?php echo $numR3; ?>,
+			maxValue:100,
+			width:7,
+			text:<?php echo $numR3; ?>,
+			colors:['#f1f1f1', '#FF9E27'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+
+			Circles.create({
+			id:'circles-5',
+			radius:45,
+			value:<?php echo $numR4; ?>,
+			maxValue:100,
+			width:7,
+			text:<?php echo $numR4; ?>,
+			colors:['#f1f1f1', '#FF9E27'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+
+
+				Circles.create({
+			id:'circles-6',
+			radius:45,
+			value:<?php echo $numR5; ?>,
+			maxValue:100,
+			width:7,
+			text:<?php echo $numR5; ?>,
+			colors:['#f1f1f1', '#FF9E27'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+	</script>
+
+<script>
 		var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
 
 		var mytotalIncomeChart = new Chart(totalIncomeChart, {
