@@ -596,48 +596,100 @@ if(isset($_POST['logout']))
 
 					$customeremail=$row16[3];	
 
-					include('../SendEmail/autoload.php');
 
-    							// if (isset($_POST['name']) && isset($_POST['email'])) {
-        
-						        $name ='JOB Listing.com';
-						        $email =$customeremail;
-						        $subject = 'Confirm';
-						        $body = 'Labor confirmed your job.';
 
-						        require_once "PHPMailer/PHPMailer.php";
-						        require_once "PHPMailer/SMTP.php";
-						        require_once "PHPMailer/Exception.php";
+					$qry18="select * from labor where l_id='$lid'";
+					$res18=mysqli_query($con,$qry18);
+					while($row18=mysqli_fetch_row($res18))
+					{
 
-						        // $mail = new PHPMailer();
+						include('../SendEmail/autoload.php');
 
-						   		$mail = new PHPMailer\PHPMailer\PHPMailer();
+	    							// if (isset($_POST['name']) && isset($_POST['email'])) {
+										$maildate=date('Y/m/d');
+	        
+							        $name ='JOB Listing.com';
+							        $email =$customeremail;
+							        // $subject = 'Confirm';
+							        $subject = 'Labor confirmed your job.';
+							        	$body='<html>
+												<head>
+												<style>
+												table, th, td {
+												  border: 1px solid black;
+												  border-collapse: collapse;
+												}
+												th, td {
+												  padding: 10px;
+												  text-align: left;    
+												}
 
-						        //SMTP Settings
-						        $mail->isSMTP();
-						        $mail->Host = "smtp.gmail.com";
-						        $mail->SMTPAuth = true;
-						        $mail->Username = "mangukiyaharshit@gmail.com";
-						        $mail->Password = 'harshit2211';
-						        $mail->Port = 465; //587
-						        $mail->SMTPSecure = "ssl"; //tls
+												</style>
+												</head>
+												<body>
 
-						        //Email Settings
-						        $mail->isHTML(true);
-						        $mail->setFrom($email,$name);
-						        $mail->addAddress($email);
-						        $mail->Subject = $subject;
-						        $mail->Body = $body;
+												<table style="width:50%" align="center" >
+												  <tr>
+												    <th colspan="2" style="color:#49e4fa;text-align:center;font-size:25px;" >JOB LISTING</th>
+												  </tr>
+												      <tr>
+												    <th>Labor Name</th>
+												    <th colspan="2">'.$row18[1].' '.$row18[2].'</th>
+												  </tr>
+												    <tr>
+												    <th>Email</th>
+												    <th colspan="2">'.$row18[5].'</th>
+												  </tr>
+												      <tr>
+												    <th>Phone</th>
+												    <th colspan="2">'.$row18[6].'</th>
+												  </tr>
+												  <tr>
+												    <th>Total Payment</th>
+												    <th colspan="2">'.$row18[18].'</th>
+												  </tr>
+												    <tr>
+												    <th>Date</th>
+												    <th>'.$maildate.'</th>
+												  </tr>
+												</table>
+												</body>
+												</html>';
 
-						        if ($mail->send()) {
-						            $status = "success";
-						            // $response = "Email is sent!";
-						            echo $status;
-						        } else {
-						            $status = "failed";
-						            echo $status;
-						            // $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
-						        }
+							        require_once "PHPMailer/PHPMailer.php";
+							        require_once "PHPMailer/SMTP.php";
+							        require_once "PHPMailer/Exception.php";
+
+							        // $mail = new PHPMailer();
+
+							   		$mail = new PHPMailer\PHPMailer\PHPMailer();
+
+							        //SMTP Settings
+							        $mail->isSMTP();
+							        $mail->Host = "smtp.gmail.com";
+							        $mail->SMTPAuth = true;
+							        $mail->Username = "mangukiyaharshit@gmail.com";
+							        $mail->Password = 'harshit2211';
+							        $mail->Port = 465; //587
+							        $mail->SMTPSecure = "ssl"; //tls
+
+							        //Email Settings
+							        $mail->isHTML(true);
+							        $mail->setFrom($email,$name);
+							        $mail->addAddress($email);
+							        $mail->Subject = $subject;
+							        $mail->Body = $body;
+
+							        if ($mail->send()) {
+							            $status = "success";
+							            // $response = "Email is sent!";
+							            echo $status;
+							        } else {
+							            $status = "failed";
+							            echo $status;
+							            // $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
+							        }
+						}
 
 				}
 
@@ -1146,7 +1198,7 @@ if(isset($_POST['logout']))
 									<li><a class="justify-content-between d-flex" href="category.php"><p>Florida</p><span>47</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.php"><p>Rocky Beach</p><span>27</span></a></li>
 									<li><a class="justify-content-between d-flex" href="category.php"><p>Chicago</p><span>17</span></a></li> -->
-								<<!-- /ul>
+								<!-- /ul>
 							</div> -->
 
 <!-- 							<div class="single-slidebar">
