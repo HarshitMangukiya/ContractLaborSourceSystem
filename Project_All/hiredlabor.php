@@ -59,6 +59,22 @@ if(isset($_POST['logout']))
 
 			</style>
 
+			<style type="text/css">	
+				strong.star {
+			    list-style: none;
+			    display: inline-block;
+			    margin-right: 5px;
+			    cursor: pointer;
+			    color: #9E9E9E;
+
+				}
+
+				strong.star.selected {
+				    color: #f5b301;
+				}
+				</style>
+
+
 		</head>
 		<body>
             <form method="post" enctype="multipart/form-data">
@@ -492,6 +508,40 @@ if(isset($_POST['logout']))
 									<!-- <p><h6><?php echo $row[15];?></h6></p> -->
 
 									<p class="address"><span class="lnr lnr-map"></span> <?php echo $row[8];?></p>
+
+									<?php
+
+									$avg='';
+								    $sql = $con->query("SELECT * FROM review where  r_laborid='$row[0]'");
+								    $numR = $sql->num_rows;
+								   	if($numR>0)
+								   	{
+								    $sql = $con->query("SELECT SUM(r_rating) AS total FROM review");
+								    $rData = $sql->fetch_array();
+								    $total = $rData['total'];
+
+								    $avg = $total / $numR;
+									}
+								    ?>
+
+ 										<h5>	
+													<?php	
+													 for ($count = 1; $count <= 5; $count ++) {
+												        $starRatingId = $avg . '_' . $count;
+												        
+												        if ($count <= $avg) {
+												            ?>
+												           <strong value="' . $count . '" id="' . $starRatingId . '" class="star selected">&#9733;</strong>
+												        <?php
+												        } else {?>
+												            <strong value="' . $count . '"  id="' . $starRatingId . '" class="star" >&#9733;</strong>
+												        <?php
+												    	}
+												    } 
+												    ?>
+												  <strong style="font-size:12px">(<?php echo $numR;?>)</strong>
+												    </h5>
+												    
 									<p class="address">Total Payment: &#x20a8; <?php echo $row[18];?> <!-- &nbsp &nbsp &nbsp Status: <?php echo $row[17];?> --></p>			
 
 									<?php
