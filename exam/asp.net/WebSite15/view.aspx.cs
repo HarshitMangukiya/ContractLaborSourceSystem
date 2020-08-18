@@ -37,6 +37,27 @@ public partial class view : System.Web.UI.Page
         GridView1.DataSource = ds;
         GridView1.DataBind();
     }
+    public void cleardata()
+    {
+        TextBox1.Text = "";
+        TextBox2.Text = "";
+        TextBox4.Text = "";
+        TextBox5.Text = "";
+        TextBox6.Text = "";
+        RadioButton1.Checked = false;
+        RadioButton2.Checked = false;
+        CheckBox1.Checked = false;
+        CheckBox2.Checked = false;
+        CheckBox3.Checked = false;
+        DropDownList1.SelectedIndex = 0;
+        DropDownList2.SelectedIndex = 0;
+        DropDownList3.SelectedIndex = 0;
+        DropDownList4.SelectedIndex = 0;
+        DropDownList5.SelectedIndex = 0;
+        DropDownList6.SelectedIndex = 0;
+        DropDownList7.SelectedIndex = 0;
+
+    }
     protected void Button2_Click(object sender, EventArgs e)
     {
         string genderx = "";
@@ -72,7 +93,7 @@ public partial class view : System.Web.UI.Page
         cmd.Parameters.AddWithValue("@var2", TextBox4.Text);
         cmd.Parameters.AddWithValue("@var3", genderx);
         cmd.Parameters.AddWithValue("@var4", DropDownList1.SelectedValue);
-        cmd.Parameters.AddWithValue("@var5", hobbyx);
+        cmd.Parameters.AddWithValue("@var5", hobbyx);               
         cmd.Parameters.AddWithValue("@var6", DropDownList2.SelectedValue);
         cmd.Parameters.AddWithValue("@var7", TextBox5.Text);
         cmd.Parameters.AddWithValue("@var8", DropDownList3.SelectedValue);
@@ -133,7 +154,7 @@ public partial class view : System.Web.UI.Page
         cmd.ExecuteNonQuery();
         Response.Write("insert record");
         display();
-
+        cleardata();
     }
     protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
     {

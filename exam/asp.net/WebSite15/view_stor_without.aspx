@@ -230,7 +230,23 @@
                 &nbsp;</td>
             <td>
                 <asp:GridView ID="GridView1" runat="server" AutoGenerateSelectButton="True" 
-                    onselectedindexchanged="GridView1_SelectedIndexChanged">
+                    onselectedindexchanged="GridView1_SelectedIndexChanged" AutoGenerateColumns="false">
+                    <Columns>
+                    <asp:BoundField DataField="id" HeaderText="id"/>
+                    <asp:BoundField DataField="name" HeaderText="name"/>
+                    <asp:BoundField DataField="password" HeaderText="password"/>
+                    <asp:BoundField DataField="gender" HeaderText="gender"/>
+                    <asp:BoundField DataField="age" HeaderText="age"/>
+                    <asp:BoundField DataField="hobby" HeaderText="hobby"/>
+                    <asp:BoundField DataField="course" HeaderText="course"/>
+                    <asp:BoundField DataField="phone" HeaderText="phone"/>
+                    <asp:BoundField DataField="country" HeaderText="country"/>
+                    <asp:BoundField DataField="state" HeaderText="state"/>
+                    <asp:BoundField DataField="city" HeaderText="city"/>
+                    <asp:ImageField DataImageUrlField="photo" HeaderText="image"/>
+                    <asp:BoundField DataField="fees" HeaderText="fees"/>
+
+                    </Columns>
                 </asp:GridView>
             </td>
             <td>
