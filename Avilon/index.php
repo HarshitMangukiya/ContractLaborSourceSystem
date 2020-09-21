@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Avilon Bootstrap Template</title>
+  <title>VAY-D</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">
@@ -26,12 +26,6 @@
   <!-- Main Stylesheet File -->
   <link href="css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
-    Theme Name: Avilon
-    Theme URL: https://bootstrapmade.com/avilon-bootstrap-landing-page-template/
-    Author: BootstrapMade.com
-    License: https://bootstrapmade.com/license/
-  ======================================================= -->
  <style type="text/css">
    .her2{
         text-align: center;
@@ -57,6 +51,10 @@
         <h1><a href="" class="scrollto"><img src="img/app_logo.png" width="55px" height="55px"> VAY-D</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="#intro"><img src="img/logo.png" alt="" title=""></a> -->
+      <a href="index.php?file=app_logo.png" style="margin-bottom:10px;">
+       <button class="btn" style="background-color:black;color:white; border-radius:10px;font-size:6px;margin-bottom:10px;">
+      <p style="margin-bottom:1px;font-size:8px;">For Android</p>
+        <img src="img/android (2).png" width="15px" height="15px" style="margin-right:2px;"> <i class="fa fa-download"></i> Download</button></a>
       </div>
 
       <nav id="nav-menu-container">
@@ -98,12 +96,18 @@
 
     <div class="intro-text">
       <h2>Welcome to VAY-D</h2>
-      <p>We are team of talanted designers making websites with Bootstrap</p>
-      <p style="margin-bottom:10px;">For Android</p>
-      <a href="index.php?file=app_logo.png" class="har">Download Now</a>
+      <p>Compete with other sports fans and Win</p>
+      <!-- <p style="margin-bottom:10px;">For Android</p> -->
+      <!-- <a href="index.php?file=app_logo.zip" class="har">Download Now</a> -->
+      <a href="index.php?file=app_logo.png" style="margin-bottom:10px;">
+       <button class="btn" style="background-color:black;color:white; border-radius:15px;">
+      <p style="margin-bottom:1px;font-size:10px;">For Android</p>
+        <img src="img/android (2).png" width="25px" height="25px" style="margin-right:2px;"> <i class="fa fa-download"></i> Download</button></a>
+
       <?php
       if(!empty($_GET['file']))
       {
+        echo "fcfff".$_GET['file'];
         $filename=basename($_GET['file']);
         $filepath='img/'.$filename;
         if(!empty($filename)&&file_exists($filepath))
@@ -119,12 +123,15 @@
             header('Content-Type: application/octet-stream');
             header('Content-Disposition: attachment; filename="'.basename($filepath).'"');
             header('Expires: 0');
+            header("content-Transfer-Encoding:binary");
+
             header('Cache-Control: must-revalidate');
             header('Pragma: public');
             header('Content-Length: ' . filesize($filepath));
             flush(); // Flush system output buffer
             readfile($filepath);
-          // exit;
+
+          exit;
 
         }
         else
@@ -133,8 +140,14 @@
         }
       }
       ?>    
-      <p style="margin-bottom:10px;">For IOS</p>
-      <a href="#" class="har">Download Now</a>
+      <!-- <p style="margin-bottom:10px;">For IOS</p> -->
+      <!-- <a href="#" class="har">Download Now</a> -->
+        <a href="#">
+
+       <button class="btn" style="background-color:black;color:white; border-radius: 15px;">
+      <p style="margin-bottom:1px;font-size:10px;">For IOS</p>
+        <img src="img/apple.png" width="25px" height="25px" style="margin-right:2px;"> <i class="fa fa-download"></i> Coming soon</button></a>
+      <!-- <button class="btn"><i class="fa fa-download"></i> Download</button> -->
     </div>
 
 
@@ -480,9 +493,6 @@
                 <h2><img src="img/checkbox.png" width="40px" height="40px"> Play more, level up & get amazing rewards.</h2>
                 <h2><img src="img/checkbox.png" width="40px" height="40px"> All major credit, debit cards & net banking from leading banks acceptable.</h2>
 
-                <!-- <h3>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
               </div>
             </div>
           </div>
@@ -807,7 +817,7 @@ This policy is effective as of 2020-09-13</p>
     <!--==========================
       Frequently Asked Questions Section
     ============================-->
-    <section id="faq">
+   <!--  <section id="faq">
       <div class="container">
 
         <div class="section-header">
@@ -874,7 +884,7 @@ This policy is effective as of 2020-09-13</p>
         </ul>
 
       </div>
-    </section><!-- #faq -->
+    </section> --><!-- #faq -->
 
     <!--==========================
       Our Team Section
@@ -1020,10 +1030,10 @@ This policy is effective as of 2020-09-13</p>
       <div class="container">
         <div class="row wow fadeInUp">
 
-          <div class="col-lg-4 col-md-4">
+          <div class="col-lg-4 col-md-4" style="margin-right:100px;">
             <div class="contact-about">
-              <h3><img src="img/app_logo.png" width="50px" height="50px"> VAY-D Quiz</h3>
-              <!-- <p>Cras fermentum odio eu feugiat. Justo eget magna fermentum iaculis eu non diam phasellus. Scelerisque felis imperdiet proin fermentum leo. Amet volutpat consequat mauris nunc congue.</p> -->
+              <h3><img src="img/app_logo.png" width="50px" height="50px"> VAY-D </h3>
+              <p>Help us to make VAY-D.net better, provide us with your suggestions and comments. Your comments will be forwarded to the appropriate editors.</p>
               <!-- <div class="social-links">
                 <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
                 <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
@@ -1032,7 +1042,7 @@ This policy is effective as of 2020-09-13</p>
                 <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
               </div> -->
                <div>
-                <i class="ion-ios-email-outline" style="font-size:50px;"></i>
+                <i class="ion-ios-email-outline" style="font-size:40px;"></i>
                 <p>Contact_us@vayd.net</p>
               </div>
 
@@ -1059,13 +1069,151 @@ This policy is effective as of 2020-09-13</p>
             </div>
           </div> -->
 
+            <?php
+
+            if(isset($_POST['send']))
+            { 
+              set_time_limit(300);
+
+              include('SendEmail/autoload.php');
+
+                    $name =$_POST['name'];
+                    $email =$_POST['email'];
+                    $subject =$_POST['subject'];
+                    // $body =$_POST['message'];
+
+                $maildate=date('Y/m/d');
+
+                    $body='<html>
+                    <head>
+                    <style>
+                    table, th, td {
+                      border: 1px solid black;
+                      border-collapse: collapse;
+                    }
+                    th, td {
+                      padding: 10px;
+                      text-align: left;    
+                    }
+
+                    </style>
+                    </head>
+                    <body>
+
+                    <table style="width:50%" align="center" >
+                      <tr>
+                        <th>Name</th>
+                        <th colspan="2">'.$_POST['name'].'</th>
+                      </tr>
+                        <tr>
+                        <th>Email</th>
+                        <th colspan="2">'.$_POST['email'].'</th>
+                      </tr>
+                          <tr>
+                        <th>Subject</th>
+                        <th colspan="2">'.$_POST['subject'].'</th>
+                      </tr>
+                      <tr>
+                        <th>Message</th>
+                        <th colspan="2">'.$_POST['message'].'</th>
+                      </tr>
+                        <tr>
+                        <th>Date</th>
+                        <th colspan="2">'.$maildate.'</th>
+                      </tr>
+                    </table>
+                    </body>
+                    </html>';
+
+                    require_once "SendEmail/PHPMailer/PHPMailer.php";
+                    require_once "SendEmail/PHPMailer/SMTP.php";
+                    require_once "SendEmail/PHPMailer/Exception.php";
+
+                    // $mail = new PHPMailer();
+
+                  $mail = new PHPMailer\PHPMailer\PHPMailer();
+
+                    //SMTP Settings
+                    $mail->isSMTP();
+                    $mail->Host = "smtp.gmail.com";
+                    $mail->SMTPAuth = true;
+                    $mail->Username = "mangukiyaharshit@gmail.com";
+                    $mail->Password = 'harshit2211';
+                    $mail->Port = 465; //587
+                    $mail->SMTPSecure = "ssl"; //tls
+
+                    //Email Settings
+                    $mail->isHTML(true);
+                    $mail->setFrom($email,$name);
+                    $mail->addAddress('mangukiyaharshit@gmail.com');
+                    $mail->Subject = $subject;
+                    $mail->Body = $body;
+
+                    if ($mail->send()) {
+                        $status = "success";
+                        // $response = "Email is sent!";
+                        // echo $status;
+                    } else {
+                        $status = "failed";
+                        // echo $status;
+                        // $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
+                    }
+
+
+                   include('SendEmail/autoload.php');
+          
+        
+                    $name ='VAY-D.net';
+                    $email =$_POST['email'];
+                    $subject = 'Thank You';
+                    $body = 'Thank you for contact us.';
+
+                    require_once "SendEmail/PHPMailer/PHPMailer.php";
+                    require_once "SendEmail/PHPMailer/SMTP.php";
+                    require_once "SendEmail/PHPMailer/Exception.php";
+
+                    // $mail = new PHPMailer();
+
+                  $mail = new PHPMailer\PHPMailer\PHPMailer();
+
+                    //SMTP Settings
+                    $mail->isSMTP();
+                    $mail->Host = "smtp.gmail.com";
+                    $mail->SMTPAuth = true;
+                    $mail->Username = "mangukiyaharshit@gmail.com";
+                    $mail->Password = 'harshit2211';
+                    $mail->Port = 465; //587
+                    $mail->SMTPSecure = "ssl"; //tls
+
+                    //Email Settings
+                    $mail->isHTML(true);
+                    $mail->setFrom($email,$name);
+                    $mail->addAddress($email);
+                    $mail->Subject = $subject;
+                    $mail->Body = $body;
+
+                    if ($mail->send()) {
+                        $status = "success";
+                        // $response = "Email is sent!";
+                        // echo $status;
+                        header("location:index.php");
+                    } else {
+                        $status = "failed";
+                        // echo $status;
+                    }
+
+
+            }
+
+            ?>
+
           <div class="col-lg-5 col-md-8">
             <div class="form">
               <h2>Contact Us</h2>
               <div id="sendmessage">Your message has been sent. Thank you!</div>
               <div id="errormessage"></div>
-              <form action="" method="post" role="form" class="contactForm">
-                <div class="form-row">
+              <form method="post" class="contactForm" enctype="multipart/form-data">
+                <!-- <div class="form-row">
                   <div class="form-group col-lg-6">
                     <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
                     <div class="validation"></div>
@@ -1082,8 +1230,41 @@ This policy is effective as of 2020-09-13</p>
                 <div class="form-group">
                   <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
                   <div class="validation"></div>
-                </div>
-                <div class="text-center"><button type="submit" title="Send Message">Send Message</button></div>
+                </div> -->
+                <!-- <div class="text-center"><button type="submit" title="Send Message" name="send">Send Message</button></div> -->
+
+                <p>Name *
+                    <input name="name" id="name4" placeholder="Enter your name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" class="common-input mb-20 form-control" type="text"><span id="error_name4" class="text-danger"></span>
+                  </p>
+                      
+
+                    <p>Email *
+                    <input name="email" id="email4" placeholder="Enter email address" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" class="common-input mb-20 form-control" type="email">
+                      <span id="error_email4" class="text-danger"></span>
+
+                    </p>
+
+                    
+                    <p>Subject *
+                    <input name="subject" id="subject4" placeholder="Enter your subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your subject'" class="common-input mb-20 form-control" type="text">
+                      <span id="error_subject4" class="text-danger"></span>
+
+                    </p>
+
+                    
+                    <p>Messege *
+                    <textarea class="common-textarea mt-10 form-control" id="body4" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" ></textarea><br>
+
+                      <span id="error_body4" class="text-danger"></span>
+                    </p>
+
+
+                <div class="text-center">
+                    <button class="har" style="float:center;border-width:0px;color:black;background:linear-gradient(45deg, #819BF2, #8E68FF);" name='send' id='send' >Send Message</button></div>
+
+
+
+                <!-- <input type="submit" name="add"> -->
               </form>
             </div>
           </div>
@@ -1140,7 +1321,7 @@ This policy is effective as of 2020-09-13</p>
   <script src="lib/magnific-popup/magnific-popup.min.js"></script>
 
   <!-- Contact Form JavaScript File -->
-  <script src="contactform/contactform.js"></script>
+  <script src="contactform/contactvalid.js"></script>
 
   <!-- Template Main Javascript File -->
   <script src="js/main.js"></script>
