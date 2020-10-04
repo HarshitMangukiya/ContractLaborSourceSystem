@@ -55,7 +55,7 @@ public partial class register : System.Web.UI.Page
 
         if (DropDownList2.SelectedValue.Equals("gujarat"))
         {
-            DropDownList3.Items.Add("surat");
+            DropDownList3.Items.Add("karnatak");
             DropDownList3.Items.Add("rajkot");
             DropDownList3.Items.Add("vapi");
         }
